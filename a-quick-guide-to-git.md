@@ -88,7 +88,6 @@ echo "Test" > README.md
 git add README.md
 ```
 
-<!-- TODO: 添加图片 -->
 ![git-add](./a-quick-guide-to-git/5.png)
 
 一旦文件位于暂存区后，你可以通过键入以下命令来删除它：
@@ -109,14 +108,83 @@ git reset README.md
 git commit -am "Description of the change"
 ```
 
+![git-commit](./a-quick-guide-to-git/6.png)
+
+![git-status](./a-quick-guide-to-git/7.png)
+
 这个命令将会清空暂存区的状态，并将所做的编辑永久记录到存储中，你可以通过键入 `git log` 来检查。
 
-<!-- TODO: 添加图片 -->
-![git-status](./a-quick-guide-to-git/5.png)
-
-<!-- TODO: 添加图片 -->
-![git-log](./a-quick-guide-to-git/5.png)
+![git-log](./a-quick-guide-to-git/８.png)
 
 ---
 
 ## 分支
+
+当你把文件提交到 Git 时，你同时会把它提交到当前分支。
+
+Git 允许你在多个独立分支上协同工作，不同的开发线代表主分支的不同开发分支。
+
+Git 非常灵活，你可以同时拥有无限数量的分支，它们可以独立开发，直到你想要合并一个分支到另一个分支。
+
+Git 默认会创建一个名为 `master` 的分支。他没有任何特别之处，除了它是在初始化时被创建的。
+
+你可以通过键入下面的命令来创建一个名为 `develop` 的分支：
+
+```shell
+git branch develop
+```
+
+![git-branch](./a-quick-guide-to-git/9.png)
+
+如你所见，`git branch` 列出了仓库所拥有的分支，星号表示当前所在分支。
+
+创建一个分支时，这个分支会指向当前分支所做的最后一次改动。如果你切换到新分支（使用 `git checkout develop` ）并运行 `git log` 时，你会看到和之前所在分支同样的日志。
+
+## Push 和 Pull
+
+在 Git 中你总是在本地提交。与 SVN 和 CVS 相比，这是一个很大的优势，因为后两者总是必须立即将改动提交到服务器。
+
+你可以离线工作，执行任意次你想要的提交，一旦准备就绪，就可以将它们推送到服务器，如果你上传到 GitHub ，你的团队成员或者社区都可以访问到最新和最优秀的代码。
+
+> Push 发送你的改动
+
+> Pull 将远程改动下载到工作副本
+
+不过，在使用 `push` 和 `pull` 之前，你需要添加一个远程库。
+
+### 添加远程库
+
+远程库位于另一台计算机上的仓库的一个副本。
+
+我将使用 [GitHub](https://github.com) 作为例子。如果你已经有一个仓库，你可以发布在 GitHub 上。这个过程包括通过 Web 界面在该平台创建一个仓库，然后将该仓库添加为远程库，并且将代码推送到这个仓库。
+
+添加一个远程库：
+
+```shell
+git remote add origin https://github.com/You/RepoName.git
+```
+
+> 另一种方法是在 GitHub 上创建一个空仓库，然后将其克隆到本地，这种情况下，会为你自动添加远程库。
+
+### Push
+
+完成之后，你可以将代码推送到远程库，使用 `git push <remote> <branch>` 来完成，例子如下：
+
+```shell
+git push origin master
+```
+
+你可以指定使用 `origin` 作为远程，因为从技术来说可以拥有多个远程库。这是我们之前添加的一个名称，同时这也是一种约定。
+
+### Pull
+
+同样的语法适用于拉取：
+
+```shell
+git pull origin master
+```
+
+它告诉 Git 从 `origin` 的 `master` 分支拉取更新，并合并到本地当前分支。
+
+### 冲突
+
