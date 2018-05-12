@@ -258,3 +258,67 @@ module.exports = {
 [babel-loader 配置参见这里](https://webpack.js.org/loaders/babel-loader/)。
 
 ## 插件
+
+插件类似加载器。它们可以做到加载器无法做到的事情，而且它们是 webpack 的主要构造块。
+
+举个例子：
+
+```javascript
+module.exports = {
+  //...
+  plugins: [
+    new HTMLWebpackPlugin()
+  ]
+  //...
+}
+```
+
+`HTMLWebpackPlugin` 插件的工作是自动创建一个 HTML 文件并添加输出的 JS 模块的路径，这样 JavaScript 就准备好服务了。
+
+[这里有很多插件可用](https://webpack.js.org/plugins/)。
+
+`CleanWebpackPlugin` 是一个有用的插件，它可以用于在创建输出文件之前清理 `dist` 文件夹，所以当你更改输出文件的名称时以便不会留下旧文件：
+
+```javascript
+module.exports = {
+  //...
+  plugins: [
+    new CleanWebpackPlugin(['dist']),
+  ]
+  //...
+}
+```
+
+## Webpack 的环境
+
+mode 被用来设置 webpack（4.0 版本引入） 的工作环境。它可以设置为 `development` 或 `production` （默认是 `production`，所以你只有在开发时使设置它）。
+
+```javascript
+module.exports = {
+  //...
+  mode: 'development'
+  //...
+}
+```
+
+开发模式：
+
+- 构建很快
+- 比生产模式更少的优化
+- 不移除注释
+- 提供更多的错误详情和建议
+- 提供更好的调试体验
+
+生产模式下构建较慢，因为它需要生成更优的模块。最终的 JavaScript 文件很小，因为它移除了很多在生产模式下不需要的东西。
+
+我制作了一个只打印 `console.log` 语句的程序。
+
+这是生产模式下打的包：
+
+![production-mode](./introduction-to-webpack/2.png)
+
+这是开发模式下打的包：
+
+![production-mode](./introduction-to-webpack/3.png)
+
+## 运行 webpack
