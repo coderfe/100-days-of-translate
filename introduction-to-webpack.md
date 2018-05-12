@@ -55,7 +55,7 @@ npm i -g webpack webpack-cli
 webpack-cli
 ```
 
-![webpack-cli](./introduction-to-webpack/1.png)
+![webpack-cli](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/introduction-to-webpack/1.png)
 
 ### 本地安装
 
@@ -315,10 +315,10 @@ module.exports = {
 
 这是生产模式下打的包：
 
-![production-mode](./introduction-to-webpack/2.png)
+![production-mode](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/introduction-to-webpack/2.png)
 
 这是开发模式下打的包：
 
-![production-mode](./introduction-to-webpack/3.png)
+![development-mode](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/introduction-to-webpack/3.png)
 
 ## 运行 webpack

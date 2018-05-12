@@ -49,7 +49,7 @@ sudo yum install git
 
 在系统上安装完 Git 之后，你可以通过在命令行键入 git 来访问它。
 
-![git](./a-quick-guide-to-git/1.png)
+![git](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/a-quick-guide-to-git/1.png)
 
 假设你有一个干净的文件夹。你可以键入下面的命令来初始化一个仓库
 
@@ -57,11 +57,11 @@ sudo yum install git
 git init
 ```
 
-![git-init](./a-quick-guide-to-git/2.png)
+![git-init](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/a-quick-guide-to-git/2.png)
 
 这个命令做了什么呢？它在你运行命令的文件里创建了一个 `.git` 文件夹。如果你看不见，那是因为它是一个隐藏的文件夹，所以它可能不会显示在任何地方，除非你将工具设置为”显示隐藏的文件“。
 
-![ll](./a-quick-guide-to-git/3.png)
+![ll](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/a-quick-guide-to-git/3.png)
 
 在新创建的仓库中任何与 Git 有关的东西都会存储在 `.git` 目录下，除 `.gitignore` 之外，我将在下一篇文章里讨论这些内容。
 
@@ -77,7 +77,7 @@ echo "Test" > README.md
 
 这个文件现在位于运行命令的目录里，但 Git 目前并没有被告知将文件添加在 Git 索引中，因为你可以看到 `git status` 告诉我们的信息：
 
-![git-status](./a-quick-guide-to-git/4.png)
+![git-status](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/a-quick-guide-to-git/4.png)
 
 
 ### 添加文件到暂存区
@@ -88,7 +88,7 @@ echo "Test" > README.md
 git add README.md
 ```
 
-![git-add](./a-quick-guide-to-git/5.png)
+![git-add](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/a-quick-guide-to-git/5.png)
 
 一旦文件位于暂存区后，你可以通过键入以下命令来删除它：
 
@@ -108,13 +108,13 @@ git reset README.md
 git commit -am "Description of the change"
 ```
 
-![git-commit](./a-quick-guide-to-git/6.png)
+![git-commit](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/a-quick-guide-to-git/6.png)
 
-![git-status](./a-quick-guide-to-git/7.png)
+![git-status](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/a-quick-guide-to-git/7.png)
 
 这个命令将会清空暂存区的状态，并将所做的编辑永久记录到存储中，你可以通过键入 `git log` 来检查。
 
-![git-log](./a-quick-guide-to-git/８.png)
+![git-log](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/a-quick-guide-to-git/8.png)
 
 ---
 
@@ -134,7 +134,7 @@ Git 默认会创建一个名为 `master` 的分支。他没有任何特别之处
 git branch develop
 ```
 
-![git-branch](./a-quick-guide-to-git/9.png)
+![git-branch](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/a-quick-guide-to-git/9.png)
 
 如你所见，`git branch` 列出了仓库所拥有的分支，星号表示当前所在分支。
 
