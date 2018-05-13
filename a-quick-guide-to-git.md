@@ -8,9 +8,9 @@
   - [什么是 Git](#什么是-git)
   - [分布式版本控制系统](#分布式版本控制系统)
   - [安装 Git](#安装-git)
-  - [OSX](#osx)
-  - [Windows](#windows)
-  - [Linux](#linux)
+    - [OSX](#osx)
+    - [Windows](#windows)
+    - [Linux](#linux)
   - [初始化仓库](#初始化仓库)
   - [添加文件到仓库](#添加文件到仓库)
     - [添加文件到暂存区](#添加文件到暂存区)
@@ -49,7 +49,7 @@ Git 可以很容易地使开发人员在代码库上协同工作，而且也提�
 
 在所有平台上安装 Git 是非常容易的：
 
-## OSX
+### OSX
 
 使用 [Homebrew](http://brew.sh/)，运行：
 
@@ -57,11 +57,11 @@ Git 可以很容易地使开发人员在代码库上协同工作，而且也提�
 brew install git
 ```
 
-## Windows
+### Windows
 
 下载并安装 [Git for Windows](https://git-for-windows.github.io/)
 
-## Linux
+### Linux
 
 使用发行版的包管理器来安装 Git，例如：
 
