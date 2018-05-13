@@ -1,6 +1,27 @@
 # Webpack 简介
 
-> Webpack 使一个在过去几年中备受关注的工具，几乎在每个项目中都可以看到它。我们一起来了解一下。
+> Webpack 是一个在过去几年中备受关注的工具，几乎在每个项目中都可以看到它。我们一起来了解一下。
+
+<!-- TOC -->
+
+- [Webpack 简介](#webpack-简介)
+  - [什么是 Webpack](#什么是-webpack)
+  - [安装 Webpack](#安装-webpack)
+    - [全局安装](#全局安装)
+    - [本地安装](#本地安装)
+  - [Webpack 配置](#webpack-配置)
+  - [入口点](#入口点)
+  - [输出](#输出)
+  - [加载器](#加载器)
+  - [插件](#插件)
+  - [Webpack 的环境](#webpack-的环境)
+  - [运行 webpack](#运行-webpack)
+  - [监听改动](#监听改动)
+  - [处理图片](#处理图片)
+  - [处理 SASS 代码并转化为 CSS](#处理-sass-代码并转化为-css)
+  - [生成 Source Maps](#生成-source-maps)
+
+<!-- /TOC -->
 
 ## 什么是 Webpack
 
@@ -322,3 +343,169 @@ module.exports = {
 ![development-mode](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/introduction-to-webpack/3.png)
 
 ## 运行 webpack
+
+如果 webpack 是全局安装的，则可以通过命令行手动运行，但通常的做法是在 `package.json` 文件中编写一个脚本，然后通过 `npm` 或者 `yarn`来运行。
+
+例如我们上面使用的 `package.json` 里定义的脚本：
+
+```json
+"scripts": {
+  "build": "webpack"
+}
+```
+
+允许我们通过下面的命令运行 webpack ：
+
+```shell
+npm run build
+```
+
+或者：
+
+```shell
+yarn run build
+```
+
+更简单地：
+
+```shell
+yarn build
+```
+
+## 监听改动
+
+Webpack 可以自动在程序文件改动时重新打包，并且继续监听下一次改动。
+
+需要添加以下脚本：
+
+```json
+"scripts": {
+  "watch": "webpack --watch"
+}
+```
+
+运行：
+
+```shell
+npm run watch
+```
+
+或者：
+
+```shell
+yarn run watch
+```
+
+更简单地：
+
+```shell
+yarn build
+```
+
+监听模式的一个很好的特性是只有在构建时没有错误的情况下才去打包。如果有错误，`watch` 将继续监听改动，并尝试重新构建包，但是当前工作的模块不会受到这些有错误的构建的影响。
+
+## 处理图片
+
+Webpack 能使我们通过 [`file-loader`](https://webpack.js.org/loaders/file-loader/) 来非常方便地使用图像文件。
+
+简单的配置如下：
+
+```javascript
+module.exports = {
+  //...
+  module: {
+    rules: [
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: [
+          'file-loader'
+        ]
+      }
+    ]
+  }
+  //...
+}
+```
+
+允许你在 JavaScript 中导入图像文件：
+
+```javascript
+import Icon from './icon.png'
+
+const img = new Image();
+img.src = Icon;
+element.appendChild(img);
+```
+
+（`img` 是一个 HTMLImageElement，查看 [Image 文档](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/Image)）
+
+`file-loader` 也可以处理其他类型的文件，例如字体、CSV 文档、xml 等等。
+
+处理图像文件的另一个工具是 `url-loader` 。
+
+这个例子演示了将任何小于 8KB 的 PNG 图像处理为 [data URL](https://flaviocopes.com/data-urls/) 。
+
+```javascript
+module.exports = {
+  //...
+  module: {
+    rules: [
+      {
+        test: /\.png$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192
+            }
+          }
+        ]
+      }
+    ]
+  }
+  //...
+}
+```
+
+## 处理 SASS 代码并转化为 CSS
+
+使用 `sass-loader` 、`css-loader`、`style-loader` ：
+
+```javascript
+module.exports = {
+  //...
+  module: {
+    rules: [
+      {
+        test: /\.scss/,
+        loader: [
+          'style-loader',
+          'css-loader',
+          'sass-loader'
+        ]
+      }
+    ]
+  }
+  //...
+}
+```
+
+## 生成 Source Maps
+
+因为 webpack 打包了代码，因此必须使用 Source Maps 才能获取引发错误对应的原始文件。
+
+你可以通过配置 `devtool` 属性来告诉 webpack 生成 source maps ：
+
+```javascript
+module.exports = {
+  //...
+  devtool: 'inline-source-map'
+  //...
+}
+```
+
+`devtool` 有[很多可能的值](https://webpack.js.org/configuration/devtool/)，最常用的有：
+
+- `none` 不添加 source map 。
+- `source-map` 适合生产环境，提供一个单独的 source map ，并将其添加到了模块中，所以开发工具知道有 source map 可用。当然，你需要配置服务器避免发送这些 source map ，它们仅用于调试目的。
+- `inline-source-map` 适合开发环境。
