@@ -55,3 +55,57 @@ const re2 = /hey/;
 这是两种形式之间第一个重要的区别，但是在稍后我们会看到其他的不同之处。
 
 ## 正则如何工作
+
+我们在上面定义的 `re1` 正则表达式非常简单。它会搜索字符串 `hey` ，没有任何限制：字符串可以包含许多文本，`hey` 也在其中，regex 是满足要求的。字符串也可以仅包含 `hey` ，同样也是满足正则匹配的的。
+
+这很简单。
+
+你可以使用 `RexExp.test(String)` 来测试正则表达式，它会返回一个布尔值：
+
+```javascript
+re1.test('hey');  // ✅
+re1.test('blablabla hey blablabla');  // ✅
+
+re1.test('he');  // ❌
+re1.test('blablabla');  //❌
+```
+
+在上面的示例中，我们检查了 `hey` 是否满足存储在 `re1` 中的正则表达式模式。
+
+这是它能做的最简单的事儿，但是你已经了解了很多正则表达式的概念。
+
+## （标志位）Anchoring
+
+`/hey/` 匹配字符串任意位置的 `hey` 字符串。
+
+如果你想匹配以 `hey` **开头**的字符串，使用 `^` 操作符：
+
+```javascript
+/^hey/.test('hey');  // ✅
+/^hey/.test('bla hey');  // ❌
+```
+
+如果你想匹配以 `hey` **结尾**的字符串，使用 `$` 操作符：
+
+```javascript
+/hey$/.test('hey');  // ✅
+/hey$/.test('bla hey');  // ✅
+/hey$/.test('hey you');  // ❌
+```
+
+结合上面的方法，如果想要完全匹配字符串 `hey` ，仅需要以下代码：
+
+```javascript
+/^hey$/.test('hey'); // ✅
+```
+
+匹配某个字符串以一个子字符串开头且以另一个子字符串结尾，你可以使用 `.*` ，它用来匹配任意字符不出现或者出现多次。
+
+```javascript
+/^hey.*joe$/.test('hey joe');  // ✅
+/^hey.*joe$/.test('heyjoe');  // ✅
+/^hey.*joe$/.test('hey how are you joe');  // ✅
+/^hey.*joe$/.test('hey joe!');  // ❌
+```
+
+## 范围匹配
