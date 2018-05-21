@@ -429,3 +429,23 @@ const result = re.exec('2018-05-21');
 ```
 
 ## 修饰符
+
+你可以在任何正则表达式中使用下面的修饰符：
+
+- `g` 多次匹配模式。
+- `i` 忽略大小写。
+- `m` 多行匹配。这这种模式下，`^` 和 `$` 匹配整个字符串的开头和结尾。如果没有此修饰符，它们将匹配每行的开头和结尾。
+- `u` 支持 unicode （在 ES6/2015 中引入）。
+- `s` (new in ES2018) short for single line, it causes the . to match new line characters as well.
+
+修饰符可以结合使用并添加在正则表达式的末尾：
+
+```javascript
+/hey/ig.test('HEy'); // ✅
+```
+
+或者作为 RegExp 对象构造函数的第二个参数：
+
+```javascript
+new RegExp('hey', 'ig').test('HEy'); // ✅
+```
