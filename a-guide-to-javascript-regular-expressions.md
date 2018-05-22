@@ -29,6 +29,11 @@
   - [使用无组 match 和 exec](#使用无组-match-和-exec)
   - [非捕获组](#非捕获组)
   - [修饰符](#修饰符)
+  - [检查正则表达式](#检查正则表达式)
+  - [转义](#转义)
+  - [字符串边界](#字符串边界)
+  - [使用正则表达式替换](#使用正则表达式替换)
+  - [贪婪匹配](#贪婪匹配)
 
 <!-- /TOC -->
 
@@ -449,3 +454,112 @@ const result = re.exec('2018-05-21');
 ```javascript
 new RegExp('hey', 'ig').test('HEy'); // ✅
 ```
+
+## 检查正则表达式
+
+给定一个正则表达式，你可以检查它的属性：
+
+- `source` 模式字符串
+- `mutiline` `m` 修饰符为 true
+- `global` `g` 修饰符为 true
+- `ignoreCase` `i` 修饰符为 true
+- `lastIndex` 
+
+```javascript
+/^(\w{3})$/i.source  // '^(\\d{3})(\\w+)$'
+/^(\w{3})$/i.nutiline  // false
+/^(\w{3})$/i.global  // false
+/^(\w{3})$/i.ignoreCase  // true
+/^(\w{3})$/i.lastIndex  // 0
+```
+
+## 转义
+
+这些字符是特殊的：
+
+- `\`
+- `/`
+- `[]`
+- `{}`
+- `()`
+- `?`
+- `+`
+- `*`
+- `|`
+- `.`
+- `^`
+- `$`
+
+它们的特殊之处在于，它们是正则表达式中具有控制含义的字符，如果你将它们用在模式中匹配字符，你需要通过在它们前面加上反斜杠来转义。
+
+```javascript
+/^\\$/
+
+/^\^$/.test('^');  // ✅
+/^\$$/.test('$');  // ✅
+```
+
+## 字符串边界
+
+`\b` 和 `\B` 用来检查字符串是在一个单词的开头还是结尾。
+
+- `\b` 匹配在单词开头或结尾的一组字符
+- `B` 匹配不再单词开头或结尾的一组字符
+
+例如：
+
+```javascript
+'I saw a bear'.match(/\bbear/);  // Array ['bear']
+'I saw a beard'.match(/\bbear/);  // Array ['bear']
+'I saw a beard'.match(/\bbear\b/);  //null
+'cool_bear'.match(/\bbear\b/);  //null
+```
+
+## 使用正则表达式替换
+
+我们已经了解了如何检查字符串包含某一模式。
+
+我们也了解了如何将匹配到的字符提取到一个数组中。
+
+让我们了解一下如何根据模式来替换字符串。
+
+Javascript 的 `String` 对象拥有一个 replace() 方法，它可以在没有正则表达式的情况下对字符串进行单次替换。
+
+```javascript
+'Hello world'.replace('world', 'dog');  // 'Hello dog'
+'My dog is a good dog!'.replace('dog', 'cat');  // My cat is a good dog!
+```
+
+这个方法也接受一个正则表达式为参数：
+
+```javascript
+'Hello world!'.replace(/world/, 'dog');  // Hello dog!
+```
+
+使用 `g` 修饰符是在 Javascript 中替换多次出现的字符串的唯一方法：
+
+```javascript
+'My dog is a good dog!'.replace(/dog/g, 'cat');  // 'My cat is a good cat!'
+```
+
+分组可以让我们做更多有趣的事，比如移动字符串的某个部分：
+
+```javascript
+'Hello, world'.replace(/(\w+), (\w+)/, '$2: $1!!!');
+// 'world: Hello!!!'
+```
+
+通过使用函数替换字符串，你可以做更有趣的事情。它将会接受一些参数，如 `String.match(RegExp)` 或 `RegExp.exec(String)` 的返回值，一些参数取决于组的数量：
+
+```javascript
+'Hello, world'.replace(/(\w+), (\w+)/, (matchedString, first, second) => {
+  console.log(first);
+  console.log(second);
+
+  return `${second.toUpperCase()}: ${first}!!!`;
+});
+
+// 'WORLD: hello!!!'
+```
+
+## 贪婪匹配
