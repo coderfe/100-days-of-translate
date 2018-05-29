@@ -563,3 +563,84 @@ Javascript 的 `String` 对象拥有一个 replace() 方法，它可以在没有
 ```
 
 ## 贪婪匹配
+
+正则表达式默认情况下是贪婪的。
+
+这是什么意思呢？
+
+例如这个正则表达式：
+
+```javascript
+/\$(.+)\s?/
+```
+
+它能够从字符串中提取美元数量。
+
+```javascript
+/\$(.+)\s?/.exec('This cost $100')[1];
+// 100
+```
+
+但是如果在这个数字后有更多的单词，它会变得很怪异：
+
+```javascript
+/\$(.+)\s?/.exec('This cost $100 and it is less than $200')[1];
+// 100 and it is less than $200
+```
+
+为什么呢？因为在 $ 后面的 `.+` 正则表达式会匹配任何字符，它不会停止匹配直到字符串的末尾。然后，它完成匹配，因为 `\s?` 使结束空白变成可选项。
+
+要修复这个问题，我么需要告诉正则表达式保持惰性，并且尽可能少地执行匹配。我们可以通过在量词后面使用 `?` 符号来完成。
+
+```javascript
+/\$(.+)\s/.exec('This cost $100 and it is less than $200')[1];
+// 100
+```
+
+> 我移除了 `\s` 后面的 `?` ，否则它只会匹配第一个数字，因为空格是可选的。
+
+因此，`?` 依其位置不同表示的含义也不同，因为它既可以是一个量词，也可以是惰性模式的标识。
+
+## 前瞻：根据字符串后面的内容匹配字符串
+
+用 `?=` 来匹配后面跟了特定字符串的字符串。
+
+```javascript
+/Roger(?=Waters)/
+
+/Roger(?= Waters)/.test('Roger is my dog');  // false
+/Roger(?= Waters)/.test('Roger is my dog and Roger Waters is a famous musician');  // false
+```
+
+`?!` 执行反向操作，用来匹配后面没有特定子字符串的字符串。
+
+```javascript
+/Roger(?!Waters)/
+
+/Roger(?! Waters)/.test('Roger is my dog');  // true
+/Roger(?! Waters)/.test('Roger Waters is a famous musician');  // 
+```
+
+## 后瞻: 根据字符串前面的内容匹配字符串
+
+这是 [ES2018](https://flaviocopes.com/ecmascript/) 的功能。
+
+前瞻匹配使用 `?=` 符号，后瞻匹配使用 `?<=` 符号。
+
+```javascript
+/(?<=Roger) Waters/
+
+/(?<=Roger) Waters/.test('Pink Waters is my dog');  // false
+/(?<=Roger) Waters/.test('Roger is my dog and Roger Waters is a famous musician');  // true
+```
+
+负向后瞻 `?<!`
+
+```javascript
+/(?<!Roger) Waters/
+
+/(?<!Roger) Waters/.test('Pink Waters is my dog');  // true
+/(?<!Roger) Waters/.test('Roger is my dog and Roger Waters is a famous musician');  // false
+```
+
+## 正则表达式和 Unicode
