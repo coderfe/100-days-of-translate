@@ -35,8 +35,14 @@
   - [使用正则表达式替换](#使用正则表达式替换)
   - [贪婪匹配](#贪婪匹配)
   - [前瞻：根据字符串后面的内容匹配字符串](#前瞻根据字符串后面的内容匹配字符串)
-  - [后瞻: 根据字符串前面的内容匹配字符串](#后瞻-根据字符串前面的内容匹配字符串)
+  - [后瞻：根据字符串前面的内容匹配字符串](#后瞻根据字符串前面的内容匹配字符串)
   - [正则表达式和 Unicode](#正则表达式和-unicode)
+  - [Unicode 属性转义](#unicode-属性转义)
+  - [示例](#示例)
+    - [字符串提取数字](#字符串提取数字)
+    - [匹配邮箱地址](#匹配邮箱地址)
+    - [捕获双引号之间的文本](#捕获双引号之间的文本)
+    - [获取 HTML 标签的内容](#获取-html-标签的内容)
 
 <!-- /TOC -->
 
@@ -624,7 +630,7 @@ Javascript 的 `String` 对象拥有一个 replace() 方法，它可以在没有
 /Roger(?! Waters)/.test('Roger Waters is a famous musician');  // 
 ```
 
-## 后瞻: 根据字符串前面的内容匹配字符串
+## 后瞻：根据字符串前面的内容匹配字符串
 
 这是 [ES2018](https://flaviocopes.com/ecmascript/) 的功能。
 
@@ -647,3 +653,124 @@ Javascript 的 `String` 对象拥有一个 replace() 方法，它可以在没有
 ```
 
 ## 正则表达式和 Unicode
+
+当使用 Unicode 时，`u` 标识符是必须的，特别是在需要处理 astral planes 中的字符串，这些字符不包括在前 1600 个 Unicode 字符中。
+
+例如 Emojis ，但不仅仅是这些。
+
+如果你不添加该标识符，这个用来匹配一个字符的简单正则表达式将不起作用，因为在 Javascript 中的 emoji 内部是由 2 个字符表示的（查看 [Javascript 中的](https://flaviocopes.com/javascript-unicode/)）：
+
+```javascript
+/^.$/.test('a');  // ✅
+/^.$/.test('🐶');  // ❌
+/^.$/u.test('🐶');  // ✅
+```
+
+因此，一定要使用 `u` 标识符。
+
+Unicode 与普通字符一样，处理范围：
+
+```javascript
+/[a-z]/.test('a');  // ✅
+/[1-9]/.test('1');  // ✅
+
+/[🐶-🦊]/u.test('🐺');  // ✅
+/[🐶-🦊]/u.test('🐛');  // ❌
+```
+
+Javascript 会检查内部的代码表示，因为 `\u1F43` < `\u1F43A` < `\u1F98A` ，所以 🐶 < 🐺 < 🦊 。查看[完整的 Emojis 列表](https://unicode.org/emoji/charts/full-emoji-list.html)来获取这些代码，并找出它们的顺序。
+
+## Unicode 属性转义
+
+正如上面我们看到的，在正则表达中你可以使用 `\d` 匹配任何数字，`\S` 匹配任何非空白字符，`\W` 匹配任何含有字母或数字的字符，等等。
+
+Unicode 属性转义是 ES2018 的功能，它引入了一个很酷的功能。引入 `\p{}` 及其否定形式 `\P{}` 这个概念，并将其扩展到所有的 Unicode 字符。
+
+任何 [unicode](https://flaviocopes.com/unicode/) 都有一组属性。例如 `Script` 确定语言系列，`ASCII` 是一个对于 ASCII 字符为 true 的布尔值，等等。你可以将这些属性放在大括号中，正则表达式将会检查其是否正确：
+
+```javascript
+/^\p{ASCII}+$/u.test('abc');  // ✅
+/^\p{ASCII}+$/u.test('ABC@');  // ✅
+/^\p{ASCII}+$/u.test('ABC🙃');  // ❌
+```
+
+`ASCII_Hex_Digit` 是另外一个布尔值属性，它用来检查字符串是否仅包含有效的 16 进制数字：
+
+```javascript
+/^\p{ASCII_Hex_Digit}+$/u.test('0123456789ABCDEF');  // ✅
+/^\p{ASCII_Hex_Digit}+$/u.test('h');  // ❌
+```
+
+还有许多这样的布尔值属性，你只需将它们的名称放在大括号里面，包括：`Uppercase`, `Lowercase`, `White_Space`, `Alphabetic`, `Emoji` 等：
+
+```javascript
+/^\p{Lowercase}$/u.test('h');  // ✅
+/^\p{Uppercase}$/u.test('H');  // ✅
+
+/^\p{Emoji}+$/u.test('H');  // ❌
+/^\p{Emoji}+$/u.test('🙃🙃');  // ✅
+```
+
+除这些二进制属性外，你也可以检查任何一个 Unicode 字符的属性以匹配特定值。在这个例子中，我检查这个字符串是用拉丁文写的还是用希腊文写的：
+
+```javascript
+/^\p{Script=Greek}+$/u.test('ελληνικά');  // ✅
+/^\p{Script=Latin}+$/u.test('hey');  // ✅
+```
+
+请阅读更多的关于你可以[直接使用的属性](https://github.com/tc39/proposal-regexp-unicode-property-escapes)的信息。
+
+## 示例
+
+### 字符串提取数字
+
+假设字符串仅仅有一个你需要提取的字符串，`/\d+/` 可以做到：
+
+```javascript
+'Test 123456789'.match(/\d+/);
+// Array ['123456789']
+```
+
+### 匹配邮箱地址
+
+一种简单的方法是检查 `@` 字符前后的非空白字符，使用 `\S` ：
+
+```javascript
+/(\S+)@(\S+)\.(\S+)/
+
+/(\S+)@(\S+)\.(\S+)/.test('copesc@gmail.com');
+// Array ['copesc@gmail.com', 'copesc', 'gmail', 'com']
+```
+
+这只是一个简单的例子，许多无效的电子邮件地址还是可以满足这个正则表达式。
+
+### 捕获双引号之间的文本
+
+假设你有一些字符串包含在双引号之间，并且你想要把它们提取出来。
+
+最好的方式时使用捕获组，因为我们很容易匹配以 `"` 开始和结尾的字符串，但同时我们想要在结果集中移除这些引号。
+
+我们可以在 `result[1]` 中找到我们需要的字符串：
+
+```javascript
+const hello = 'Hello "nice flower"';
+const result = /"([^']*)"/.exec(hello);
+// Array ['"nice flower"', 'nice flower']
+```
+
+### 获取 HTML 标签的内容
+
+例如获取 span 标签内的内容，允许标签内有任意数量的参数：
+
+```javascript
+/<span\b[^>]*>(.*?)<\/span>/
+
+/<span\b[^>]*>(.*?)<\/span>/.exec('test');
+// null
+
+/<span\b[^>]*>(.*?)<\/span>/.exec('<span>test</span>');
+// ["<span>test</span>", "test"]
+
+/<span\b[^>]*>(.*?)<\/span>/.exec('<span class="x">test</span>');
+// ["<span class="x">test</span>", "test"]
+```
