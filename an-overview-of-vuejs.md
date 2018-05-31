@@ -22,3 +22,9 @@ Javascript 框架帮我们创建现代应用程序。现代 Javascript 应用程
 直到 21 世纪初期，浏览器还没有它们现在拥有的功能。它们要弱小很多，从性能的角度来看，在其中构建复杂应用是不可行的，并且它们甚至并不是人们想要的工具。
 
 当谷歌推出 Google Maps 和 GMail 时，一切都变了，这两个应用程序运行在浏览器中。Ajax 使得异步网络请求成为可能，随着时间推移，开发人员开始在 Web 平台上构建程序，而工程师们自己开发平台：浏览器、Web 标准、浏览器 APIs、Javascript 自身。
+
+类似 jQuery 和 Mootools 的类库是第一种基于 Javascript 的大型项目，并一度大受欢迎。它们提供了更好的 API 来跟浏览器交互，并且也为各种浏览器的 bugs 和不同实现提供了解决方法。
+
+类似 Backbone、Ember、Knockout 及 AngularJS 是现代 Javascript 框架的第一波浪潮。而第二波就是现在，以 React、Angular 和 Vue 为主角。
+
+> 这里要注意的是，我提到的如 jQuery、Ember 和其他项目依旧被重度使用，有积极的维护者，并且有数以百万计的网站依赖着它们。也就是说，技术和工具是不断发展的，并且作为一个 Javascript 程序员，你现在可能需要了解 React、Angular 和 Vue 了。
