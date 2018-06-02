@@ -9,3 +9,5 @@
 4. [A Guide To Javascript Regular Expressions](https://flaviocopes.com/javascript-regular-expressions/) —— [Javascript 正则表达式指南](https://github.com/coderfe/100-days-of-translate/blob/master/a-guide-to-javascript-regular-expressions.md)
 
 5. [An Overview Of Vue.js](https://flaviocopes.com/vue-introduction/) —— [Vue.js 概览](https://github.com/coderfe/100-days-of-translate/blob/master/an-overview-of-vuejs.md)
+
+6. [The Vue.js CLI: Learn How To Use It](https://flaviocopes.com/vue-cli/) —— [学习如何使用 Vue.js CLI](https://github.com/coderfe/100-days-of-translate/blob/master/vue-cli.md)
