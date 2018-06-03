@@ -9,6 +9,7 @@
   - [Vue CLI 提供了什么？](#vue-cli-提供了什么)
   - [如何使用 CLI 创建 Vue 项目？](#如何使用-cli-创建-vue-项目)
   - [如何启动新创建的 Vue CLI 应用程序？](#如何启动新创建的-vue-cli-应用程序)
+  - [Git 仓库](#git-仓库)
 
 <!-- /TOC -->
 
@@ -97,3 +98,21 @@ Vue CLI 询问我将所有配置放在哪里：是放在 `package.json` 文件�
 ![install-dependencies](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/vue-cli/10.png)
 
 ## 如何启动新创建的 Vue CLI 应用程序？
+
+Vue CLI 已经为我们创建了程序，现在我们可以进入到 `example` 文件夹里，然后运行 `yarn serve` 来启动我们的第一个应用程序。
+
+![app](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/vue-cli/11.png)
+
+示例程序包含了几个源文件，包括 `package.json` ：
+
+![app](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/vue-cli/12.png)
+
+这里定义了所有的 CLI 命令，包括之前我们用过的 `yarn serve` ，其它命令有：
+
+- `yarn build` 启动生产构建
+- `yarn lint` 运行 linter
+- `yarn test:unit` 运行单元测试
+
+我将在单独的教程中介绍 Vue CLI 生成的示例程序。
+
+## Git 仓库
