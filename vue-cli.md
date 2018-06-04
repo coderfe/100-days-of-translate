@@ -10,6 +10,12 @@
   - [如何使用 CLI 创建 Vue 项目？](#如何使用-cli-创建-vue-项目)
   - [如何启动新创建的 Vue CLI 应用程序？](#如何启动新创建的-vue-cli-应用程序)
   - [Git 仓库](#git-仓库)
+  - [在命令行中使用 preset](#在命令行中使用-preset)
+  - [presets 存储在哪里？](#presets-存储在哪里)
+  - [插件](#插件)
+  - [远程存储 presets](#远程存储-presets)
+  - [Vue CLI 的另一种用法：快速制作原型](#vue-cli-的另一种用法快速制作原型)
+  - [Webpack](#webpack)
 
 <!-- /TOC -->
 
@@ -116,3 +122,138 @@ Vue CLI 已经为我们创建了程序，现在我们可以进入到 `example` �
 我将在单独的教程中介绍 Vue CLI 生成的示例程序。
 
 ## Git 仓库
+
+注意到 VS Code 左下角的 `master` 单词了么？那是因为 Vue CLI 自动创建了仓库，并进行了第一次提交。所以我么可以直接进来，改动一些东西，我们知道我们改动了什么。
+
+![git-log](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/vue-cli/13.png)
+
+这是很酷的工具。有多少次你进到项目改动一些东西，直到你想要提交一些东西，你才意识到没有进行初始化提交。
+
+## 在命令行中使用 preset
+
+你可以跳过可交互式面板，并让 Vue CLI 使用制定的 preset ：
+
+```shell
+vue create -p favourite example-2
+```
+
+## presets 存储在哪里？
+
+Presets 存储在 home 目录下的 `.vuerc` 文件中。这是我的创建的第一个 ”favourite“ preset ：
+
+```javascript
+{
+  "useTaobaoRegistry": true,
+  "packageManager": "yarn",
+  "presets": {
+    "favourite": {
+      "useConfigFiles": true,
+      "plugins": {
+        "@vue/cli-plugin-babel": {},
+        "@vue/cli-plugin-eslint": {
+          "config": "prettier",
+          "lintOn": [
+            "save"
+          ]
+        },
+        "@vue/cli-plugin-unit-jest": {}
+      },
+      "router": true,
+      "vuex": true
+    }
+  }
+}
+```
+
+## 插件
+
+通过阅读配置可以看出来，一个 preset 基本是插件的集合以及一些可选配置项。
+
+创建一个项目后，你可以通过使用 `yarn add` 来添加更多的插件。
+
+```shell
+vue add @vue/cli-plugin-babel
+```
+
+这些所有的插件都使用最新版本。你可以通过为其指定一个版本号来使用特定的版本：
+
+```javascript
+"@vue/cli-plugin-eslint": {
+  "version": "^3.0.0"
+}
+```
+
+如果一个版本出现 bug 或者破坏性升级，并且需要你等待一段时候后才能使用，这将非常有用。
+
+## 远程存储 presets
+
+通过创建一个包含 `preset.json` 文件，其中包含单个 preset 配置，这样它就可以存储在 Github （或者其他服务）。我制作了一个包含这些配置的 preset [https://github.com/flaviocopes/vue-cli-preset/blob/master/preset.json](https://github.com/flaviocopes/vue-cli-preset/blob/master/preset.json) ：
+
+```json
+{
+  "useConfigFiles": true,
+  "plugins": {
+    "@vue/cli-plugin-babel": {},
+    "@vue/cli-plugin-eslint": {
+      "config": "prettier",
+      "lintOn": [
+        "save"
+      ]
+    },
+    "@vue/cli-plugin-unit-jest": {}
+  },
+  "router": true,
+  "vuex": true
+}
+```
+
+它可以用来创建新的应用程序：
+
+```shell
+vue create --preset flaviocopes/vue-cli-preset example3
+```
+
+## Vue CLI 的另一种用法：快速制作原型
+
+到现在为止，我已经介绍了如何使用 Vue CLI 从头创建一个项目。但是对于正真的快速原型制作，你可以创建一个正真简单的 Vue 程序，甚至是一个独立的 .vue 文件来提供服务，而不用将所有依赖都下载到 `node_modules` 文件夹。
+
+怎么做？首先全局安装 `cli-service-global` ：
+
+```shell
+npm install -g @vue/cli-service-global
+
+//or
+
+yarn global add @vue/cli-service-global
+```
+
+创建 app.vue 文件：
+
+```html
+<template>
+    <div>
+        <h2>Hello world!</h2>
+        <marquee>Heyyy</marquee>
+    </div>
+</template>
+```
+
+然后运行：
+
+```shell
+vue serve app.vue
+```
+
+![vue-serve-app](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/vue-cli/14.png)
+
+你也可以为由 Javascript 和 HTML 文件组成的更有组织的项目提供服务。Vue CLI 默认使用 main.js/index.js 作为入口点，而且你也可以有一个 package.json 文件和其它任何工具的初始化配置。`vue serve` 会选择它。
+
+因为这样使用的是全局依赖，除了演示和测试之外，这不是一个最佳解决方案。
+
+运行 `vue build` 将会为部署 `dist/` 做好准备，并且会生成所有的代码依赖，也包括 vender 依赖。
+
+## Webpack
+
+Vue CLI 在内部使用了 webpack ，但是配置项被抽象了，甚至在工作目录下看不到。但是你还是可以通过使用 `vue inspect` 来访问它：
+
+![vue-inspect](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/vue-cli/14.png)
