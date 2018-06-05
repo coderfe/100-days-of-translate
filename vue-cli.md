@@ -256,4 +256,4 @@ vue serve app.vue
 
 Vue CLI 在内部使用了 webpack ，但是配置项被抽象了，甚至在工作目录下看不到。但是你还是可以通过使用 `vue inspect` 来访问它：
 
-![vue-inspect](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/vue-cli/14.png)
+![vue-inspect](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/vue-cli/15.png)
