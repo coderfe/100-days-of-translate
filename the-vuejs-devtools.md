@@ -4,7 +4,7 @@ Vue 有一个优秀的面板可以集成到浏览器开发者工具中，可以�
 
 当你第一次尝试 Vue 时，如果你打开了浏览器开发者工具，你可以看到这个信息：“下载 Vue Devtools 扩展以获得更好的开发体验：[https://github.com/vuejs/vue-devtools](https://github.com/vuejs/vue-devtools)”：
 
-![vue-devtools](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/vue.js-devtools/1.png)
+![vue-devtools](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/vuejs-devtools/1.png)
 
 这是安装 Vue Devtools 扩展的友好的提示。那是什么？任何流行的框架都有自己的开发工具扩展，通常它们会为浏览器开发者工具添加一个新的面板，比浏览器提供的默认面板更加专业。在这种情况下，这个面板会让我们检查 Vue 应用程序并与之交互。
 
@@ -28,7 +28,7 @@ Safari、Edge 和其他浏览器不支持自定义扩展，但是通过使用独
 
 图标除了向我们展示是否存在 Vue.js 实例之外，它什么也不做。要使用 Vue 开发者工具的话，我们必须打开浏览器开发者工具，通过“View → Developer → Developer Tools”，或者 `Cmd-Alt-i` 。
 
-![Cmd-Alt-i](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/vue.js-devtools/2.png)
+![Cmd-Alt-i](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/vuejs-devtools/2.png)
 
 ## 在 Firefox 上安装
 
@@ -56,7 +56,7 @@ vue-devtools
 
 这回打开一个基于 Electron 的应用程序。
 
-![Electron](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/vue.js-devtools/3.png)
+![Electron](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/vuejs-devtools/3.png)
 
 现在，粘贴 script 标签：
 
@@ -74,7 +74,7 @@ vue-devtools
 
 Vue 开发者工具面板打开后，我们可以导航到组件树。当我们在左侧列表选择一个组件，右边的面板将会显示 props 和 data :
 
-![props-data](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/vue.js-devtools/4.png)
+![props-data](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/vuejs-devtools/4.png)
 
 顶部有 4 个按钮：
 
@@ -88,7 +88,7 @@ Vue 开发者工具面板打开后，我们可以导航到组件树。当我们�
 
 注意到组件上的小字 `= $vm0` 了吗？这是使用控制台检查组件的便捷方式。按下 `Esc` 可以在开发工具底部显示控制台，你可以键入 `$vm0` 来访问 Vue 组件。
 
-![$vm0](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/vue.js-devtools/5.png)
+![$vm0](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/vuejs-devtools/5.png)
 
 这非常酷，同来检查并且与组件交互，而不用将它们分配给代码中的全局变量。
 
@@ -103,7 +103,7 @@ Vue 开发者工具面板打开后，我们可以导航到组件树。当我们�
 ## 在页面中选择组件
 
 点击
-![select-component](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/vue.js-devtools/6.png)
+![select-component](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/vuejs-devtools/6.png)
 按钮，然后会在开发工具中打开。
 
 ### 格式化组件名称
