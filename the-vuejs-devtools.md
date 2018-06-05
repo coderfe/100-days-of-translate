@@ -56,7 +56,7 @@ vue-devtools
 
 这回打开一个基于 Electron 的应用程序。
 
-![Electron](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/vue-devtools/4.png)
+![Electron](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/vue-devtools/3.png)
 
 现在，粘贴 script 标签：
 
@@ -67,3 +67,57 @@ vue-devtools
 等待应用程序重新加载，并且它会自动连接。
 
 ## 如何使用开发者工具
+
+正如前面提到的，Vue 开发者工具需要通过打开浏览器开发者工具并移动到 Vue 面板才能激活。
+
+另一个方式是在页面的任何元素上右键，选择“Inspect Vue component” 。
+
+Vue 开发者工具面板打开后，我们可以导航到组件树。当我们在左侧列表选择一个组件，右边的面板将会显示 props 和 data :
+
+![props-data](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/vue-devtools/4.png)
+
+顶部有 4 个按钮：
+
+- Components（当前面板），这是运行在当前页面的所有组件实例。Vue 可以同时运行多个实例，例如，它可能会使用单独的轻量级应用程序来管理购物车小部件和幻灯片显示。
+
+- Vuex 通过 Vuex 检查状态管理。
+
+- Events 显示所有提交的事件。
+
+- Refresh 刷新开发者工具面板。
+
+注意到组件上的小字 `= $vm0` 了吗？这是使用控制台检查组件的便捷方式。按下 `Esc` 可以在开发工具底部显示控制台，你可以键入 `$vm0` 来访问 Vue 组件。
+
+![$vm0](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/vue-devtools/5.png)
+
+这非常酷，同来检查并且与组件交互，而不用将它们分配给代码中的全局变量。
+
+### 管理数据
+
+你可以直接编辑组件的 state 通过修改 data
+
+### 筛选组件
+
+通过键入组件名称，然后组件树会过滤掉不匹配的。
+
+## 在页面中选择组件
+
+点击
+![select-component](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/vue-devtools/6.png)
+按钮，然后会在开发工具中打开。
+
+### 格式化组件名称
+
+你可以选在用 camelCase 或者 dashes 显示组件名称。
+
+### 过滤检查数据
+
+右边的面板，你可以键入任何单词来过滤不匹配的属性。
+
+### 检查 DOM
+
+单击检查 DOM 的按钮会将你带到开发者工具元素的检查器，使用组件生成的 DOM 元素。
+
+### 在编辑器中打开
+
+任何用户组件（不是框架层组件）都有一个按钮，可以在默认的编辑器中打开。非常便捷。
