@@ -13,3 +13,5 @@
 6. [The Vue.js CLI: Learn How To Use It](https://flaviocopes.com/vue-cli/) —— [学习如何使用 Vue.js CLI](https://github.com/coderfe/100-days-of-translate/blob/master/vue-cli.md)
 
 7. [The Vue.js Devtools](https://flaviocopes.com/vue-devtools/) —— [Vue.js 开发工具](https://github.com/coderfe/100-days-of-translate/blob/master/the-vuejs-devtools.md)
+
+8. [Vue Single File Components](https://flaviocopes.com/vue-single-file-components/) —— [Vue 单文件组件](https://github.com/coderfe/100-days-of-translate/blob/master/vue-single-file-components.md)
