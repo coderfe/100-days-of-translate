@@ -19,3 +19,5 @@
 9. [Vue.js Templates And Interpolations](https://flaviocopes.com/vue-templates/) —— [Vue.js 模板和插值](https://github.com/coderfe/100-days-of-translate/blob/master/vue-templates.md)
 
 10. [Vue.js Directives](https://flaviocopes.com/vue-directives/) —— [Vue.js 指令](https://github.com/coderfe/100-days-of-translate/blob/master/vue-directives.md)
+
+11. [Vue.js Methods](https://flaviocopes.com/vue-methods/) —— [Vue.js 方法](https://github.com/coderfe/100-days-of-translate/blob/master/vue-methods.md)
