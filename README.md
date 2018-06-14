@@ -23,3 +23,5 @@
 11. [Vue.js Methods](https://flaviocopes.com/vue-methods/) —— [Vue.js 方法](https://github.com/coderfe/100-days-of-translate/blob/master/vue-methods.md)
 
 12. [Vue.js Computed Properties](https://flaviocopes.com/vue-computed-properties/) —— [Vue.js 计算属性](https://github.com/coderfe/100-days-of-translate/blob/master/vue-computed-properties.md)
+
+13. [Vue.js Watchers](https://flaviocopes.com/vue-watchers/) —— [Vue.js 侦听属性](https://github.com/coderfe/100-days-of-translate/blob/master/vue-watchers.md)
