@@ -27,3 +27,5 @@
 13. [Vue.js Watchers](https://flaviocopes.com/vue-watchers/) —— [Vue.js 侦听属性](https://github.com/coderfe/100-days-of-translate/blob/master/vue-watchers.md)
 
 14. [Vue: When To Use A Method, A Watcher Or A Computed Property](https://flaviocopes.com/vue-methods-watchers-computed-properties/) —— [Vue ：何时使用方法，侦听属性或者计算属性](https://github.com/coderfe/100-days-of-translate/blob/master/vue-methods-watchers-computed-properties.md)
+
+15. [Vue.js Filters](https://flaviocopes.com/vue-filters/) —— [Vue.js 过滤器](https://github.com/coderfe/100-days-of-translate/blob/master/vue-filters.md)
