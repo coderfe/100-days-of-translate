@@ -54,7 +54,7 @@ export default {
 </script>
 ```
 
-分配给 `watch.name` 属性的函数可接受两个可选参数。第一个是新的属性值，第二个是旧属性值。
+`watch.name` 属性的函数可接受两个可选参数。第一个是新的属性值，第二个是旧属性值。
 
 ```javascript
 export default {
