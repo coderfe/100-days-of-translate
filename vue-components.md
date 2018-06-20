@@ -20,7 +20,7 @@ new Vue({ /* options */ })
 Vue.component('component-name', { /* options */ })
 ```
 
-第三种是使用本地组件：组件只能在特定的组件中访问，并适用于其它地方（非常适合封装）。
+第三种是使用本地组件：组件只能在特定的组件中访问，并不适用于其它地方（非常适合封装）。
 
 第四种是 `.vue` 文件，又称为[单文件组件](https://github.com/coderfe/100-days-of-translate/blob/master/vue-single-file-components.md)。
 
