@@ -30,4 +30,4 @@
 
 15. [Vue.js Filters](https://flaviocopes.com/vue-filters/) —— [Vue.js 过滤器](https://github.com/coderfe/100-days-of-translate/blob/master/vue-filters.md)
 
-16. [Vue.js Components](https://flaviocopes.com/vue-components/) —— [](https://github.com/coderfe/100-days-of-translate/blob/master/vue-components.md)
+16. [Vue.js Components](https://flaviocopes.com/vue-components/) —— [Vue.js 组件](https://github.com/coderfe/100-days-of-translate/blob/master/vue-components.md)
