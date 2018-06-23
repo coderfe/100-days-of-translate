@@ -31,3 +31,5 @@
 15. [Vue.js Filters](https://flaviocopes.com/vue-filters/) —— [Vue.js 过滤器](https://github.com/coderfe/100-days-of-translate/blob/master/vue-filters.md)
 
 16. [Vue.js Components](https://flaviocopes.com/vue-components/) —— [Vue.js 组件](https://github.com/coderfe/100-days-of-translate/blob/master/vue-components.md)
+
+17. [Vue.js Slots](https://flaviocopes.com/vue-slots/) —— [Vue.js 插槽](https://github.com/coderfe/100-days-of-translate/blob/master/vue-slots.md)
