@@ -10,10 +10,10 @@
   - [如何使用 CLI 创建 Vue 项目？](#如何使用-cli-创建-vue-项目)
   - [如何启动新创建的 Vue CLI 应用程序？](#如何启动新创建的-vue-cli-应用程序)
   - [Git 仓库](#git-仓库)
-  - [在命令行中使用 preset](#在命令行中使用-preset)
-  - [presets 存储在哪里？](#presets-存储在哪里)
+  - [在命令行中使用预设](#在命令行中使用预设)
+  - [预设存储在哪里？](#预设存储在哪里)
   - [插件](#插件)
-  - [远程存储 presets](#远程存储-presets)
+  - [远程存储预设](#远程存储预设)
   - [Vue CLI 的另一种用法：快速制作原型](#vue-cli-的另一种用法快速制作原型)
   - [Webpack](#webpack)
 
@@ -67,7 +67,7 @@ Vue CLI 对于快速开发是必不可少的。
 vue create example
 ```
 
-比较酷的在于这是一个可交互的过程。你需要选择 preset ，默认情况下，它会提供一个集成了 Babel 和 ESLint 的 preset 。
+比较酷的在于这是一个可交互的过程。你需要选择预设 ，默认情况下，它会提供一个集成了 Babel 和 ESLint 的预设。
 
 ![vue-create-example](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/vue-cli/2.png)
 
@@ -127,19 +127,19 @@ Vue CLI 已经为我们创建了程序，现在我们可以进入到 `example` �
 
 ![git-log](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/vue-cli/13.png)
 
-这是很酷的工具。有多少次你进到项目改动一些东西，直到你想要提交一些东西，你才意识到没有进行初始化提交。
+这是很酷的工具。有多少次你在项目中改动一些代码，直到你想要提交，你才意识到没有进行初始化提交。
 
-## 在命令行中使用 preset
+## 在命令行中使用预设
 
-你可以跳过可交互式面板，并让 Vue CLI 使用制定的 preset ：
+你可以跳过可交互式面板，并让 Vue CLI 使用指定的预设：
 
 ```shell
 vue create -p favourite example-2
 ```
 
-## presets 存储在哪里？
+## 预设存储在哪里？
 
-Presets 存储在 home 目录下的 `.vuerc` 文件中。这是我的创建的第一个 ”favourite“ preset ：
+预设存储在 home 目录下的 `.vuerc` 文件中。这是我的创建的第一个 “favourite” 预设：
 
 ```javascript
 {
@@ -167,7 +167,7 @@ Presets 存储在 home 目录下的 `.vuerc` 文件中。这是我的创建的�
 
 ## 插件
 
-通过阅读配置可以看出来，一个 preset 基本是插件的集合以及一些可选配置项。
+通过阅读配置可以看出来，预设基本是插件的集合以及一些可选配置项。
 
 创建一个项目后，你可以通过使用 `yarn add` 来添加更多的插件。
 
@@ -185,9 +185,9 @@ vue add @vue/cli-plugin-babel
 
 如果一个版本出现 bug 或者破坏性升级，并且需要你等待一段时候后才能使用，这将非常有用。
 
-## 远程存储 presets
+## 远程存储预设
 
-通过创建一个包含 `preset.json` 文件，其中包含单个 preset 配置，这样它就可以存储在 Github （或者其他服务）。我制作了一个包含这些配置的 preset [https://github.com/flaviocopes/vue-cli-preset/blob/master/preset.json](https://github.com/flaviocopes/vue-cli-preset/blob/master/preset.json) ：
+通过创建一个包含 `preset.json` 文件，其中包含单个预设配置，这样它就可以存储在 Github （或者其他服务）。我制作了一个包含这些配置的预设[https://github.com/flaviocopes/vue-cli-preset/blob/master/preset.json](https://github.com/flaviocopes/vue-cli-preset/blob/master/preset.json) ：
 
 ```json
 {
