@@ -35,3 +35,5 @@
 17. [Vue.js Slots](https://flaviocopes.com/vue-slots/) —— [Vue.js 插槽](https://github.com/coderfe/100-days-of-translate/blob/master/vue-slots.md)
 
 18. [Vue.js Components Props](https://flaviocopes.com/vue-props/) —— [Vue.js 组件 Props](https://github.com/coderfe/100-days-of-translate/blob/master/vue-props.md)
+
+19. [Vue.js Events](https://flaviocopes.com/vue-events/) —— [Vue.js 事件](https://github.com/coderfe/100-days-of-translate/blob/master/vue-events.md)
