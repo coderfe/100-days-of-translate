@@ -2,6 +2,18 @@
 
 > Props 用于将状态传递给子组件。了解它的一切。
 
+<!-- TOC -->
+
+- [Vue.js 组件 Props](#vuejs-组件-props)
+  - [在组件中定义 prop](#在组件中定义-prop)
+  - [接收多个 props](#接收多个-props)
+  - [设置 prop 类型](#设置-prop-类型)
+  - [将 prop 设置为必选项](#将-prop-设置为必选项)
+  - [设置 prop 默认值](#设置-prop-默认值)
+  - [向组件传递 props](#向组件传递-props)
+
+<!-- /TOC -->
+
 ## 在组件中定义 prop
 
 组件期望有一个或多个 prop，它必须定义在组件的 props 属性中：
