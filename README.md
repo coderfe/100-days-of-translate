@@ -37,3 +37,5 @@
 18. [Vue.js Components Props](https://flaviocopes.com/vue-props/) —— [Vue.js 组件 Props](https://github.com/coderfe/100-days-of-translate/blob/master/vue-props.md)
 
 19. [Vue.js Events](https://flaviocopes.com/vue-events/) —— [Vue.js 事件](https://github.com/coderfe/100-days-of-translate/blob/master/vue-events.md)
+
+20, [Vue.js Components Communication](https://flaviocopes.com/vue-components-communication/) —— [Vue.js 组件通讯](https://github.com/coderfe/100-days-of-translate/blob/master/vue-components-communication.md)
