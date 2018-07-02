@@ -41,3 +41,5 @@
 20. [Vue.js Components Communication](https://flaviocopes.com/vue-components-communication/) —— [Vue.js 组件通讯](https://github.com/coderfe/100-days-of-translate/blob/master/vue-components-communication.md)
 
 21. [Vuex, The Vue.js State Manager](https://flaviocopes.com/vuex/) —— [Vue.js 状态管理：Vuex](https://github.com/coderfe/100-days-of-translate/blob/master/vuex.md)
+
+22. [The Vue Router](https://flaviocopes.com/vue-router/) —— [Vue Router](https://github.com/coderfe/100-days-of-translate/blob/master/vue-router.md)
