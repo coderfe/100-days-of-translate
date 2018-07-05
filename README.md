@@ -43,3 +43,5 @@
 21. [Vuex, The Vue.js State Manager](https://flaviocopes.com/vuex/) —— [Vue.js 状态管理：Vuex](https://github.com/coderfe/100-days-of-translate/blob/master/vuex.md)
 
 22. [The Vue Router](https://flaviocopes.com/vue-router/) —— [Vue Router](https://github.com/coderfe/100-days-of-translate/blob/master/vue-router.md)
+
+23. [The History API](https://flaviocopes.com/history-api/) —— [History API](https://github.com/coderfe/100-days-of-translate/blob/master/history-api.md)
