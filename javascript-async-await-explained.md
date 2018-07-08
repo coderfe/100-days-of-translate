@@ -2,7 +2,7 @@
 
 很长一段时间里 Javascript 开发者都必须依赖回调处理异步代码。因此，我们许多人都经历过回调地狱，并且当面对[这样的函数时]()我们会感到恐惧：
 
-![callback-hell](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/async-await/callback-hell.png)
+![callback-hell](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/async-await/callback-hell.jpg)
 
 幸运的是，then（或者说 `then()`）带来了 Promises。它们为回调提供了更加有条理的替代方案，而且大多数社区都很快地转而使用它。
 
