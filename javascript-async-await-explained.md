@@ -10,9 +10,9 @@
 
 ## 什么是 Async/Await
 
-Async/Await 时一个期待已久的 Javascript 功能，它使得处理异步函数更加愉快和易懂。它构建于 Promise 之上，兼容现存的基于 Promise 的 APIs。
+Async/Await 是一个期待已久的 Javascript 功能，它使得处理异步函数更加愉快和易懂。它构建于 Promise 之上，兼容现存的基于 Promise 的 APIs。
 
-名称来自于 `async` 和 `await`——这两个关键字将会帮助我们整理异步代码。
+其名称来自于 `async` 和 `await`——这两个关键字将会帮助我们整理异步代码。
 
 **Async——声明一个异步函数（`async function sayName(){...}`）**
 
@@ -20,7 +20,7 @@ Async/Await 时一个期待已久的 Javascript 功能，它使得处理异步�
 - 当调用 async 函数时，可以解析它们内部返回的任何内容
 - Async 允许使用 `await`
 
-**Await——赞同执行异步函数（var result = await someAsyncCall()）**
+**Await——暂停执行异步函数（var result = await someAsyncCall()）**
 
 - 当被置于 Promise 调用之前，`await` 强制让其它的代码等待直到 Promise 结束并且返回结果
 - Await 只可以处理 Promise，它不能处理回调
@@ -28,7 +28,7 @@ Async/Await 时一个期待已久的 Javascript 功能，它使得处理异步�
 
 下面是一个简单的例子：
 
-假设我们想从服务器上获取一些 JSON 文件。我们将使用 [axios](https://github.com/mzabriskie/axios) 写一个函数，并且向 [https://tutorialzine.com/misc/files/example.json](https://tutorialzine.com/misc/files/example.json) 发送 HTTP GET 请求。我们得等待服务器的响应，所以，这个 HTTP 请求自然将是异步的。
+假设我们想从服务器获取一些 JSON 文件。我们将使用 [axios](https://github.com/mzabriskie/axios) 写一个函数，并且向 [https://tutorialzine.com/misc/files/example.json](https://tutorialzine.com/misc/files/example.json) 发送 HTTP GET 请求。我们得等待服务器的响应，所以，这个 HTTP 请求自然将是异步的。
 
 下面我们可以看到相同的函数实现了两次。第一个是 Promise，第二个使用了 Async/Await。
 
@@ -51,7 +51,7 @@ async function getJSON() {
 }
 ```
 
-Async/Await 版本的代码非常干净，并且更加简短和易读。除了使用的语法，两个函数完全相同——它们都返回 Promise，并且解析了从 axios 获取的 JSON。我么可以想这样调用 async 函数：
+Async/Await 版本的代码非常干净，并且更加简短和易读。除了使用的语法，两个函数完全相同——它们都返回 Promise，并且解析了从 axios 获取的 JSON。我们可以像这样调用 async 函数：
 
 ```javascript
 getJSON().then(function(result) {
@@ -65,7 +65,7 @@ getJSON().then(function(result) {
 
 有些情况下，使用 Async/Await 并不会优化代码，所以我们不得不回到 Promises 以求帮助。一个场景是：当我们需要完成多个独立的异步调用并且等待至它们全部完成。
 
-如我们试着使用 async 和 await，就会发生下面的事情：
+如果我们试着使用 async 和 await，就会发生下面的事情：
 
 ```javascript
 async function getABC() {
@@ -128,6 +128,6 @@ Async/Await 已适用于大多数主流浏览器。除了 IE11 —— 其他所�
 
 ![caniuse-async-await](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/async-await/caniuse-async-await.png)
 
-Node 开发者也可以享受改进的异步流，只要他们在 Node8 及以上。Node8 将在今年成为 LTS。
+Node 开发者也可以享受改进的异步流，只要他们使用 Node8 及以上版本。Node8 将在今年成为 LTS。
 
-如果这个兼容性无法满足你，这里有几个 JS 转换库，像 [Babel](https://babeljs.io/docs/plugins/transform-async-to-generator/) 和 [TypeScript](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-3.html)，而且 Node.js 的 [asyncawait](https://github.com/yortus/asyncawait)也提供了跨平台的版本。
+如果这个兼容性无法满足你，这里有几个 JS 转换库，像 [Babel](https://babeljs.io/docs/plugins/transform-async-to-generator/) 和 [TypeScript](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-3.html)，而且 Node.js 的 [asyncawait](https://github.com/yortus/asyncawait) 也提供了跨平台的版本。
