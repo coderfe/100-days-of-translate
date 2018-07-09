@@ -47,3 +47,5 @@
 23. [The History API](https://flaviocopes.com/history-api/) —— [History API](https://github.com/coderfe/100-days-of-translate/blob/master/history-api.md)
 
 24. [JavaScript Async/Await Explained in 10 Minutes](https://tutorialzine.com/2017/07/javascript-async-await-explained) —— [10 分钟解释 Javascript Async/Await](https://github.com/coderfe/100-days-of-translate/blob/master/javascript-async-await-explained.md)
+
+25. [How To Print Your HTML With Style](https://flaviocopes.com/css-printing/) —— [如何打印带样式的 HTML](https://github.com/coderfe/100-days-of-translate/blob/master/css-printing.md)
