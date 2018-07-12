@@ -94,3 +94,145 @@ const element = <h1 id={myId}>Hello, world!</h1>;
 
 React 引入 JSX 不再是 React 独有的技术。
 
+## React 组件
+
+### 什么是 React 组件
+
+一个组件即是一个独立的接口。举个例子，在一个典型的博客主页面，你可能会找到 Sidebar 组件 和 Blog Post Lists 组件。它们又有组件本身组成，所以你可能会有一个 Blog post 组件的列表，每篇博客文章对应一个组件，而且每个组件拥有自身的属性。
+
+![components](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/react/1.png)
+
+React 使得这些非常简单：一切皆是组件。
+
+甚至纯 HTML 标记本身也是组件，而且默认情况下它们已经被添加进来了。
+
+下面这 2 行代码是等价的，因为它们做了同样的事情。一个有 JSX，另一个没有，都是在 id 为 `app` 的元素中注入 `<h1>Hello World!</h1>`。
+
+```javascript
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+ReactDOM.render(<h1>Hello World!</h1>, document.getElementById('id'));
+
+ReactDOM.render(
+  React.DOM.h1('Hello World!'),
+  document.getElementById(null, 'app')
+);
+```
+
+看，`React.DOM` 给了我们一个 `h1` 组件。其它的 HTML 标记适用么？全部适用！你可以通过在浏览器控制台键入 `React.DOM` 来检查它提供了什么：
+
+![react.dom](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/react/2.png)
+
+（截图省略，列表太长）
+
+内建组件非常好，但你的需求很快就会超过它们。React 擅长的是通过构建自定义组件来组成我们的 UI。
+
+### 自定义组件
+
+在 React 种有两种方式定义组件。
+
+无状态组件不管理内部状态，它只是一个函数：
+
+```javascript
+const BlogPostExcerpt = () => {
+  return (
+    <div>
+      <h1>Title</h1>
+      <p>Description</p>
+    </div>
+  );
+};
+```
+
+有的状态组件是一个 class，它管理自身属性中的状态。
+
+```javascript
+import React, { Component } from 'react';
+
+class BlogPostExcerpt extends Component {
+  render() {
+    return (
+      <div>
+        <h1>Title</h1>
+        <p>Description</p>
+      </div>
+    );
+  }
+}
+```
+
+它们是等价的因为现在还没有状态管理（将在下几篇文章中引入）。
+
+这是第三种语法，它使用了 `ES5`/`ES2015` 语法，没有 classes：
+
+```javascript
+import React from 'react';
+
+React.createClass({
+  render() {
+    return (
+      <div>
+        <h1>Title</h1>
+        <p>Description</p>
+      </div>
+    );
+  }
+});
+```
+
+你在现代 `> ES6` 的代码库中几乎看不到这种语法。
+
+Props 是组件获取它们自身属性的方式。从顶层组件开始，每个子组件都从其父组件获取它的 props。在无状态组件中，它获取的 props 都是传递进来的，通过在函数参数中添加 `props` 就可以使用。
+
+```javascript
+const BlopPostExcerpt = props => {
+  return (
+    <div>
+      <div>{props.title}</div>
+      <p>{props.description}</p>
+    </div>
+  );
+};
+```
+
+在有状态组件中，props 是默认传递的。不需要做任何特别的处理，在组件实例中可以通过 `this.props` 访问。
+
+```javascript
+import React, { Component } from 'react';
+
+class BlogPostExcerpt extends Component {
+  redner() {
+    return (
+      <div>
+        <h1>{this.props.title}</h1>
+        <p>{this.props.description}</p>
+      </div>
+    );
+  }
+}
+```
+
+将 props 向下传递给子组件是在应用程序中传值的好方法。组件既可以拥有数据（状态），也可以通过 props 接收数据。
+
+以下情况会变得复杂：
+
+- 你需要访问好几层以下的子组件的状态
+- 你需要访问一个毫无关联的组件的状态
+
+[Redux](https://flaviocopes.com/redux/) 传统上非常流行，这也是许多教程中包含它的原因。
+
+最近 React（16.3.0 版本）引入了 **Context API**，它使得 Redux 在这种简单的情况下有些冗余。
+
+我们将在稍后讨论 Context API。
+
+Redux 已经有用，如果你：
+
+- 出于一些原因，要将数据迁移出应用程序
+- 创建复杂的 reducers 和 actions 来以任何你想要的方式操作数据
+
+但是现在 Redux 不再是 React 应用程序的“必需品”了。
+
+
+
+
