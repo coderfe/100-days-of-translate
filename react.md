@@ -2,6 +2,26 @@
 
 > React 是 Javascript 库，其目标在于简化可视化界面的开发。学习它为何如此受欢迎，以及它解决了什么问题。
 
+<!-- TOC -->
+
+- [React 简介](#react-简介)
+  - [React 简介](#react-简介-1)
+    - [什么是 React](#什么是-react)
+    - [React 为何如此流行](#react-为何如此流行)
+      - [比其它替代方案简单](#比其它替代方案简单)
+      - [时间恰好](#时间恰好)
+      - [Facebook 的支持](#facebook-的支持)
+      - [React 真的那么简单么？](#react-真的那么简单么)
+  - [JSX](#jsx)
+  - [React 组件](#react-组件)
+    - [什么是 React 组件](#什么是-react-组件)
+    - [自定义组件](#自定义组件)
+    - [Fragment](#fragment)
+    - [PropTypes](#proptypes)
+    - [我们可以使用什么类型](#我们可以使用什么类型)
+
+<!-- /TOC -->
+
 ## React 简介
 
 ### 什么是 React
@@ -233,6 +253,126 @@ Redux 已经有用，如果你：
 
 但是现在 Redux 不再是 React 应用程序的“必需品”了。
 
+### Fragment
 
+注意，我把返回值用一个 `div` 包裹起来了。这是因为组建只能返回一个单独的元素，如果你有多个元素时候，你就需要将包裹在另外一个容器标签中。
 
+无论怎样这都将导致在页面中产生不必要的 `div` 标签。你可以通过使用 `React.Fragment` 来避免这种情况：
 
+```javascript
+import React, { Component } from 'react';
+
+class BlogPostExcerpt extends Component {
+  render() {
+    return (
+      <React.Fragment>
+        <h1>{this.props.title}</h1>
+        <p>{this.props.description}</p>
+      </React.Fragment>
+    );
+  }
+}
+```
+
+同时它有一个非常简短语法 `<></>`，仅在最近的版本中支持（Babel 7+）：
+
+```javascript
+import React, { Component } from 'react';
+
+class BlogPostExcerpt extends Component {
+  render() {
+    return (
+      <>
+        <h1>{this.props.title}</h1>
+        <p>{this.props.description}</p>
+      </>
+    );
+  }
+}
+```
+
+### PropTypes
+
+由于 Javascript 是一门动态类型语言，我们没有办法在编译时规定变量的类型，而且我们传递无效的类型时，它们将在运行时出错，过着虽然类型兼容，但并不是我们所期望的结果。
+
+Flow 和 Typescript 能帮到许多，但是 React 有方法直接检查属性类型，甚至在代码运行之前，当我们传递了错误的值时，我们的工具（编辑器、linters）能够帮助我们检测到：
+
+```javascript
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+
+class BlogPostExcerpt extends Component {
+  render() {
+    return (
+      <div>
+        <h1>{this.props.title}</h1>
+        <p>{this.props.description}</p>
+      </div>
+    );
+  }
+}
+
+BlogPostExcerpt.propTypes = {
+  title: PropTypes.string,
+  description: PropTypes.string
+};
+
+export default BlogPostExcerpt;
+```
+
+### 我们可以使用什么类型
+
+这些是我们可接收的基本类型：
+
+- PropTypes.array
+- PropTypes.bool
+- PropTypes.func
+- PropTypes.number
+- PropTypes.object
+- PropTypes.string
+- PropTypes.symbol
+
+我们可以接收两种类型之一：
+
+```javascript
+PropTypes.oneOfType([PropTypes.string, PropTypes.number]);
+```
+
+我们可以接收许多值之一：
+
+```javascript
+PropTypes.oneOf(['Test1', 'Test2']);
+```
+
+我们可以接收一个类实例：
+
+```javascript
+PropTypes.instanceOf(Something);
+```
+
+我们可以接收任何 React 节点：
+
+```javascript
+PropTypes.node;
+```
+
+或者是任何类型：
+
+```javascript
+PropTypes.any;
+```
+
+数组有一种特殊的语法，我们可以用来接收特定类型的数组：
+
+```javascript
+PropTypes.arrayOf(PropTypes.string);
+```
+
+对象：
+
+```javascript
+PropTypes.shape({
+  color: PropTypes.string,
+  fontSize: PropTypes.number
+});
+```
