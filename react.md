@@ -19,6 +19,15 @@
     - [Fragment](#fragment)
     - [PropTypes](#proptypes)
     - [我们可以使用什么类型](#我们可以使用什么类型)
+    - [Requiring Properties](#requiring-properties)
+    - [Props 的默认值](#props-的默认值)
+    - [Props 是如何传递的](#props-是如何传递的)
+    - [Children](#children)
+    - [设置 state 的默认值](#设置-state-的默认值)
+    - [访问 state](#访问-state)
+    - [改变 state](#改变-state)
+    - [为什么你应该总是使用 `setState`](#为什么你应该总是使用-setstate)
+    - [state 是封装的](#state-是封装的)
 
 <!-- /TOC -->
 
@@ -376,3 +385,159 @@ PropTypes.shape({
   fontSize: PropTypes.number
 });
 ```
+
+### Requiring Properties
+
+把 `isRequired` 设置为任何 PropTypes 的属性时，如果这个属性丢失，React 将会返回错误：
+
+```javascript
+PropTypes.arrayOf(PropTypes.string).isRequired;
+PropTypes.string.isRequired;
+```
+
+### Props 的默认值
+
+如果任意一个值不是必须的，我们就需要为其指定一个默认值，以免在组件初始化时丢失：
+
+```javascript
+BlogExcerpt.propTypes = {
+  title: PropTypes.String,
+  description: PropTypes.String
+};
+
+BlogExcerpt.defaultProps = {
+  title: '',
+  description: ''
+};
+```
+
+一些像 [ESLint](https://flaviocopes.com/eslint/) 的工具能够强制定义组件中没有明确要求的 propTypes 的默认 props。
+
+### Props 是如何传递的
+
+在初始化组件时，以类似于 HTML 属性的方式传递 props：
+
+```javascript
+const desc = 'A description'
+
+<BlogExcerpt title="A blog post" description={desc} />
+```
+
+我们将 title 作为普通字符串传递（这事儿我们只能以字符串来做），而 description 作为变量传递。
+
+### Children
+
+有一个特殊的 prop 是 `children`。它包含着传递到组件 `<body>` 中的任何值，例如：
+
+```javascript
+<BlogExcerpt title="A title" description="A description">
+  Something
+</BlogExcerpt>
+```
+
+在这个例子中，我们可以通过 `this.props.children` 来访问 `BlogExcerpt` 内部的 “Something”。
+
+Props 允许组件从它的父组件接受属性，例如被“指示”打印一些数据，state 允许组件从它自身获取数据，并且独立于周围的环境。
+
+记住：只有基于类的组件才有 state，所以如果你要在无状态（基于函数）的组件中管理状态，你首先要将其“升级”为 Class 组件：
+
+```javascript
+const BlogExcerpt = () => {
+  return (
+    <div>
+      <h1>Title</h1>
+      <p>Description</p>
+    </div>
+  );
+};
+```
+
+变成：
+
+```javascript
+import React, { Component } from 'react';
+
+class BlogExcerpt extends Component {
+  render() {
+    return (
+      <div>
+        <h1>Title</h1>
+        <p>Description</p>
+      </div>
+    );
+  }
+}
+```
+
+### 设置 state 的默认值
+
+在组件的构造函数中初始化 `this.state`。例如 BlogExcerpt 组件可能会有一个 `clicked` 状态：
+
+```javascript
+class BlogExcerpt extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { clicked: false };
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>Title</h1>
+        <p>Description</p>
+      </div>
+    );
+  }
+}
+```
+
+### 访问 state
+
+可以通过引用 `this.state.clicked` 来访问 `clicked` 状态：
+
+```javascript
+class BlogExcerpt extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { clicked: false };
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>Title</h1>
+        <p>Description</p>
+        <p>Clicked: {this.state.clicked}</p>
+      </div>
+    );
+  }
+}
+```
+
+### 改变 state
+
+改变状态应该永不使用：
+
+```javascript
+this.state.clicked = false;
+```
+
+而是你应该总是使用 `setState()` 来代替，为其传递一个对象：
+
+```javascript
+this.setState({ clicked: false });
+```
+
+这个对象应该包含状态的子集或者超集。只有你传递的属性才会被改变，省略的部分会保持现有的状态。
+
+### 为什么你应该总是使用 `setState`
+
+原因是使用这种方法，React 就会知道 state 已经被改变了。然后它会开始一系列的事件，这些事件将会促使组件重新渲染以及任何 [DOM](https://flaviocopes.com/dom/) 更新。
+
+### state 是封装的
+
+一个组件的父组件是无法告诉其子组件是否为有状态或者无状态的，同样适用于组件的子组件。
+
+有状态或无状态（基于类或函数）完全是实现细节，问其他组件不需要关心。
+
+这就导致了单向数据流。
