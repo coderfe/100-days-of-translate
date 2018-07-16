@@ -81,7 +81,7 @@ React 面世的时候，Ember.js 和 Angular 1.x 作为框架是优秀的选择�
 
 #### Facebook 的支持
 
-由 Faceboo 支持显然对一个项目非常有益，但不保证，因为你能看到许多由 Facebook 和 Google 支持的失败的开源项目。
+由 Facebook 支持显然对一个项目非常有益，但不保证，因为你能看到许多由 Facebook 和 Google 支持的失败的开源项目。
 
 #### React 真的那么简单么？
 
@@ -89,7 +89,7 @@ React 面世的时候，Ember.js 和 Angular 1.x 作为框架是优秀的选择�
 
 React 内部只有很少的 API。
 
-React 中没有比这些概念更多的了：
+React 中的主要概念有：
 
 - Components
 - JSX
@@ -98,9 +98,9 @@ React 中没有比这些概念更多的了：
 
 ## JSX
 
-许多开发者，包括写这篇文章的人，第一眼看到 JSX 是非常可怕的，并且会迅速驳斥 React。
+许多开发者，包括写这篇文章的人，第一眼看到 JSX 是非常可怕的，并且会迅速排斥 React。
 
-尽管它们说 JSX 不是必须的，使用没有 JSX 的 React 是痛苦的。
+尽管它们说 JSX 不是必须的，但使用没有 JSX 的 React 是痛苦的。
 
 我花了几年时间偶尔看一下它才开始消化 JSX，现在我更喜欢它胜过替代方案，即：使用模板。
 
