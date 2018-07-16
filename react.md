@@ -28,6 +28,30 @@
     - [改变 state](#改变-state)
     - [为什么你应该总是使用 `setState`](#为什么你应该总是使用-setstate)
     - [state 是封装的](#state-是封装的)
+    - [单向数据流](#单向数据流)
+    - [在组件树上向上移动状态](#在组件树上向上移动状态)
+  - [事件](#事件)
+    - [事件处理器](#事件处理器)
+    - [在方法中绑定 `this`](#在方法中绑定-this)
+    - [事件参考](#事件参考)
+      - [Clipboard](#clipboard)
+      - [Composition](#composition)
+      - [Keyboard](#keyboard)
+      - [Focus](#focus)
+      - [Form](#form)
+      - [Mouse](#mouse)
+      - [Selection](#selection)
+      - [Touch](#touch)
+      - [UI](#ui)
+      - [Mouse Wheel](#mouse-wheel)
+      - [Media](#media)
+      - [Image](#image)
+      - [Animation](#animation)
+      - [Transition](#transition)
+  - [React 声明式](#react-声明式)
+    - [React 声明式](#react-声明式-1)
+  - [Virtual DOM](#virtual-dom)
+    - [“真实的” DOM](#真实的-dom)
 
 <!-- /TOC -->
 
@@ -129,7 +153,7 @@ React 引入 JSX 不再是 React 独有的技术。
 
 一个组件即是一个独立的接口。举个例子，在一个典型的博客主页面，你可能会找到 Sidebar 组件 和 Blog Post Lists 组件。它们又有组件本身组成，所以你可能会有一个 Blog post 组件的列表，每篇博客文章对应一个组件，而且每个组件拥有自身的属性。
 
-![components](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/react/1.png)
+cccc
 
 React 使得这些非常简单：一切皆是组件。
 
@@ -541,3 +565,308 @@ this.setState({ clicked: false });
 有状态或无状态（基于类或函数）完全是实现细节，而其他组件不需要关心。
 
 这就导致了单向数据流。
+
+### 单向数据流
+
+状态总是被组件所拥有。受此状态影响的数据只能影响其下方的组件：其子组件。
+
+改变组件的状态永远不会影响它的父组件或者兄弟组件，或者任何其他组件：仅限于其子组件。
+
+这也是状态经常被移动到组件树上的原因。
+
+### 在组件树上向上移动状态
+
+由于单向数据流原则，如果两个组件要共享一个状态，那么这个状态就需要向上移动到其共同的祖先。
+
+许多时候最近的祖先是管理状态的好地方，但这不是强制性规定。
+
+状态会通过 props 向下传递到需要它的组件上：
+
+```javascript
+class Converter extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { currency: '€' };
+  }
+
+  render() {
+    return (
+      <div>
+        <Display currency={this.state.currency} />
+        <CurrencySwitcher currency={this.state.currency} />
+      </div>
+    );
+  }
+}
+```
+
+The state can be mutated by a child component by passing a mutating function down as a prop:
+
+```javascript
+class Converter extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { currency: '€' };
+  }
+
+  handleChangeCurrency = event => {
+    this.setState({
+      currency: this.state.currency === '€' ? '$' : '?'
+    });
+  };
+
+  render() {
+    return (
+      <div>
+        <Display currency={this.state.currency} />
+        <CurrencySwitcher
+          currency={this.state.currency}
+          handleChangeCurrency={this.handleChangeCurrency}
+        />
+      </div>
+    );
+  }
+}
+
+const CurrencySwicher = props => {
+  return (
+    <button onClick={props.handleChangeCurrency}>
+      Current currency: {props.currency}. Change it!
+    </button>
+  );
+};
+
+const Display = props => {
+  return <p>Current currency: {props.currency}</p>;
+};
+```
+
+![currency](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/react/1.gif)
+
+## 事件
+
+React 提供了一种简单的方式管理事件。准备和 `addEventListener` 说再见 :)
+
+在之前文章中关于状态的例子，你可以看到：
+
+```javascript
+const CurrencySwitch = props => {
+  return (
+    <button onClick={props.handleChangeCurrency}>
+      Current currency: {props.currency}. Change it!
+    </button>
+  );
+};
+```
+
+如果你使用 JavaScript 已经有一段时间了，这看起来像是普通的旧的 [JavaScript 事件处理器](https://flaviocopes.com/javascript-events/)，只是这次你在 JavaScript 中定义的一切，而不是 HTML，并且你传递的是一个函数，而非字符串。
+
+事实上，事件名称有些许不同，因为在 React 中你使用了小驼峰形式，所以 `onclick` 变成 `onClick`，`onsubmit` 变成了 `onSubmit`。
+
+参考：这是老式的 HTML 混合了 JavaScript 事件：
+
+```html
+<button onclick="handleChangeCurrency()">
+  ...
+</button>
+```
+
+### 事件处理器
+
+将事件处理程序定义在组件类上是一种约定：
+
+```javascript
+class Converter extends React.Component {
+  handleChangeCurrency = event => {
+    this.setState({
+      currency: this.state.currency === '€' ? '$' : '?'
+    });
+  };
+}
+```
+
+所有的处理程序都接收一个事件对象，该事件对象跨浏览器，并且遵守 [W3C UI 事件规范](https://www.w3.org/TR/DOM-Level-3-Events/)。
+
+### 在方法中绑定 `this`
+
+不要忘记绑定方法。ES6 类的方法默认不绑定。这意味着除非你讲方法定义为箭头函数，否则 `this` 将是未定义的：
+
+```javascript
+class Converter extends React.Component {
+  handleClick = event => {
+    /*...*/
+  };
+  // ...
+}
+```
+
+当使用带有 Babel 的属性初始值设定语法时（在 create-react-app 中默认启用）会绑定 `this`，否则，你需要在构造函数中手动绑定：
+
+```javascript
+class Converter extends React.Component {
+  constructor(props) {
+    super(props);
+    this.hanleClick = this.handleClick.bind(this);
+  }
+  handleClick(e) {}
+}
+```
+
+### 事件参考
+
+有大量事件已经被支持，这里是一个摘要列表：
+
+#### Clipboard
+
+- onCopy
+- onCut
+- onPaste
+
+#### Composition
+
+- onCompositionEnd
+- onCompositionStart
+- onCompositionUpdate
+
+#### Keyboard
+
+- onKeyDown
+- onKeyPress
+- onKeyUp
+
+#### Focus
+
+- onFocus
+- onBlur
+
+#### Form
+
+- onChange
+- onInput
+- onSubmit
+
+#### Mouse
+
+- onClick
+- onContextMenu
+- onDoubleClick
+- onDrag
+- onDragEnd
+- onDragEnter
+- onDragExit
+- onDragLeave
+- onDragOver
+- onDragStart
+- onDrop
+- onMouseDown
+- onMouseEnter
+- onMouseOver
+- onMouseLeave
+- onMouseMove
+- onMouseOut
+- onMouseUp
+
+#### Selection
+
+- onSelect
+
+#### Touch
+
+- onTouchCancel
+- onTouchEnd
+- onTouchMove
+- onTouchStart
+
+#### UI
+
+- onScroll
+
+#### Mouse Wheel
+
+- onWheel
+
+#### Media
+
+- onAbort
+- onCanPlay
+- onCanPlayThrough
+- onDurationChange
+- onEmptied
+- onEncrypted
+- onEnded
+- onErroe
+- onLoadedData
+- onLoadedMetadata
+- onLoadStart
+- onPause
+- onPlay
+- onPlaying
+- onProgress
+- onRateChange
+- onSeeked
+- onStalled
+- onSuspend
+- onTimeUpdate
+- onVolumeChange
+- onWating
+
+#### Image
+
+- onLoad
+- onError
+
+#### Animation
+
+- onAnimationStart
+- onAnimationEnd
+- onAnimationIteration
+
+#### Transition
+
+- onTransitionEnd
+
+## React 声明式
+
+你将会遇到将 React 描述为声明式构建 UIs 的方法的文章。
+
+查看[声明式编程](https://flaviocopes.com/javascript-functional-programming/#declarative)来查看更多关于声明式编程。
+
+### React 声明式
+
+React 使得“声明式方法”非常流行，因此它也随着 React 一起渗透到了前端开发的世界。
+
+它真的是一个非常新的概念，而且 React 为构建 UIs 带来了比 HTML 模板更多的声明式：即使不用直接接触 DOM，你也可以构建 Web 接口，你拥有一个事件系统，为不用去和实际的 DOM 事件交互。
+
+例如，使用 jQuery 或者 DOM 事件在 DOM 中查找元素是一种迭代方法。
+
+React 的声明式为我们抽象了这些东西。我们只需要告诉 React 我们需要以一种特定的方式来渲染一个组件，而且我们可以永远不和 DOM 交互。
+
+## Virtual DOM
+
+许多现存的，在 React 出现之前的框架，在每次更改时都会直接操作 DOM。
+
+### “真实的” DOM
+
+什么是 DOM，首先 DOM（Document Object Model）是页面的树表示，从 `<html>` 标签开始，向下进入每个子节点，称之为节点。
+
+它保存在浏览器内存中，并且直接链接到你在页面中看到的内容。DOM 有一套 API 供你使用，可以访问每个单独的节点，筛选它们，修改它们。
+
+API 你可能见过很多次，如果你没有使用 jQuery 提供的抽象 API：
+
+```javascript
+document.getElementById(id)
+document.getElementsByTagName(name)
+document.createElement(name)
+parentNode.appendChild(node)
+element.innerHTML
+element.style.left
+element.getAttribute()
+element.setAttribute()
+element.addEventListener()
+window.content
+window.onload
+window.dump()
+window.scrollTo()
+```
+
+React 保留了 DOM 表示的副本，用来解决 React 的渲染：Virtual DOM。
