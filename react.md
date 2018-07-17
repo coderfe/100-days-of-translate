@@ -52,6 +52,9 @@
     - [React 声明式](#react-声明式-1)
   - [Virtual DOM](#virtual-dom)
     - [“真实的” DOM](#真实的-dom)
+    - [Virtual DOM 的解释](#virtual-dom-的解释)
+    - [为什么 Virtual DOM 是有用的：批量](#为什么-virtual-dom-是有用的批量)
+  - [Context API](#context-api)
 
 <!-- /TOC -->
 
@@ -854,19 +857,136 @@ React 的声明式为我们抽象了这些东西。我们只需要告诉 React �
 API 你可能见过很多次，如果你没有使用 jQuery 提供的抽象 API：
 
 ```javascript
-document.getElementById(id)
-document.getElementsByTagName(name)
-document.createElement(name)
-parentNode.appendChild(node)
-element.innerHTML
-element.style.left
-element.getAttribute()
-element.setAttribute()
-element.addEventListener()
-window.content
-window.onload
-window.dump()
-window.scrollTo()
+document.getElementById(id);
+document.getElementsByTagName(name);
+document.createElement(name);
+parentNode.appendChild(node);
+element.innerHTML;
+element.style.left;
+element.getAttribute();
+element.setAttribute();
+element.addEventListener();
+window.content;
+window.onload;
+window.dump();
+window.scrollTo();
 ```
 
 React 保留了 DOM 表示的副本，用来解决 React 的渲染：Virtual DOM。
+
+### Virtual DOM 的解释
+
+每次 DOM 发生变化，浏览器都会去做两个密集的操作：重绘（）和重排（）。
+
+当需要在页面上发生变动时，React 使用 Virtual DOM 来帮助浏览器使用更少的资源。
+
+当你在组件上调用 `setState()` 时，指定了一个与之前不同的状态，React 会将组件标记为**脏的**。这是关键：React 只会更新状态发生明确变化的组件。
+
+接下来会发生：
+
+- React 会更新与标记为脏组件（一些额外的检查，例如触发 `shouldComponentUpdate()`）相关联的 Virtual DOM
+- 运行 Diff 算法来协调更改
+- 更新真实 DOM
+
+### 为什么 Virtual DOM 是有用的：批量
+
+事情的关键在于，React 通过更改所有需要同时更新的元素来批量处理大部分改动，并且对真实 DOM 执行唯一性更新，所以浏览器必须执行的重绘和重排（用以呈现更改）就只执行一次。
+
+## Context API
+
+Context API 的引入允许你在应用程序中传递 state，而不必再使用 props。
+
+如果你只有少量的几个层级的子元素需要传递 state，React 团队建议仍然使用 props，因为这是比 Context API 更简单的方案。
+
+在许多情况下，它能避免我们使用 Redux 以简化我们的应用程序，并且也可以学习如何使用 React。
+
+它是怎样工作的呢？
+
+使用 `React.createContext()` 创建上下文，这个方法会返回一个 Context 对象：
+
+```javascript
+const { Provider, Consumer } = React.createContext();
+```
+
+然后再创建一个返回 **Provider** 组件的包装组件，然后将其添加为你需要访问这个上下文的所有组件的子元素：
+
+```javascript
+class Container extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      something: 'hey'
+    };
+  }
+
+  render() {
+    return (
+      <Provider value={{ state: this.state }}>{this.props.children}</Provider>
+    );
+  }
+}
+
+class HelloWorld extends React.Component {
+  render() {
+    return (
+      <Container>
+        <Button />
+      </Container>
+    );
+  }
+}
+```
+
+我使用名为 Container 的组件，因为它是一个全局的 provider。你也可以创建更小的上下文。
+
+在由 Provider 包装的组件的内部，你可以使用 Comsumer 组件来使用上下文：
+
+```javascript
+class Button extends React.Component {
+  render() {
+    return (
+      <Consumer>
+        {context => <button>{context.state.something}</button>}
+      </Consumer>
+    );
+  }
+}
+```
+
+你也可以为 Provider 的 value 传递函数，这些函数将会被 Consumer 组件用来更新上下文的状态：
+
+```javascript
+<Provider value={{
+  state: this.state,
+  updateSomething: () => this.setState({ something: 'ho!' })
+}}>
+  {this.props.children}
+</Provider>
+
+/*...*/
+<Consumer>
+  {(context) => (
+    <button onClick={context.updateSomething}>{context.state.something}</button>
+  )}
+</Consumer>
+```
+
+你可以在 [Glitch](https://glitch.com/edit/#!/flavio-react-context-api-example?path=app/components/HelloWorld.jsx)) 查看。
+
+你可以创建多个上下文，让状态在组件间共享，然后公开它们，在你想要的任何组件中访问。
+
+当使用多个文件时，你可以将内容创建在一个文件中，然后在你要使用的任何地方导入它：
+
+```javascript
+// context.js
+import React from 'react'
+export default React.createContext()
+
+// component1.js
+import Context from './context'
+// use Context.Provider
+
+// component2.js
+import Context from './context'
+// use Context.Provider
+```
