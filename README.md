@@ -51,3 +51,5 @@
 25. [How To Print Your HTML With Style](https://flaviocopes.com/css-printing/) —— [如何打印带样式的 HTML](https://github.com/coderfe/100-days-of-translate/blob/master/css-printing.md)
 
 26. [Introduction To React](https://flaviocopes.com/react/) —— [React 简介](https://github.com/coderfe/100-days-of-translate/blob/master/react.md)
+
+27. [Organize Vue.js Application and Make It Scale](https://medium.com/@channasmcs/organize-vue-js-application-and-make-it-scale-life-in-vue-js-28a40cb94dfe) —— [组织 Vue.js 应用并使其可扩展](https://github.com/coderfe/100-days-of-translate/blob/master/organize-vue-js.md)
