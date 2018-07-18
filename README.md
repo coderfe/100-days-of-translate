@@ -52,4 +52,4 @@
 
 26. [Introduction To React](https://flaviocopes.com/react/) —— [React 简介](https://github.com/coderfe/100-days-of-translate/blob/master/react.md)
 
-27. [Organize Vue.js Application and Make It Scale](https://medium.com/@channasmcs/organize-vue-js-application-and-make-it-scale-life-in-vue-js-28a40cb94dfe) —— [组织 Vue.js 应用并使其可扩展](https://github.com/coderfe/100-days-of-translate/blob/master/organize-vue-js.md)
+27. [How To Think Like A Programmer](https://zellwk.com/blog/think/) —— [如何像程序员一样思考](https://github.com/coderfe/100-days-of-translate/blob/master/think.md)
