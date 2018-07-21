@@ -92,3 +92,213 @@
 假设你想要创建一个按钮，在单击时会展示一个侧边栏。
 
 [Codepen](https://codepen.io/zellwk/pen/zdqmLe)
+
+制作这个 button-and-sidebar 组件的第一步是将组件分解成更小的部分。你可能会有一下几个问题：
+
+1. 这个按钮的标记是怎样的？
+2. 这个按钮应该是什么样子？
+3. 第一次点击按钮会发生什么？
+4. 再次点击按钮会发生什么？
+5. 第三次点击按钮又会发生什么？
+6. 侧边栏的标记是怎样的？
+7. 侧边栏显示的时候是什么样子？
+8. 侧边栏隐藏的时候是什么样子？
+9. 侧边栏如何显示出来？
+10. 侧边栏如何隐藏？
+11. 页面加载时是否应该展示侧边栏？
+
+第二步是为这些问题创造解决方案。
+
+要创造解决方案，你需要了解有关的知识。在这个例子中，你需要充分了解 HTML、CSS 和 JavaScript。
+
+如果你不知道这些问题的答案，不要担心。如果你能够把它充分地分解，你应该就能够在五分钟之内通过 Google 找出答案。
+
+让我们来回答每一个问题。
+
+###　这个按钮的标记是怎样的？
+
+标记就是一个了类名为　`.button` 的　`<a>` 标签。
+
+```html
+<a href="#" class="button">Click me</a>
+```
+
+### 这个按钮应该是什么样子？
+
+```css
+.button {
+  display: inline-block;
+  font-size: 2em;
+  padding: .75em 1em;
+  background-color: #1ce;
+  color: #fff;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+```
+
+### 当按钮点击一次，两次，三次，分别会发生什么？
+
+按钮点击第一次的时候，侧边栏组件应该显示出来。再一次点击按钮时侧边栏应该消失。第三次点击按钮时，侧边栏组件会再次显示。
+
+### 侧边栏的标记是怎样的？
+
+侧边栏应该是一个 `<div>`，它包含了链接的列表：
+
+```html
+<div class="sidebar">
+  <ul>
+    <li><a href="#">Link 1</a></li>
+    <li><a href="#">Link 2</a></li>
+    <li><a href="#">Link 3</a></li>
+    <li><a href="#">Link 4</a></li>
+    <li><a href="#">Link 5</a></li>
+    <li><a href="#">Link 6</a></li>
+  </ul>
+</div>
+```
+
+### 侧边栏显示的时候是什么样子？
+
+侧边栏应该放在窗口的右侧。它需要固定在那个地方，因为用户要看见它。它的宽度应该是　300px。
+
+当你解决了这些问题后，你可能会有类似下面的 CSS：
+
+```css
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 200px;
+  background-color: #333;
+}
+.sidebar ul {
+  margin: 0;
+  padding: 0;
+}
+.sidebar li {
+  list-style: none;
+}
+.sidebar li + li {
+  border-bottom: 1px solid white;
+}
+.sidebar a {
+  display: block;
+  padding: 1em 1.5em;
+  color: #fff;
+  text-decoration: none;
+}
+```
+
+### 侧边栏隐藏的时候是什么样子？
+
+侧边栏应该享有移动　300px，这样它就离开了屏幕。
+
+当你回答这个问题时，另外两个问题又出现在你的脑海里：
+
+1. 你怎么知道侧边栏是隐藏的还是显示的？
+2. 怎样设置隐藏的侧边栏的样式？
+
+让我们来解答。
+
+### 你怎么知道侧边栏是隐藏的还是显示的？
+
+如果侧边栏有有　`is-hidden`　类名，这个侧边栏就是隐藏的。否则，它就是可见的。
+
+### 怎样设置隐藏的侧边栏的样式？
+
+我们使用 `translateX` 把侧边栏向右移动　300px，因为　`transform`　是更好的动画属性之一。你的样式会变成：
+
+```css
+.sidebar.is-hidden {
+  transform: translateX(300px);
+}
+```
+
+### 侧边栏如何显示出来？
+
+侧边栏无法立即显示。它需要从右侧隐藏的视图中移动到左侧可见的视图中。
+
+如果你了解 CSS，你可以使用　`transition`　属性。如果不了解，你可以通过 Google 找到答案。
+
+```css
+.sidebar {
+  transition: transform .3s ease-out;
+}
+```
+
+### 侧边栏如何隐藏？
+
+它应该以它显示的方式消失，只是方向相反。这样，你就不必再编写额外的 CSS 代码。
+
+### 页面加载时是否应该展示侧边栏？
+
+不。只给我们所拥有的，在侧边栏的标记中添加 `is-hidden` 类名，并且侧边栏应该保持隐藏。
+
+```html
+<div class="sidebar hidden">
+  <!-- links -->
+</div>
+```
+
+至此，我们已经回答了几乎全部问题，除了一个——当按钮点击一次，两次，三次，分别会发生什么？
+
+我们上面的回答比较含糊。我们知道当你点击时，侧边栏应该出现，但是如何出现？当你再次点击时，侧边栏应该消失，但是如何消失？
+
+现在，我们可以更加细节性地回到这个问题。但是在这之前，如何知道你何时点击按钮？
+
+### 如何知道你何时点击按钮？
+
+如果你了解 JavaScript，你就知道我们可以在按钮上添加事件监听器并且监听一个 `click` 事件。如果你不了解 JavaScript，你可以去 Google。
+
+在你添加事件监听器之前，你需要使用 `querySelector` 在标记中找到按钮。
+
+```javascript
+const button = document.querySelector('.button')
+
+button.addEventListener('click', fucntion() {
+  console.log('button is clicked')
+})
+```
+
+### 第一次点击按钮会发生什么？
+
+当按钮被点击了一次，我们应该移除 `is-hidden` 类名，这样侧边栏就会出现。在 JavaScript 中要移除类名，我们可以使用 `Element.classList.remove`。这意味着首先要选中侧边栏。
+
+```javascript
+const button = document.querySelector('.button')
+const sidebar = document.querySelector('.sidebar')
+
+button.addEventListener('click', fucntion() {
+  sidebar.classList.remove('is-hidden')
+})
+```
+
+### 再次点击按钮会发生什么？
+
+再次点击按钮时，我们应该把 `is-hidden` 添加回侧边栏上，这样它就会消失。
+
+可惜的是，我们无法在事件监听器中检测到按钮被点击了几次。最好的方法是，检查 `is-hidden` 类名是否在侧边栏上。如果在，我们将它移除。如果不在，我们为其添加。
+
+```javascript
+const button = document.querySelector('.button')
+const sidebar = document.querySelector('.sidebar')
+
+button.addEventListener('click', fucntion() {
+  if (sidebar.classList.contains('is-hidden')) {
+    sidebar.classList.remove('is-hidden')
+  } else {
+    sidebar.classList.add('is-hidden')
+  }
+})
+```
+
+这样，你就有了一个初始的原型组件。
+
+[Codepen](https://codepen.io/zellwk/pen/zdqmLe)
+
+## 重构并提升
+
+最后一步是重构并提升你的代码。
