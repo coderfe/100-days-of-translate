@@ -53,3 +53,5 @@
 26. [Introduction To React](https://flaviocopes.com/react/) —— [React 简介](https://github.com/coderfe/100-days-of-translate/blob/master/react.md)
 
 27. [How To Think Like A Programmer](https://zellwk.com/blog/think/) —— [如何像程序员一样思考](https://github.com/coderfe/100-days-of-translate/blob/master/think.md)
+
+28. [Create React App](https://github.com/facebook/create-react-app/blob/next/README.md) —— [Create React App](https://github.com/coderfe/100-days-of-translate/blob/master/create-react-app.md)
