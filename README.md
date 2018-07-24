@@ -55,3 +55,5 @@
 27. [How To Think Like A Programmer](https://zellwk.com/blog/think/) —— [如何像程序员一样思考](https://github.com/coderfe/100-days-of-translate/blob/master/think.md)
 
 28. [Create React App](https://github.com/facebook/create-react-app/blob/next/README.md) —— [Create React App](https://github.com/coderfe/100-days-of-translate/blob/master/create-react-app.md)
+
+29. [Why JSON isn’t a Good Configuration Language](https://www.lucidchart.com/techblog/2018/07/16/why-json-isnt-a-good-configuration-language/) —— [为什么 JSON 不是一种好的配置语言](https://github.com/coderfe/100-days-of-translate/blob/master/json.md)
