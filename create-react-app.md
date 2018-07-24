@@ -205,3 +205,46 @@ cd my-app
 权衡是**这些工具被预先配置以一种特定的方式工作**。如果你的项目需要高度自定义化，你可以“eject”并且自定义，但是之后你需要维护这些配置。
 
 ## 流行的替代方案
+
+Create React App 非常适合用来：
+
+- **学习 React**：舒适而且功能丰富的开发环境
+- **开始一些新的单页 React 应用程序**
+- 为你的 React 库和组件**创建一些示例**
+
+这里是一些常见的情况，你可能想尝试一些别的东西：
+
+- 如果你想在没有数百个构建依赖项的情况下**试用 React**，考虑[使用单个 HTML文件或者在线 sandbox 来代替](https://reactjs.org/docs/try-react.html)。
+- 如果你**需要把 React 代码集成到像 Rails 或者 Django 这样的服务端模板框架中**，或者你不是在**构建单页应用**，考虑使用 [nwb](https://github.com/insin/nwb)，或 [Neutrino](https://neutrinojs.org/) 更加适用。特别对于 Rails，你可以使用 [Rails Webpacker](https://github.com/rails/webpacker)。
+- 如果你需要**发布 React 组件**，[nwb](https://github.com/insin/nwb) 也[可以做到](https://github.com/insin/nwb#react-components-and-libraries)，[Neutrino's react-conponents preset](https://neutrino.js.org/packages/react-components/) 同样也可以。
+- 如果你想使用 React 和 Node.js 做**服务端渲染**，考虑 [Next.js](https://github.com/zeit/next.js) 或者 [Razzle](https://github.com/jaredpalmer/razzle)。Create React App 不考虑后端，只处理静态的 HTML/CSS/JS。
+- 如果你想让网站**静态化**（例如博客），可以考虑使用 [Gatsby](https://www.gatsbyjs.org/) 代替。不像 Create React App，它在构建时会把网站预渲染为 HTML。
+- 如果你想使用 **TypeScript**，考虑使用 [create-react-app-typescript](https://github.com/wmonk/create-react-app-typescript)。
+- 如果你想用 **Parcel** 代替 **Webpack** 作为你的打包器，考虑使用 [create-react-app-parcel](https://github.com/sw-yx/create-react-app-parcel)。
+- 最后如果你想**更加定制化**，查看 [Neutrino](https://neutrinojs.org/) 和它的 [React preset](https://neutrino.js.org/packages/react/)。
+
+上面的工具都可以在零配置或者很少配置的情况下工作。
+
+如果你喜欢构建自己的配置，[参考这个指南](https://reactjs.org/docs/add-react-to-a-website.html)。
+
+## 贡献
+
+我们希望你能和我们一起开发 `create-react-app`！关于我们在寻找什么以及如何开始等更多信息，可以参阅 [CONTRIBUTING.md](https://github.com/facebook/create-react-app/blob/next/CONTRIBUTING.md)。
+
+## React Native
+
+想要为 React Native 寻找类似的工具？
+
+查看 [Create React Native App](https://github.com/react-community/create-react-native-app/)。
+
+## 致谢
+
+我们非常感激现有关联项目作者的想法和合作：
+
+- [@eanplatter](https://github.com/eanplatter)
+- [@insin](https://github.com/insin)
+- [@mxstbr](https://github.com/mxstbr)
+
+## License
+
+Create React App 是以 MIT 授权的开源软件。
