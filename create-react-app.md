@@ -29,17 +29,17 @@ _（npx 需要 npm 5.2+ 或者更高版本，参见 [npm 的旧版本](https://g
 
 ### 立即开始
 
-你不需要安装或配置想 Webpack 和 Babel 这样的工具。
+你不需要安装或配置类似 Webpack 和 Babel 这样的工具。
 
-它们已经预先配置好并隐藏了，所以你只需关注于写代码。
+它们已经预先配置好并隐藏，所以你只需关注于编写代码。
 
 只需要创建一个项目，你就可以开始了。
 
 ## 创建应用程序
 
-在你本地开发机器上需要 Node >= 6 的版本（但是在服务器上不是必须的）。你可以使用 [nvm](https://github.com/creationix/nvm#installation)（macOS/Linux）或者 [nvm-windows](https://github.com/coreybutler/nvm-windows#node-version-manager-nvm-for-windows) 轻松地在不同的项目之间切换 Node 版本。
+在你本地开发机器上需要 Node >= 6 的版本（但是在服务器上不是必须的）。你可以使用 [nvm](https://github.com/creationix/nvm#installation)（macOS/Linux）或者 [nvm-windows](https://github.com/coreybutler/nvm-windows#node-version-manager-nvm-for-windows) 轻松地在不同项目之间切换 Node 版本。
 
-要创建应用程序，你可以选择下面的任意一种方法：
+要创建应用程序，你可以选择下面任意一种方法：
 
 ### npx
 
@@ -65,9 +65,9 @@ yarn init react-app my-app
 
 `yarn create` 在 Yarn 0.25+ 上可用。
 
-它将会在当前文件夹下创建 `my-app` 目录。
+上述命令会在当前文件夹下创建 `my-app` 目录。
 
-在这这目录下，它会生成初始项目结构并且安装依赖项：
+在这个目录下，它会生成初始项目结构并且安装依赖项：
 
 ```plain
 my-app
@@ -89,7 +89,7 @@ my-app
     └── registerServiceWorker.js
 ```
 
-没有配置或者复杂的问价结构，只有你构建应用程序所需的文件。
+没有配置或者复杂的文件夹结构，只有你构建应用程序所需的文件。
 
 一旦安装完成，你就可以打开项目文件夹：
 
@@ -105,7 +105,7 @@ cd my-app
 
 打开 [http://localhost:3000](http://localhost:3000) 在浏览器中查看。
 
-如果你改动了代码，页面就会自动重载。你可以在控制台看到构建错误和校验警告。
+如果你改动了代码，页面就会自动重新加载。你可以在控制台看到构建错误和校验警告。
 
 <p style="text-align: center">
 <img src="https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/create-react-app/2.svg" alt="yarn-start" />
@@ -121,13 +121,13 @@ cd my-app
 
 ### `npm run build` 或者 `yarn build`
 
-将生产环境的应用程序构建在 `build` 文件夹中。
+生产环境的应用程序会构建在 `build` 文件夹中。
 
 它以最佳方法将 React 打包到生产环境，并且优化构建以获得最佳性能。
 
 构建被最小化，并且文件名包含了哈希值。
 
-默认情况下，它也包含了 [service worker](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#making-a-progressive-web-app)，所以以后访问你的应用程序时可以从本地缓存加载。
+默认情况下，它也包含了 [service worker](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#making-a-progressive-web-app)，因此以后访问你的应用程序时可以从本地缓存加载。
 
 你的应用程序已经准备好部署了。
 
@@ -160,7 +160,7 @@ cd my-app
 - [添加自定义环境变量](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#adding-custom-environment-variables)
 - [我可以使用装饰器吗？](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#can-i-use-decorators)
 - [使用 Ajax 获取数据](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#fetching-data-with-ajax-requests)
-- [继承后端 API](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#integrating-with-an-api-backend)
+- [集成后端 API](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#integrating-with-an-api-backend)
 - [开发环境使用代理 API 请求](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#proxying-api-requests-in-development)
 - [开发环境中使用 HTTPS](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#using-https-in-development)
 - [在服务端生成动态 `<meta>` 标签](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#generating-dynamic-meta-tags-on-the-server)
@@ -184,15 +184,15 @@ cd my-app
 ## Philosophy
 
 - **一个依赖**：只有一个构建依赖。它使用了 Webpack、Babel、Eslint 和其他优秀的项目，但是在它们之上提供了更加一致的体验。
-- **零配置**：你需要配置任何东西。开发和生产的构建已经为你合理地配置了，因此，你只需专注于编写代码。
+- **零配置**：你不需要配置任何东西。开发和生产的构建已经为你合理地配置了，因此，你只需专注于编写代码。
 - **没有锁定**：你随时可以“eject”为自定义设置。只要运行一个命令，所有的配置和构建依赖都会直接移动到你的项目文件夹下。
 
 ## 包含什么？
 
-你的环境将包含你需要构建一个现代单页 React 应用程序的所有东西：
+你的环境包含你需要构建一个现代单页 React 应用程序需要的所有东西：
 
 - React、JSX、ES6 和 Flow 语法支持
-- ES6 语言意外的附加功能，如对象扩展运算符
+- ES6 语言以外的附加功能，如对象扩展运算符
 - Autoprefixed CSS，你不需要 `-webkit` 或者其他前缀
 - 一个快速可交互式的单元测试运行器，并且内置支持覆盖率报告
 - 能够提醒常见开发错误的实时开发服务器
@@ -202,7 +202,7 @@ cd my-app
 
 查看[这个指南](https://github.com/nitishdayal/cra_closer_look)来了解这些工具如何组合在一起工作。
 
-权衡是**这些工具被预先配置以一种特定的方式工作**。如果你的项目需要高度自定义化，你可以“eject”并且自定义，但是之后你需要维护这些配置。
+权衡是**这些工具被预先配置为以一种特定的方式工作**。如果你的项目需要高度定制化，你可以“eject”并且自定义，但是之后你需要维护这些配置。
 
 ## 流行的替代方案
 
