@@ -57,3 +57,5 @@
 28. [Create React App](https://github.com/facebook/create-react-app/blob/next/README.md) —— [Create React App](https://github.com/coderfe/100-days-of-translate/blob/master/create-react-app.md)
 
 29. [Why JSON isn’t a Good Configuration Language](https://www.lucidchart.com/techblog/2018/07/16/why-json-isnt-a-good-configuration-language/) —— [为什么 JSON 不是一种好的配置语言](https://github.com/coderfe/100-days-of-translate/blob/master/json.md)
+
+30. [The Best Explanation of JavaScript Reactivity](https://medium.com/vue-mastery/the-best-explanation-of-javascript-reactivity-fea6112dd80d) —— [JavaScript 响应性的最佳解释](https://github.com/coderfe/100-days-of-translate/blob/master/javascript-reactivity.md)
