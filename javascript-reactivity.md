@@ -2,7 +2,7 @@
 
 许多前端 JavaScript 框架（如 Angular、React 及 Vue）都有它们自己的响应式引擎。通过理解响应式是什么以及它如何工作，能够提升你的开发技巧，并且更高效地使用 JavaScript 框架。在下面的视频和文章中，我们构建了一些在 Vue 源码中可以看到的相同的响应式。
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/7Cjb7Xj8fEI" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+[![Youtube 视频](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/javascript-reactivity/video-post.png)](https://youtu.be/7Cjb7Xj8fEI)
 
 > 如果你在看视频而不是阅读这篇文章，查看[这个系列的下一个视频](https://www.vuemastery.com/courses/advanced-components/evan-you-on-proxies/)和 Vue 的创始人 Evan You 讨论响应式和代理。
 
@@ -166,4 +166,4 @@ replay();
 console.log(total); // => 40
 ```
 
-![entirety-code](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/javascript-reactivity/2.png)
+![console](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/javascript-reactivity/3.png)
