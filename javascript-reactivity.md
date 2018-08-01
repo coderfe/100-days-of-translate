@@ -64,7 +64,7 @@ console.log(`total is ${total}`);
 >> total is 10
 ```
 
-在 Vue 中我们在 `price` 或者 `quantity` 更新时想让 `total` 也得到更新。我们想要：
+Vue 中我们在 `price` 或 `quantity` 更新时想让 `total` 也得到更新。我们想要：
 
 ```plain
 >> total is 40
@@ -74,11 +74,11 @@ console.log(`total is ${total}`);
 
 ## ⚠ 问题
 
-我们需要保存我们是如何计算 `total` 的，由此，当 `price` 或 `quantity` 发生变化时我们可以重新计算它的值。
+我们需要保存是如何计算 `total` 的，由此，当 `price` 或 `quantity` 发生变化时我们可以重新计算它的值。
 
 ## ✅ 解决方法
 
-首先，我们需要告诉应用程序，“把我即将运行的代码它保存起来，下次我可能还需要你运行它”。然后我们运行代码，如果 `price` 或 `quantity` 变量更新时，再次运行存储过的代码。
+首先，我们需要告诉应用程序，“把我即将运行的代码保存起来，下次我可能还需要你运行它”。然后我们运行代码，如果 `price` 或 `quantity` 变量更新时，再次运行存储过的代码。
 
 ![store-code](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/javascript-reactivity/2.png)
 
@@ -125,7 +125,7 @@ function replay() {
 }
 ```
 
-它将会遍历我们存储在 storage 数组中的所有匿名函数，并逐个执行。
+它会遍历我们存储在 storage 数组中的所有匿名函数，并逐个执行。
 
 然后在代码中，我们只要：
 
@@ -167,3 +167,36 @@ console.log(total); // => 40
 ```
 
 ![console](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/javascript-reactivity/3.png)
+
+## ⚠ 问题
+
+我们可以根据需要继续记录目标，但是如果有一个强大的解决方案能够根据我们的应用程序伸缩，那将非常好。或许是一个 class 负责维护一系列的目标，在我们需要重新运行它们时，它会得到通知。
+
+## ✅ 解决方案：依赖类
+
+我们开始解决这个问题的一个方法，是把这些行为封装到它己的类中，实现了标准编程的观察者模式的一个**依赖类**。
+
+因此，如果我们创建一个 JavaScript 类来管理我们的依赖（这更加接近 Vue 的处理方式），它看起来是这样的：
+
+```javascript
+class Dep {
+  // Stands of dependency
+  constructor() {
+    // The targets that are dependent, and should be
+    // run when notify() is called
+    this.subscribers = [];
+  }
+  // This replaces our record function
+  depend() {
+    if (target && !this.subscribers.includes(target)) {
+      // Only if there is a target & it's not already subscribed
+      this.subscribers.push(target);
+    }
+  }
+  // Replaces our replay function
+  notify() {
+    // Run our targets or observers
+    this.subscribers.forEach(sub => sub());
+  }
+}
+```
