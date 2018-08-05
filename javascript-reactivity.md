@@ -200,3 +200,138 @@ class Dep {
   }
 }
 ```
+
+注意，现在我们把匿名函数存储在了 `subscribers`，而不是 `storage` 变量中。用 `depend` 函数代替 `record` 函数，用 `notify` 代替 `replay`。为了让这个可以运行：
+
+```javascript
+const dep = new Dep();
+
+let price = 5;
+let quantity = 2;
+let total = 0;
+let target = () => {
+  total = price * quantity;
+};
+dep.depend();
+target();
+
+console.log(total); // 10 .. The right number
+price = 20;
+console.log(total); // 10 .. No longer the right number
+dep.notify();
+console.log(total); // 40 .. Now the right number
+```
+
+它仍然可以工作，而且现在我们的代码更能够复用。唯一有点奇怪的是 `target` 的初始化和运行。
+
+## ⚠ 问题
+
+以后我们为每个变量设置一个 Dep 类，并且良好的地封装了创建需要监听更新的匿名函数的行为。或许 `watcher` 函数可以用来处理这些行为。
+
+与其这样调用：
+
+```javascript
+let target = () => {
+  total = price * quantity;
+};
+dep.depend();
+target();
+```
+
+（这是上面的代码）
+
+我们可以这样调用：
+
+```javascript
+wacther(() => {
+  total = price * quantity;
+});
+```
+
+## ✅ 结局方案：观察者函数
+
+在观察者函数内部我们可以做一些简单的事情：
+
+```javascript
+function watcher(myFunc) {
+  target = myFunc; // Set as active target
+  dep.depend(); // Add the active target as a dependency
+  target(); // Call the target
+  target = null; // Reset the target
+}
+```
+
+正如你看到的，`wacther` 函数接受一个 `myFunc` 参数，把它设置为我们的全局 `target` 属性，调用 `dep.depend()` 把 target 添加为 subscribers，调用 `target()` 函数，然后重置 `target`。
+
+现在我们运行下面的代码：
+
+```javascript
+price = 20;
+console.log(total);
+dep.depend();
+console.log(total);
+```
+
+![console](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/javascript-reactivity/3.png)
+
+你可能会疑惑为什么把 `target` 时限为一个全局变量，而不是将其传递到我们需要它的函数中。对此是由原因的，在文章的最后答案会清晰可见。
+
+## ⚠ 问题
+
+我们只有一个 Dep 类，但我们想要的是每个变量拥有自己的 Dep 类。在我们进一步深入之前，让我先把这些东西设置为属性。
+
+```javascript
+let data = { price: 5, quantity: 2 };
+```
+
+我们假设一下，每个属性（`price` 和 `quantity`）都有它们子集的 Dep 类。
+
+![price-quantity-dep](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/javascript-reactivity/4.png)
+
+现在我们运行：
+
+```javascript
+watcher(() => {
+  total = data.price * quantity;
+});
+```
+
+当访问 `data.price` 值时，我想 `price` 的 Dep 类能够把匿名函数（存储在 `target` 中）push 到它的 subscribers 数组中（通过调用 `dep.depend()`）。当访问 `data.quantity` 值时，我也希望 `quantity` 的 Dep 类能够把匿名函数（存储在 `target` 中）push 到它的 subscribers 数组中。
+
+![data-price-quantity-dep](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/javascript-reactivity/5.png)
+
+如果有另外一个匿名函数，只访问 `data.price`，我想它只能 push `price` 属性到 Dep 类。
+
+![data-price-dep](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/javascript-reactivity/6.png)
+
+我在什么时候想在 `price` 的 subscribers 上调用 `dep.notify()`？我想在 `price` 被设置的时候调用。在文章结束时，我能够进入控制台并指向以下操作：
+
+![data-price-dep](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/javascript-reactivity/7.png)
+
+我们需要某种方式来链接数据的属性（像 `price` 和 `quantity`），所以当它被访问时，我们可以将 `target` 保存到 subscribers 数组中，并且在其发生变化时运行存储在 subscribers 数组中的函数。
+
+## ✅ 解决方案：Object.defineProperty()
+
+我们需要了解 [Object.defineProperty()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty)，它只是简单的 ES5 的功能。它允许为一个属性设置 getter 和 setter 函数。在我演示它如何与我们的 Dep 类一起使用之前，让我为你演示一下基本用法：
+
+```javascript
+let data = { price: 5, quantity: 2 };
+
+Object.defineProperty(data, 'price', {
+  // Create a get method
+  get() {
+    console.log(`I was accessed`);
+  },
+
+  // Create a set method
+  set(newVal) {
+    console.log(`I was changed`);
+  }
+});
+data.price; // This calls get()
+data.price = 20; // This calls set()
+```
+
+![object-defineproperty](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/javascript-reactivity/8.png)
+
+如你所见，它只打印了两行。
