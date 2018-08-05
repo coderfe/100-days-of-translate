@@ -334,4 +334,60 @@ data.price = 20; // This calls set()
 
 ![object-defineproperty](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/javascript-reactivity/8.png)
 
-如你所见，它只打印了两行。
+如你所见，它只打印了两行。无论怎样，它实际上不会 `get` 或 `set` 任何值，因为我们重写了该功能。我们来把它加回去。`get()` 期望返回一个值，`set()` 则需要更新一个值，所以添加一个 `internalValue` 变量来存储当前 `price` 值。
+
+```javascript
+let data = { price: 5, quantity: 2 };
+
+let internalValue = data.price;
+
+Object.defineProperty(data, 'price', {
+  // Create a get method
+  get() {
+    console.log(`Getting price: ${internalValue}`);
+    return internalValue;
+  },
+
+  // Create a set method
+  set(newVal) {
+    console.log(`Setting price to: ${newVal}`);
+    internalValue = newVal;
+  }
+});
+total = data.price * quantity; // This calls get()
+data.price = 20; // This calls set()
+```
+
+现在 get 和 set 可以正常运行了，你认为控制台会打印什么呢？
+
+![price-get-set](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/javascript-reactivity/9.png)
+
+所以现在当我们 get 或者 set 值的时候，我们有种方式可以得到通知。通过一些循环，我们可以为 data 数组中的每一项都运行，对吧？
+
+仅供参考，`Object.keys()` 会返回对象的键的数组。
+
+```javascript
+let data = { price: 5, quantity: 2 };
+
+Object.keys(data).forEach(key => {
+  let internalValue = data[key];
+  Object.defineProperty(data, key, {
+    get() {
+      console.log(`Getting ${key}: ${internalVal}`);
+      return internalValue;
+    },
+    set(newVal) {
+      console.log(`Setting ${key} to: ${newVal}`);
+      internalVal = newVal;
+    }
+  });
+});
+total = data.price * data.quantity;
+data.price = 20;
+```
+
+现在所有属性都拥有 getter 和 setter，让我们看一下控制台：
+
+![data-getter-setter](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/javascript-reactivity/10.png)
+
+## 🛠 把两种想法结合起来
