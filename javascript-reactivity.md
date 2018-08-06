@@ -304,7 +304,7 @@ watcher(() => {
 
 ![data-price-dep](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/javascript-reactivity/6.png)
 
-我在什么时候想在 `price` 的 subscribers 上调用 `dep.notify()`？我想在 `price` 被设置的时候调用。在文章结束时，我能够进入控制台并指向以下操作：
+我在什么时候想在 `price` 的 subscribers 上调用 `dep.notify()`？我想在 `price` 被设置的时候调用。在文章结束时，我能够进入控制台并执行以下操作：
 
 ![data-price-dep](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/javascript-reactivity/7.png)
 
@@ -391,3 +391,90 @@ data.price = 20;
 ![data-getter-setter](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/javascript-reactivity/10.png)
 
 ## 🛠 把两种想法结合起来
+
+```javascript
+total = data.price * data.quantity;
+```
+
+当这部分代码可以运行而且可以得到 `price` 的值时，我们想让 `price` 记住这个匿名函数（`target`）。这样一来，如果 `price` 发生变化，或者设置了新值时，它将触发这个函数再次运行，因为它知道这行代码依赖于依赖于它。因此，你可以这样思考。
+
+**Get** => 记住这个匿名函数，当值发生变化时再次运行它。
+
+**Set** => 运行保存的匿名函数，值就会发生变化。
+
+或者在我们的 Dep 类中：
+
+**Price accessed** => 调用 `dep.depend()` 保存当前 `target`。
+
+**Price Set** => 在 price 上调用 `dep.notify()`，再次运行全部 `targets`。
+
+让我们组合这两种想法，串联出我们最终的代码：
+
+```javascript
+let data = { price: 5, quantity: 2 };
+let target = null;
+
+class Dep {
+  constructor() {
+    this.subscribers = [];
+  }
+
+  depend() {
+    if (target && !this.subscribers.includes(target)) {
+      this.subscribers.push(target);
+    }
+  }
+
+  notify() {
+    this.subscribers.forEach(sub => sub());
+  }
+}
+
+Object.keys(key => {
+  let internalValue = data[key];
+  Object.defineProperty(data, key, {
+    get() {
+      dep.depend();
+      return internalValue;
+    },
+    set(newVal) {
+      internalValue = newVal;
+      dep.notify();
+    }
+  });
+});
+
+function watcher(myFunc) {
+  target = myFunc;
+  target();
+  target = null;
+}
+
+watcher(() => {
+  data.total = data.price * data.quantity;
+});
+```
+
+现在让我们来看看控制台会发生什么：
+
+![final-code-console](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/javascript-reactivity/11.png)
+
+正是我们所期望的！`price` 和 `quantity` 确实是响应式的！我们的 total 代码会在 `price` 或者 `quantity` 更新时重新运行。
+
+Vue 文档的插图现在应该有意义了。
+
+![vue-doc-illustration](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/javascript-reactivity/12.png)
+
+你看到那个带着 getter 和 setter 的漂亮的紫色的 Data 圆了么？它看起来应该很熟悉！每个组件实例都有一个 watcher 实例（蓝色的），它从 getter（红色的线条） 收集依赖性。稍后调用 setter 时，它会通知 watcher 来重新渲染组件。这里有一张图片和我自己的一些注释：
+
+![my-own-annotations](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/javascript-reactivity/13.png)
+
+是的，现在这些是不是更有意义了呢？
+
+很明显，Vue 在底层做了很复杂的封装，但是现在你已经了解了基本原理。
+
+## ⏪ 那么我们学到了什么？
+
+- 如何创建 **Dep 类**来收集依赖（depend），并且运行所有依赖（notify）。
+- 如何创建 **watcher** 来管理我们正在运行的代码，这可能需要作为依赖类添加。
+- 如何使用 **Object.defineProperty()** 创建 getter 和 setter。
