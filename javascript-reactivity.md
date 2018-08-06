@@ -432,6 +432,7 @@ class Dep {
 
 Object.keys(key => {
   let internalValue = data[key];
+  const dep = new Dep();
   Object.defineProperty(data, key, {
     get() {
       dep.depend();
