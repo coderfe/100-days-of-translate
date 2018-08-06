@@ -430,7 +430,7 @@ class Dep {
   }
 }
 
-Object.keys(key => {
+Object.keys(data).forEach(key => {
   let internalValue = data[key];
   const dep = new Dep();
   Object.defineProperty(data, key, {
