@@ -62,3 +62,84 @@ console.log(person); // "Jhon"，let 允许重新赋值
 ##### var
 
 `var` 声明的变量是*函数作用域*，意味着在函数中创建一个变量，函数中的任何事物都可以访问到该变量。此外，创建在函数中的*函数作用域*变量无法在函数外访问。
+
+我建议你把它想象为 X 作用域变量，意味着这个变量将是 X 的一个属性。
+
+```javascript
+function myFunction() {
+  var myVar = 'Nick';
+  console.log(myVar); // "Nick" - myVar 可以在函数内访问
+}
+console.log(myVar); // 抛出 ReferenceError，myVar 无法在函数外访问
+```
+
+仍然关注变量作用域，这是一个更加微妙的例子：
+
+```javascript
+function myFunction() {
+  var myVar = 'Nick';
+  if (true) {
+    var myVar = 'Jhon';
+    console.log(myVar); // "Jhon"，实际上 myVar 是函数作用域，我们只是用 Jhon 覆盖了之前的 myVar 的值
+  }
+  console.log(myVar); // "Jhon"，查看 if 块中的指令如何影响 myVar 的值
+}
+console.log(myVar); // 抛出 ReferenceError，myVar 无法在函数外访问
+```
+
+此外，var 声明的变量在运行时会被提升到作用域顶部。这就是我们通常所说的[变量提升](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var#var_hoisting)。
+
+这部分代码：
+
+```javascript
+console.log(myVar); // undefined - 没有出现错误
+var myVar = 2;
+```
+
+在执行时会理解为：
+
+```javascript
+var myVar;
+console.log(myVar); // undefined - 没有出现错误
+myVar = 2;
+```
+
+##### let
+
+`var` 和 `let` 大致相同，但是 `let` 声明的变量：
+
+- 是块作用域
+- 赋值之前不能访问
+- 不能再同样的作用域中重新声明
+
+让我们用之前的例子来看看块作用域的影响：
+
+```javascript
+function myFunction() {
+  let myVar = 'Nick';
+  if (true) {
+    let myVar = 'Jhon';
+    console.log(myVar); // "Jhon"，实际上 myVar 是块作用域，我们在这儿又创建了一个变量，这个变量在这个块之外无法访问，而且完全独立于第一次创建的 myVar
+  }
+  console.log(myVar); // "Nick"，if 块中的指令不会影响 myVar 的值
+}
+cosnole.log(myVar); // 抛出 ReferenceError，myVar 无法在函数外访问
+```
+
+现在，let 和 const 变量在声明之前无法访问意味着什么：
+
+```javascript
+console.log(myVar); // 出现错误 ReferenceError
+let myVar = 2;
+```
+
+和 var 变量相比，如果你尝试在 let 和 const 变量分配之前读取或写入时将出现一个错误。这种现象通常称为[临时死区](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let#Temporal_Dead_Zone_and_errors_with_let)或者 TDZ。
+
+> 注：严格来讲，let 和 const 变量声明也会被提升，但却没有分配。因为创造它们是为了在分配之前不能被使用，直觉上并没有提升，但实际上提升了。如果你想了解更多，[在这里查找详细的解释](http://jsrocks.org/2015/01/temporal-dead-zone-tdz-demystified)。
+
+此外，你无法重新定义 let 变量：
+
+```javascript
+let myVar = 2;
+let myVar = 3; // SyntaxError
+```
