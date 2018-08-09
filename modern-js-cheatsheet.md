@@ -137,9 +137,57 @@ let myVar = 2;
 
 > 注：严格来讲，let 和 const 变量声明也会被提升，但却没有分配。因为创造它们是为了在分配之前不能被使用，直觉上并没有提升，但实际上提升了。如果你想了解更多，[在这里查找详细的解释](http://jsrocks.org/2015/01/temporal-dead-zone-tdz-demystified)。
 
-此外，你无法重新定义 let 变量：
+此外，你不能重新定义 let 变量：
 
 ```javascript
 let myVar = 2;
 let myVar = 3; // SyntaxError
 ```
+
+##### const
+
+`const` 定义变量的行为类似于 `let`，但它们也不能重新赋值。
+
+总之，const 定义的变量：
+
+- 是块作用域
+- 赋值之前不能访问
+- 不能在相同作用域内重新声明
+- 不能重新赋值
+
+```javascript
+const myVar = 'Nick';
+myVar = 'Jhon'; // 抛出错误，不允许重新赋值
+```
+
+```javascript
+const myVar = 'Nick';
+const myVar = 'Jhon'; // 抛出错误，不允许再次声明
+```
+
+但是微妙之处在于：`const` 变量不是[不可变的](https://mbeaudru.github.io/modern-js-cheatsheet/#mutation_def)！具体来说，`const` 声明的*对象*和*数组*变量**可以**被改变。
+
+对于对象：
+
+```javascript
+const persone = {
+  name: 'Nick'
+};
+persone.name = 'Jhon'; // 可以运行！person 变量没有重新赋值，只是被改变
+console.log(person.name); // "Jhon"
+person = 'Sandra'; // 抛出错误，因为 const 声明的变量不允许重新赋值
+```
+
+对于数组：
+
+```javascript
+const person = [];
+person.push('Nick'); // 可以运行！person 变量没有重新赋值，只是被改变
+console.log(person[0]); // "Nick"
+person = ['Nick']; // 抛出错误，因为 const 声明的变量不允许重新赋值
+```
+
+#### 外部资源
+
+- [How let and const are scoped in JavaScript - WesBos](http://wesbos.com/javascript-scoping/)
+- [Temporal Dead Zone (TDZ) Demystified](http://jsrocks.org/2015/01/temporal-dead-zone-tdz-demystified)
