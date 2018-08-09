@@ -191,3 +191,45 @@ person = ['Nick']; // 抛出错误，因为 const 声明的变量不允许重新
 
 - [How let and const are scoped in JavaScript - WesBos](http://wesbos.com/javascript-scoping/)
 - [Temporal Dead Zone (TDZ) Demystified](http://jsrocks.org/2015/01/temporal-dead-zone-tdz-demystified)
+
+### 箭头函数
+
+ES6 JavaScript 更新引入了箭头函数，这是声明和使用函数的另一个方式。这是它带来的好处：
+
+- 更加简洁
+- _this_ is picked up from surroundings
+- 隐式返回
+
+#### 示例代码
+
+- 简洁及隐式返回
+
+  ```javascript
+  // 传统的方式
+  function double(x) {
+    return x * 2;
+  }
+  console.log(double(2)); // 4
+  ```
+
+  ```javascript
+  // 箭头函数
+  const double = x => x * 2;
+  console.log(double(2)); // 4
+  ```
+
+- _this_ 引用
+
+  在箭头函数中，this 相当于封闭执行上下文的 this 值。通常对于箭头函数，在调用函数内部的函数之前，你不必再使用 `that = this`。
+
+  ```javascript
+  function myFun() {
+    this.myVar = 0;
+    setTimeout(() => {
+      this.myVar++;
+      console.log(myVar); // 1
+    }, 0);
+  }
+  ```
+
+#### 详细解释
