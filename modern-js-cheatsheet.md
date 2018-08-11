@@ -278,5 +278,76 @@ ES6 JavaScript 更新引入了箭头函数，这是声明和使用函数的另�
   如果你的函数只有一个参数，你可以省略圆括号。如果我们回到上面的 double 代码：
 
   ```javascript
+  const double = (x) => x * 2; // 这个箭头函数只接受一个参数
+  ```
+
+  参数的圆括号是可以省略的：
+
+  ```javascript
   const double = x => x * 2; // 这个箭头函数只接受一个参数
   ```
+
+- 没有参数
+
+  如果箭头函数中没有参数，你就需要为其提供圆括号，否则它就是无效的语法：
+
+  ```javascript
+  // 有圆括号
+  () => {
+    const x = 2;
+    return x;
+  }
+  ```
+
+  ```javascript
+  // 没有圆括号，无法运行
+  => {
+    const = 2;
+    return x;
+  }
+  ```
+
+##### _this_ 引用
+
+要理解箭头函数引入 this 的精妙之处，你首先需要知道 [this](https://mbeaudru.github.io/modern-js-cheatsheet/#this_def) 在 JavaScript 的行为。
+
+在箭头函数中，_this_ 相当于封闭的执行上下文的 _this_ 的值。这意味箭头函数不会创造新的 _this_，箭头函数会在其上下文中寻找 _this_。
+
+不在箭头函数中，如果你想在一个函数的内部函数中访问 this 的变量，你就必须使用 `that = this` 或者 `self = this` 这种技巧。
+
+举个例子，在 myFunc 内部使用 setTimeout 函数：
+
+```javascript
+function myFunc() {
+  this.myVar = 0;
+  var that = this; // that = this 技巧
+  setTimeout(function() {
+    // 在这个函数作用域中又创建了新的 this
+    that.myVar++;
+    console.log(that.myVar); // 1
+
+    console.log(this.myVar); // undefined -- 查看上面函数的定义
+  }, 0);
+}
+```
+
+但是在箭头函数中，this 时从上下文获取的：
+
+```javascript
+function myFunc() {
+  this.myVar = 0;
+  setTimeout(() => {
+    // this 是从上下文环境获取的，意味着是 myFunc
+    this.myVar++;
+    console.log(myVar); // 1
+  }, 0);
+}
+```
+
+#### 有用的资源
+
+- [Arrow functions introduction - WesBos](http://wesbos.com/arrow-functions/)
+- [JavaScript arrow function - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
+- [Arrow function and lexical _this_](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
+
+
