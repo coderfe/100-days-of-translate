@@ -1,5 +1,25 @@
 # 现代 JavaScript 备忘单
 
+<!-- TOC -->
+
+- [现代 JavaScript 备忘单](#现代-javascript-备忘单)
+  - [介绍](#介绍)
+    - [动机](#动机)
+    - [补充资源](#补充资源)
+  - [概念](#概念)
+    - [变量声明：var, const, let](#变量声明var-const-let)
+      - [简短解释](#简短解释)
+      - [示例代码](#示例代码)
+      - [详细解释](#详细解释)
+      - [外部资源](#外部资源)
+    - [箭头函数](#箭头函数)
+      - [示例代码](#示例代码-1)
+      - [详细解释](#详细解释-1)
+      - [有用的资源](#有用的资源)
+    - [函数参数默认值](#函数参数默认值)
+
+<!-- /TOC -->
+
 ## 介绍
 
 ### 动机
@@ -350,4 +370,4 @@ function myFunc() {
 - [JavaScript arrow function - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
 - [Arrow function and lexical _this_](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
 
-
+### 函数参数默认值
