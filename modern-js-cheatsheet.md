@@ -15,8 +15,14 @@
     - [箭头函数](#箭头函数)
       - [示例代码](#示例代码-1)
       - [详细解释](#详细解释-1)
-      - [有用的资源](#有用的资源)
+      - [补充资源](#补充资源-1)
     - [函数参数默认值](#函数参数默认值)
+      - [补充资源](#补充资源-2)
+    - [结构对象和数组](#结构对象和数组)
+      - [示例代码](#示例代码-2)
+      - [补充资源](#补充资源-3)
+    - [数组方法 - map / filter / reduce](#数组方法---map--filter--reduce)
+      - [示例代码](#示例代码-3)
 
 <!-- /TOC -->
 
@@ -364,10 +370,181 @@ function myFunc() {
 }
 ```
 
-#### 有用的资源
+#### 补充资源
 
 - [Arrow functions introduction - WesBos](http://wesbos.com/arrow-functions/)
 - [JavaScript arrow function - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
 - [Arrow function and lexical _this_](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
 
 ### 函数参数默认值
+
+从 ES2015 JavaScript 更新开始，你可以用以下的语法为函数参数设置默认值：
+
+```javascript
+function myFunc(x = 10) {
+  return x;
+}
+console.log(myFunc()); // 10
+console.log(myFunc(5)); // 5
+
+console.log(myFunc(undefined)); // 10
+console.log(myFunc(null)); // null
+```
+
+默认参数限于且仅限于下面两种情况：
+
+- 没有提供参数
+- 参数为 _undefined_
+
+换句话说，如果你传入 _null_，默认参数则不会应用。
+
+> 注：默认值也可以与解构参数一起使用（参见下一个概念的示例）。
+
+#### 补充资源
+
+- [Default parameter value - ES6 Features](http://es6-features.org/#DefaultParameterValues)
+- [Default parameters - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Default_parameters)
+
+### 结构对象和数组
+
+*解构*是通过把存储在对象或数组中的数据提取出来创建变量的一种非常方便的方法。
+
+举几个例子，解构可以用在结构函数参数，或者 React 项目中的 _this.props_ 中。
+
+#### 示例代码
+
+- 对象
+
+  让我们为所有的示例考虑下面这个对象：
+
+  ```javascript
+  const person = {
+    firstName: 'Nick',
+    lastName: 'Anderson',
+    age: 35,
+    sex: 'M'
+  };
+  ```
+
+  不使用解构：
+
+  ```javascript
+  const firstName = person.firstName;
+  const age = person.age;
+  const city = person.city || 'Pairs';
+  ```
+
+  使用解构，只需一行：
+
+  ```javascript
+  const { firstName: first, age, city = 'Pairs' } = person; // 就是这样
+
+  console.log(age); // 35 -- 一个新变量被创建并且等于 person.age
+  console.log(first); // "Nick" -- 一个新变量被创建并且等于 person.firstName
+  console.log(firstName); // ReferenceError -- person.firstName 已经存在，但是新创建的变量名为 first
+  console.log(city); // "Pairs" -- 一个新变量 city 被创建，然而 person.city 是 undefined，city 等于提供的默认值 "Pairs"
+  ```
+
+  > 注：在 `const { age } = person;` 中，*const* 关键词后面的大括号既不是声明对象，也不是语句块，而是解构语法。
+
+- 函数参数
+
+  解构也经常在函数中用于解构参数。
+
+  没有解构：
+
+  ```javascript
+  function joinFirstLastName(person) {
+    const firstName = person.firstName;
+    const lastName = person.lastName;
+    return firstName + '-' + lastName;
+  }
+
+  joinFirstLastName(person); // "Nick-Anderson"
+  ```
+
+  通过解构参数 person，我们可以得到一个更简洁的函数：
+
+  ```javascript
+  function joinFirstLastName({ firstName, lastName }) {
+    return firstName + '-' + lastName;
+  }
+  joinFirstLastName(person); // "Nick-Anderson"
+  ```
+
+  解构和[箭头函数](https://mbeaudru.github.io/modern-js-cheatsheet/#arrow_func_concept)一起使用可以更加简洁：
+
+  ```javascript
+  const joinFirstLastName = ({ firstName, lastName }) => firstName + '-' + lastName;
+
+  joinFirstLastName(person); // "Nick-Anderson"
+  ```
+
+- 数组
+
+  思考以下数组：
+
+  ```javascript
+  const myArray = ['a', 'b','c'];
+  ```
+
+  没有解构：
+
+  ```javascript
+  const x = myArray[0];
+  const x = myArray[1];
+  ```
+
+  使用解构：
+
+  ```javascript
+  const [x, y] = myArray; // 就这样
+
+  console.log(x); // "a"
+  console.log(y); // "b"
+  ```
+
+#### 补充资源
+
+- [ES6 Features - Destructuring Assignment](http://es6-features.org/#ArrayMatching)
+- [Destructuring Objects - WesBos](http://wesbos.com/destructuring-objects/)
+- [ExploringJS - Destructuring](http://exploringjs.com/es6/ch_destructuring.html)
+
+### 数组方法 - map / filter / reduce
+
+map / filter / reduce 都是数组的方法，它们源于一种称为[函数式编程](https://medium.com/javascript-scene/master-the-javascript-interview-what-is-functional-programming-7f218c68b3a0)的编程模式。
+
+总之：
+
+- **Array.prototype.map()** 接受一个数组，对其每个元素执行某些操作，并且返回转换后元素的数组
+- **Array.prototype.filter()** 接受一个数组，决定是否保留一个元素，并且只返回保留下的元素的数组
+- **Array.prototype.reduce()** 接受一个数组并将所有元素归并为一个单独的值（即返回值）
+
+我推荐在遵循函数式编程的原则下尽可能地使用它们，因为它们可组合、简洁，而且优雅。
+
+用这三种放，你在大多数情况下就可以避免使用 for 或 forEach 循环。当你想使用 for 循环时，试着使用 map / filter / reduce 来做。第一次使用时你可能会纠结，因为它需要你学习一种新的思考方式，但是当你理解了，一切就会变得更简单。
+
+#### 示例代码
+
+```javascript
+const numbers = [0, 1, 2, 3, 4, 5, 6];
+const doubleNumbers = numbers.map(n => n * 2); // [0, 2, 4, 6, 8, 10, 12]
+const evenNumbers = numbers.filter(n => n % 2 === 0); // [0, 2, 4, 6]
+const sum = numbers.reduce((prev, next) => prev + next, 0); // 21
+```
+
+通过组合 map，filter 和 reduce 来计算 10 年级及其以上年级的成绩总和：
+
+```javascript
+const students = [
+  { name: 'Nick', grade: 10 },
+  { name: 'John', grade: 15 },
+  { name: 'Julia', grade: 19 },
+  { name: 'Nathalie', grade: 9 }
+];
+
+const aboveTenSum = students
+  .map(student => student.grade)
+  .filter(grade => grade >= 10)
+  .reduce((prev, next) => prev + next, 0);
+```
