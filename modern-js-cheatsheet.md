@@ -512,7 +512,7 @@ console.log(myFunc(null)); // null
 
 ### 数组方法 - map / filter / reduce
 
-map / filter / reduce 都是数组的方法，它们源于一种称为[函数式编程](https://medium.com/javascript-scene/master-the-javascript-interview-what-is-functional-programming-7f218c68b3a0)的编程模式。
+map / filter / reduce 都是数组的方法，它们源于[函数式编程](https://medium.com/javascript-scene/master-the-javascript-interview-what-is-functional-programming-7f218c68b3a0)这种编程模式。
 
 总之：
 
@@ -520,9 +520,9 @@ map / filter / reduce 都是数组的方法，它们源于一种称为[函数式
 - **Array.prototype.filter()** 接受一个数组，决定是否保留一个元素，并且只返回保留下的元素的数组
 - **Array.prototype.reduce()** 接受一个数组并将所有元素归并为一个单独的值（即返回值）
 
-我推荐在遵循函数式编程的原则下尽可能地使用它们，因为它们可组合、简洁，而且优雅。
+我推荐在遵循函数式编程的原则下尽可能地使用它们，因为它们可组合、简洁且优雅。
 
-用这三种放，你在大多数情况下就可以避免使用 for 或 forEach 循环。当你想使用 for 循环时，试着使用 map / filter / reduce 来做。第一次使用时你可能会纠结，因为它需要你学习一种新的思考方式，但是当你理解了，一切就会变得更简单。
+用这三种方法，你在大多数情况下就可以避免使用 for 或 forEach 循环。当你想使用 for 循环时，试着使用 map / filter / reduce 来做。第一次使用时你可能会纠结，因为它需要你学习一种新的思考方式，但是当你理解之后，一切就会变得简单。
 
 #### 示例代码
 
@@ -533,7 +533,7 @@ const evenNumbers = numbers.filter(n => n % 2 === 0); // [0, 2, 4, 6]
 const sum = numbers.reduce((prev, next) => prev + next, 0); // 21
 ```
 
-通过组合 map，filter 和 reduce 来计算 10 年级及其以上年级的成绩总和：
+通过组合 map / filter / reduce 来计算 10 年级及其以上年级的学生的成绩总和：
 
 ```javascript
 const students = [
