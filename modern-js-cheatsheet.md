@@ -23,6 +23,7 @@
       - [补充资源](#补充资源-3)
     - [数组方法 - map / filter / reduce](#数组方法---map--filter--reduce)
       - [示例代码](#示例代码-3)
+      - [详细解释](#详细解释-2)
 
 <!-- /TOC -->
 
@@ -548,3 +549,41 @@ const aboveTenSum = students
   .filter(grade => grade >= 10)
   .reduce((prev, next) => prev + next, 0);
 ```
+
+#### 详细解释
+
+为接下来的例子思考下面这个数字的数组：
+
+```javascript
+const numbers = [0, 1, 2, 3, 4, 5, 6];
+```
+
+##### Array.prototype.map()
+
+```javascript
+const doubleNumbers = numbers.map(function(n) {
+  return n * 2;
+});
+console.log(doubleNumbers); // [0, 2, 4, 6, 8, 10, 12]
+```
+
+这里发生了什么？我们在 numbers 数组上使用了 .map 方法，map 会遍历数组的每一项并将其传递到函数中。函数的目的是从传递进来的参数产生并返回新值，便于 map 用来替换。
+
+我们把函数提取出来使其更加清晰：
+
+```javascript
+const doubleN = function(n) { return n * 2; };
+const doubleNumbers = numbers.map(doubleN);
+console.log(doubleNumbers); // [0, 2, 4, 6, 8, 10, 12]
+```
+
+注：你会经常遇到这个方法和箭头函数结合使用
+
+```javascript
+const doubleNumbers = numbers.map(n => n * 2);
+console.log(doubleNumbers); // [0, 2, 4, 6, 8, 10, 12]
+```
+
+`numbers.map(doubleN)` 产生 `[doubleN(0), doubleN(1), doubleN(2), doubleN(3), doubleN(4), doubleN(5), doubleN(6)]`，等于 `[0, 2, 4, 6, 8, 10, 12]`。
+
+> 注：如果你不需要返回新数组，并且只想做一个有副作用的循环，你可能只想使用 for 或 forEach 循环而不是 map。
