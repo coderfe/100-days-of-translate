@@ -24,6 +24,8 @@
     - [数组方法 - map / filter / reduce](#数组方法---map--filter--reduce)
       - [示例代码](#示例代码-3)
       - [详细解释](#详细解释-2)
+      - [补充资源](#补充资源-4)
+    - [扩展运算符“...”](#扩展运算符)
 
 <!-- /TOC -->
 
@@ -577,7 +579,7 @@ const doubleNumbers = numbers.map(doubleN);
 console.log(doubleNumbers); // [0, 2, 4, 6, 8, 10, 12]
 ```
 
-注：你会经常遇到这个方法和箭头函数结合使用
+**注**：你会经常遇到这个方法和箭头函数结合使用
 
 ```javascript
 const doubleNumbers = numbers.map(n => n * 2);
@@ -587,3 +589,106 @@ console.log(doubleNumbers); // [0, 2, 4, 6, 8, 10, 12]
 `numbers.map(doubleN)` 产生 `[doubleN(0), doubleN(1), doubleN(2), doubleN(3), doubleN(4), doubleN(5), doubleN(6)]`，等于 `[0, 2, 4, 6, 8, 10, 12]`。
 
 > 注：如果你不需要返回新数组，并且只想做一个有副作用的循环，你可能只想使用 for 或 forEach 循环而不是 map。
+
+##### Array.prototype.filter()
+
+```javascript
+const evenNumbers = numbers.filter(function(n) {
+  return n % 2 === 0;
+});
+console.log(evenNumbers); // [0, 2, 4, 6]
+```
+
+**注**：你会经常遇到这个方法和箭头函数结合使用
+
+```javascript
+const evenNumbers = numbers.filter(n => n % 2 === 0);
+console.log(evenNumbers); // [0, 2, 4, 6]
+```
+
+我们在 numbers 数组上使用 .filter 方法时，filter 会遍历数组的每个元素并将其传递到函数中。函数的目标是返回一个 boolean 值并决定当前值是否保留。然后 filter 会返回保留下的元素的数组。
+
+##### Array.prototype.reduce()
+
+reduce 方法的目标在于将数组的所有元素归并为一个值。它如何归并这些元素取决于你。
+
+```javascript
+const sum = numbers.reduce(
+  function(acc, n) {
+    return acc + n;
+  },
+  0
+);
+console.log(sum); // 21
+```
+
+**注**：你会经常遇到这个方法和箭头函数结合使用
+
+```javascript
+const sum = numbers.reduce((acc, n) => acc + n, 0);
+console.log(sum); // 21
+```
+
+就像 .map 和 .filter 方法，.reduce 可应用于数组并接受一个函数作为第一个参数。
+
+不过这一次有些变化：
+
+- .reduce 接受两个参数
+
+  第一个参数是在每个迭代步骤都会调用的函数。
+
+  第二个参数是在第一次迭代步骤（参阅下面的知识点）中累加器（在这里是 acc）的值。
+
+- 函数参数
+
+  作为 .reduce 第一个参数传递的函数接受两个参数。第一个（acc）是累加器变量，第二个参数（n）是当前元素。
+
+  累加器变量等于前一次迭代的函数的返回值。在第一次迭代时，acc 等于你传递给 .reduce 的第二个参数的值。
+
+###### 第一次迭代
+
+`acc = 0` 因为我们为 reduce 传递的第二个参数是 0
+
+`n = 0` numbers 数组的一个元素是 0
+
+函数返回：acc + n -> 0 + 0 -> 0
+
+###### 第二次迭代
+
+`acc = 0` 因为它是前一次迭代返回的值
+
+`n = 1` numbers 数组的第二个元素是 1
+
+函数返回：acc + n -> 0 + 1 -> 1
+
+###### 第三次迭代
+
+`acc = 1` 因为它是前一次迭代返回的值
+
+`n = 2` numbers 数组的第三个元素是 2
+
+函数返回：acc + n -> 1 + 2 -> 3
+
+###### 第四次迭代
+
+`acc = 3` 因为它是前一次迭代返回的值
+
+`n = 3` numbers 数组的第四个元素是 3
+
+函数返回：acc + n -> 3 + 3 -> 6
+
+###### [...]最后一次迭代
+
+`acc = 15` 因为它是前一次迭代返回的值
+
+`n = 6` numbers 数组的最后一个元素是 6
+
+函数返回：acc + n -> 15 + 6 -> 21
+
+最后一次迭代，.reduce 返回 21。
+
+#### 补充资源
+
+- [Understanding map / filter / reduce in JS](https://hackernoon.com/understanding-map-filter-and-reduce-in-javascript-5df1c7eee464)
+
+### 扩展运算符“...”
