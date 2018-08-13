@@ -768,7 +768,7 @@ myFunc('Nick', 'Anderson', 10, 12, 6);
 
 但是假设我们需要这个函数能够创建一个新的学生和他的分数及平均分数。把前两个参数提取到单独的变量中，然后把所有的分数放在可以遍历的数组中，这样是否更方便？
 
-这正是 rest 操作符允许我们可以做的！
+这正是 rest 操作符允许我们做的！
 
 ```javascript
 function createStudent(firstName, lastName, ...grades) {
