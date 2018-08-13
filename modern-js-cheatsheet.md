@@ -25,7 +25,10 @@
       - [示例代码](#示例代码-3)
       - [详细解释](#详细解释-2)
       - [补充资源](#补充资源-4)
-    - [扩展运算符“...”](#扩展运算符)
+    - [展开运算符“...”](#展开运算符)
+      - [示例代码](#示例代码-4)
+      - [详细解释](#详细解释-3)
+      - [补充资源](#补充资源-5)
 
 <!-- /TOC -->
 
@@ -691,4 +694,122 @@ console.log(sum); // 21
 
 - [Understanding map / filter / reduce in JS](https://hackernoon.com/understanding-map-filter-and-reduce-in-javascript-5df1c7eee464)
 
-### 扩展运算符“...”
+### 展开运算符“...”
+
+The spread operator ... has been introduced with ES2015 and is used to expand elements of an iterable (like an array) into places where multiple elements can fit.
+
+#### 示例代码
+
+```javascript
+const arr1 = ['a', 'b', 'c'];
+const arr2 = [...arr1, 'd', 'e', 'f']; // ['a', 'b', 'c', 'd', 'e', 'f']
+```
+
+```javascript
+function myFunc(x, y, ...params) {
+  console.log(x);
+  console.log(y);
+  console.log(params);
+}
+myFunc('a', 'b', 'c', 'd', 'e', 'f');
+// 'a'
+// 'b'
+// ['c', 'd', 'e', 'f']
+```
+
+```javascript
+const {x, y, ...z} = { x: 1, y: 2, a: 3, b: 4 };
+cosnole.log(x); // 1
+cosnole.log(y); // 2
+cosnole.log(z); // { a: 3, b: 4 }
+
+const n = { x, y, ...z };
+console.log(n); // { x: 1, y: 2, a: 3, b: 4 }
+```
+
+#### 详细解释
+
+##### 可迭代（如数组）
+
+假设我们有下面两个数组：
+
+```javascript
+const arr1 = ['a', 'b', 'c'];
+const arr2 = [arr1, 'd', 'e', 'f']; // [['a', 'b', 'c'], 'd', 'e', 'f']
+```
+
+arr2 的第一个元素是数组，因为 arr1 注入到了 arr2 中。但我们想要 arr2 是一组字母。为此，我么可以把 arr1 的元素展开到 arr2。
+
+使用展开运算符：
+
+```javascript
+const arr1 = ['a', 'b', 'c'];
+const arr2 = [...arr1, 'd', 'e', 'f']; // ['a', 'b', 'c', 'd', 'e', 'f']
+```
+
+##### 函数剩余参数
+
+在函数参数中，我们可以使用 rest 操作符把参数注入到可以循环的数组中。每个函数已经绑定了一个 **arguments** 对象，它等于传递到函数中的所有参数的数组。
+
+```javascript
+funciton myFunc() {
+  for (var i = 0; i < arguments.length; i++) {
+    console.log(arguments[i]);
+  }
+}
+
+myFunc('Nick', 'Anderson', 10, 12, 6);
+// "Nick"
+// "Anderson"
+// 10
+// 12
+// 6
+```
+
+但是假设我们需要这个函数能够创建一个新的学生和他的分数及平均分数。把前两个参数提取到单独的变量中，然后把所有的分数放在可以遍历的数组中，这样是否更方便吗？
+
+这正是 rest 操作符允许我们可以做的！
+
+```javascript
+function createStudent(firstName, lastName, ...grades) {
+  const avgGrade = grades.reduce((acc, curr) => acc + curr, 0) / grades.length;
+
+  return {
+    firstName: firstName,
+    lastName: lastName,
+    grades: grades,
+    avgGrade: avgGrade
+  };
+}
+const student = createStudent('Nick', 'Anderson', 10, 12, 6);
+console.log(student);
+// { firstName: 'Nick',
+//   lastName: 'Anderson',
+//   grades: [ 10, 12, 6 ],
+//   avgGrade: 9.333333333333334
+// }
+```
+
+> 注：createStudent 函数是糟糕的，因为我们没有检查 grades.length 是否存在或者是是否为 0。但是为了易读，我没有处理这种情况。
+
+##### 对象属性展开
+
+对于这个，我建议你阅读上面的可迭代的 rest 操作符和函数参数。
+
+```javascript
+const myObj = { x: 1, y: 2, a: 3, b: 4 };
+const {x, y, ...z} = myObj;
+cosnole.log(x); // 1
+cosnole.log(y); // 2
+cosnole.log(z); // { a: 3, b: 4 }
+
+const n = { x, y, ...z };
+console.log(n); // { x: 1, y: 2, a: 3, b: 4 }
+```
+
+#### 补充资源
+
+- [TC39 - Object rest/spread](https://github.com/tc39/proposal-object-rest-spread)
+- [Spread operator introduction - WesBos](https://github.com/wesbos/es6-articles/blob/master/28%20-%20Spread%20Operator%20Introduction.md)
+- [JavaScript & the spread operator](https://codeburst.io/javascript-the-spread-operator-a867a71668ca)
+- [6 Great uses of the spread operator](https://davidwalsh.name/spread-operator)
