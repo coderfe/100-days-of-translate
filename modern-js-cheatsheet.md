@@ -696,7 +696,7 @@ console.log(sum); // 21
 
 ### 展开运算符“...”
 
-The spread operator ... has been introduced with ES2015 and is used to expand elements of an iterable (like an array) into places where multiple elements can fit.
+展开运算符在 ES2015 中引入，它用来将可迭代元素展开到可以容纳多个元素的地方。
 
 #### 示例代码
 
@@ -790,7 +790,7 @@ console.log(student);
 // }
 ```
 
-> 注：createStudent 函数是糟糕的，因为我们没有检查 grades.length 是否存在或者是是否为 0。但是为了易读，我没有处理这种情况。
+> 注：createStudent 函数是糟糕的，因为我们没有检查 grades.length 是否存在或者是否为 0。但是为了易读，我没有处理这种情况。
 
 ##### 对象属性展开
 
