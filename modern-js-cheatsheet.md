@@ -32,6 +32,10 @@
     - [对象属性简写](#对象属性简写)
       - [详细解释](#详细解释-4)
       - [补充资源](#补充资源-6)
+    - [Promises](#promises)
+      - [示例代码](#示例代码-5)
+      - [详细解释](#详细解释-5)
+      - [补充资源](#补充资源-7)
 
 <!-- /TOC -->
 
@@ -864,3 +868,82 @@ console.log(myObj.y); // 20
 #### 补充资源
 
 - [Property shorthand - ES6 Features](http://es6-features.org/#PropertyShorthand)
+
+### Promises
+
+Promise 是可以从异步函数（[ref](https://medium.com/javascript-scene/master-the-javascript-interview-what-is-a-promise-27fc71e77261#3cd0)）中同步返回的对象。
+
+使用 Promises 可以避免[回调地狱](http://callbackhell.com/)，而且它也越来越频繁地使用在现代 JavaScript 项目中。
+
+#### 示例代码
+
+```javascript
+const fetchingPosts = new Promise((res, rej) => {
+  $.get('/posts')
+    .done(posts => res(posts))
+    .fail(err => rej(err));
+});
+
+fetchingPosts
+  .then(posts => console.log(posts))
+  .catch(err => console.log(err));
+```
+
+#### 详细解释
+
+当你发起一次 Ajax 请求时，响应并不是同步的，因为你想要的资源会花费一些时间。如果你请求的资源由于一些原因（404）不可用，它甚至不会返回。
+
+为了处理这种情况，ES2015 引入了 promises。Promises 有三种不同的状态：
+
+- Pending
+- Fulfilled
+- Rejected
+
+假设我们使用 promise 处理一个获取资源 X 的 Ajax 请求。
+
+##### 创建 promise
+
+首先我们需要创建一个 promise。我们将使用 jQuery 的 get 方法来处理获取 X 的 Ajax 请求。
+
+```javascript
+const xFetchPromise = new Promise(function(resolve, reject) {
+  $.get('X')
+    .done(function(x) {
+      resolve(x);
+    })
+    .fail(function(err) {
+      reject(err);
+    });
+});
+```
+
+正如在上面的例子中看到的，Promise 对象接受一个执行器函数，这个函数接受两个参数 **resolve** 和 **reject**。这些参数都是函数，在被调用时，它们会把 promise 的 pending 状态分别转换为 fulfilled 和 rejected 状态。
+
+Promise 会在实例创建完成和执行器函数被执行之后立即进入 pending 状态。一旦 resolve 或 reject 函数中任意一个函数被调用时，promise 就会调用与之相关的处理函数。
+
+##### Promise 处理器用法
+
+为了得到 promise 的结果（或错误），我们必须通过以下操作为其添加处理函数：
+
+```javascript
+xFetchPromise
+  .then(function(x) {
+    cosnole.log(x);
+  })
+  .catch(function(err) {
+    console.log(err);
+  });
+```
+
+如果 promise 成功了，则执行 resolve 并把函数作为 `.then` 参数执行。
+
+如果 promise 失败了，则执行 reject 并把函数作为 `.catch` 参数执行。
+
+#### 补充资源
+
+- [JavaScript Promises for dummies - Jecelyn Yeen](https://scotch.io/tutorials/javascript-promises-for-dummies)
+- [JavaScript Promise API - David Walsh](https://davidwalsh.name/promises)
+- [Using promises - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)
+- [What is a promise - Eric Elliott](https://medium.com/javascript-scene/master-the-javascript-interview-what-is-a-promise-27fc71e77261)
+- [JavaScript Promises: an Introduction - Jake Archibald](https://developers.google.com/web/fundamentals/getting-started/primers/promises)
+- [Promise documentation - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
