@@ -29,6 +29,9 @@
       - [示例代码](#示例代码-4)
       - [详细解释](#详细解释-3)
       - [补充资源](#补充资源-5)
+    - [对象属性简写](#对象属性简写)
+      - [详细解释](#详细解释-4)
+      - [补充资源](#补充资源-6)
 
 <!-- /TOC -->
 
@@ -813,3 +816,51 @@ console.log(n); // { x: 1, y: 2, a: 3, b: 4 }
 - [Spread operator introduction - WesBos](https://github.com/wesbos/es6-articles/blob/master/28%20-%20Spread%20Operator%20Introduction.md)
 - [JavaScript & the spread operator](https://codeburst.io/javascript-the-spread-operator-a867a71668ca)
 - [6 Great uses of the spread operator](https://davidwalsh.name/spread-operator)
+
+### 对象属性简写
+
+在为对象属性分配属性时，如果变量名和属性名一样，你可以这样写：
+
+```javascript
+const x = 10;
+const myObj = { x };
+console.log(myObj.x); // 10
+```
+
+#### 详细解释
+
+通常（在 ES2015 之前）在声明新对象时，如果你想用变量作为对象的属性值时，你可能会写出以下代码：
+
+```javascript
+const x = 10;
+const y = 20;
+
+const myObj = {
+  x: x,
+  y: y
+};
+
+console.log(myObj.x);  // 10
+console.log(myObj.y); // 20
+```
+
+如你所见，这是相当重复的，因为 myObj 的属性名称和变量名称是相同的。
+
+在 ES2015 中，如果变量名和属性名称相同，那么你就这样简写：
+
+```javascript
+const x = 10;
+const y = 20;
+
+const myObj = {
+  x: x,
+  y: y
+};
+
+console.log(myObj.x);  // 10
+console.log(myObj.y); // 20
+```
+
+#### 补充资源
+
+- [Property shorthand - ES6 Features](http://es6-features.org/#PropertyShorthand)
