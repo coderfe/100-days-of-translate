@@ -41,6 +41,9 @@
       - [补充资源](#补充资源-8)
     - [标签模板字符串](#标签模板字符串)
       - [补充资源](#补充资源-9)
+    - [导入 / 导出](#导入--导出)
+      - [示例代码](#示例代码-7)
+      - [补充资源](#补充资源-10)
 
 <!-- /TOC -->
 
@@ -1014,3 +1017,88 @@ comma`I like ${snacks} to snack on.`;
 
 - [Wes Bos on Tagged Template Literals](http://wesbos.com/tagged-template-literals/)
 - [Library of common template tags](https://github.com/declandewet/common-tags)
+
+### 导入 / 导出
+
+ES6 模块用于访问由其导入模块中显式导出的变量和函数。
+
+我强烈建议你看看关于 import/export 的 MDN 资源（参见下面的补充资源），它既完整又通俗易懂。
+
+#### 示例代码
+
+##### 命名导出
+
+命名导出用于从模块中导出几个值。
+
+> 注：你只能导出有名称的[一等公民](https://en.wikipedia.org/wiki/First-class_citizen)。
+
+```javascript
+// mathConstants.js
+export const pi = 3.14;
+export const exp = 2.7;
+export const alpha = 0.35;
+
+// -----------------
+
+// myFile.js
+import {pi, exp} from 'mathConstants.js'; // 命名导入 -- 类似解构语法
+console.log(pi); // 3.14
+console.log(exp); // 2.7
+
+// -----------------
+
+// mySecondFile.js
+import * as constants from 'mathConstants.js';  // 把所有导出的值注入到 constants 变量
+console.log(constants.pi); // 3.14
+console.log(constants.exp); // 2.7
+```
+
+虽然命名导入看起来像解构，但它们的语法不一样。它既不支持默认值，也不支持深解构。
+
+此外，你可以使用别名，但是不同于解构中使用的语法：
+
+```javascript
+import {foo as bar} from 'myFile.js'; // foo 被导入并注入给新变量 bar
+```
+
+##### 默认 import/export
+
+关于默认导出，每个模块中只有一个默认导出。一个默认导出可以是一个函数，一个类，一个对象或者其他任何东西。这个值被认为是“main”导出值，因为是最容易导入的值。[Ref: MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export#Description)
+
+```javascript
+// coolNumber.js
+const ultimateNumber = 42;
+export default ultimateNumber;
+
+// -----------------
+
+// myFile.js
+import number from 'coolNumber.js';
+console.log(number); // 42
+```
+
+函数导出：
+
+```javascript
+// sum.js
+export default function sum(x, y) {
+  return x + y;
+}
+
+// -----------------
+
+// myFile.js
+import sum from 'sum.js';
+const result = sum(1, 2);
+console.log(result); // 3
+```
+
+#### 补充资源
+
+- [ES6 Modules in bulletpoints](https://ponyfoo.com/articles/es6#modules)
+- [Export - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export)
+- [Import - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import)
+- [Understanding ES6 Modules](https://www.sitepoint.com/understanding-es6-modules/)
+- [Destructuring special case - import statements](https://ponyfoo.com/articles/es6-destructuring-in-depth#special-case-import-statements)
+- [Misunderstanding ES6 Modules - Kent C. Dodds](https://medium.com/@kentcdodds/misunderstanding-es6-modules-upgrading-babel-tears-and-a-solution-ad2d5ab93ce0)
+- [Modules in JavaScript](http://exploringjs.com/es6/ch_modules.html#sec_modules-in-javascript)
