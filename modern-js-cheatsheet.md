@@ -39,6 +39,8 @@
     - [模板字符串](#模板字符串)
       - [示例代码](#示例代码-6)
       - [补充资源](#补充资源-8)
+    - [标签模板字符串](#标签模板字符串)
+      - [补充资源](#补充资源-9)
 
 <!-- /TOC -->
 
@@ -969,3 +971,46 @@ const name = 'Nick';
 
 - [String interpolation - ES6 Features](http://es6-features.org/#StringInterpolation)
 - [ES6 Template Strings - Addy Osmani](https://developers.google.com/web/updates/2015/01/ES6-Template-Strings)
+
+### 标签模板字符串
+
+模板标签是可以放在[模板字符串](#模板字符串)前面的函数。当一个函数以这种方式被调用时，第一个变量是出现在模板插值之间的字符串数组，随后的参数时插值。使用展开操作符 `...` 来捕获它们。（[Ref: MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Tagged_template_literals)）。
+
+> 注：著名的 [styled-components](https://www.styled-components.com/) 非常依赖于这个功能。
+
+下面是一个关于它如何运行的例子：
+
+```javascript
+function highlight(strings, ...values) {
+  const interpolation = strings.reduce((prev, next) => {
+    return prev + next + (values.length ? '<mark>' + values.shift() + '</mark>' : '');
+  }, '');
+  return interpolation;
+}
+const condiment = 'jam';
+const meal = 'toast';
+
+highlight`I like ${condiment} on ${meal}.`;
+// I like <mark>jam</mark> on <mark>toast</mark>.
+```
+
+一个更有趣的例子：
+
+```javascript
+function comma(strings, ...values) {
+  return strings.reduce((prev, next) => {
+    let value = values.shift() || [];
+    value = value.join(', ');
+    return prev + next + value;
+  }, '');
+}
+
+const snacks = ['apples', 'bananas', 'cherries'];
+comma`I like ${snacks} to snack on.`;
+// I like apples, bananas, cherries to snack on.
+```
+
+#### 补充资源
+
+- [Wes Bos on Tagged Template Literals](http://wesbos.com/tagged-template-literals/)
+- [Library of common template tags](https://github.com/declandewet/common-tags)
