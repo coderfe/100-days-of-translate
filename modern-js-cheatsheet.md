@@ -36,6 +36,9 @@
       - [示例代码](#示例代码-5)
       - [详细解释](#详细解释-5)
       - [补充资源](#补充资源-7)
+    - [模板字符串](#模板字符串)
+      - [示例代码](#示例代码-6)
+      - [补充资源](#补充资源-8)
 
 <!-- /TOC -->
 
@@ -947,3 +950,22 @@ xFetchPromise
 - [What is a promise - Eric Elliott](https://medium.com/javascript-scene/master-the-javascript-interview-what-is-a-promise-27fc71e77261)
 - [JavaScript Promises: an Introduction - Jake Archibald](https://developers.google.com/web/fundamentals/getting-started/primers/promises)
 - [Promise documentation - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
+
+### 模板字符串
+
+模板字符串时针对单行和多行字符串的[插值表达式](https://en.wikipedia.org/wiki/String_interpolation)。
+
+换句话说，它是一种新语法，你可以在其中使用任何 JavaScript 表达式（例如变量）。
+
+#### 示例代码
+
+```javascript
+const name = 'Nick';
+`Hello ${name}, the following expression is equal to four: ${2+2}`
+// Hello Nick, the following expression is equal to four: 4
+```
+
+#### 补充资源
+
+- [String interpolation - ES6 Features](http://es6-features.org/#StringInterpolation)
+- [ES6 Template Strings - Addy Osmani](https://developers.google.com/web/updates/2015/01/ES6-Template-Strings)
