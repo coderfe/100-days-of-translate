@@ -46,6 +46,9 @@
       - [补充资源](#补充资源-10)
     - [JavaScript *this*](#javascript-this)
       - [补充资源](#补充资源-11)
+    - [Class](#class)
+      - [示例代码](#示例代码-8)
+      - [补充资源](#补充资源-12)
 
 <!-- /TOC -->
 
@@ -1144,3 +1147,59 @@ myBoundFunc('test'); // "hello" -- myBoundFunc 是 person.myFunc 把 this 绑定
 
 - [Understanding JavaScript Function Invocation and “this” - Yehuda Katz](http://yehudakatz.com/2011/08/11/understanding-javascript-function-invocation-and-this/)
 - [JavaScript this - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this)
+
+### Class
+
+JavaScript 是一种[基于原型的](https://en.wikipedia.org/wiki/Prototype-based_programming)语言（而 Java 是[基于类的](https://en.wikipedia.org/wiki/Class-based_programming)语言）。ES6 引入了 JavaScript 类，这意味着类是基于原型的继承的语法糖，而不是基于类的一种新的继承模型（[ref](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes)）。
+
+如果你熟悉其他语言中的类，JavaScript class 确实容易出错。如果是这样，尽量避免假设 JavaScript class 是如何工作的，并且以一种完全不同的概念去思考它。
+
+由于这份文档不是试图从头开始教你这门语言，我相信你应该知道什么是原型以及它的行为表现。如果你不知道，参考示例代码下面的补充资源。
+
+#### 示例代码
+
+ES6 之前，原型语法：
+
+```javascript
+var Person = function(name, age) {
+  this.name = name;
+  this.age = age;
+};
+
+Person.prototype.stringSentence = function() {
+  return 'Hello, my name is ' + this.name + ' and I\'m ' + this.age;
+}
+```
+
+使用 ES6 class 语法：
+
+```javascript
+class Person {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  stringSentence() {
+    return `Hello, my name is ${this.name} and I'm ${this.age}`;
+  }
+}
+
+const person = new Person('Manu', 23);
+console.log(person.age); // 23
+console.log(person.stringSentence()); // "Hello, my name is Manu and I'm 23"
+```
+
+#### 补充资源
+
+对于理解原型：
+
+- [Understanding Prototypes in JS - Yehuda Katz](http://yehudakatz.com/2011/08/12/understanding-prototypes-in-javascript/)
+- [A plain English guide to JS prototypes - Sebastian Porto](http://sporto.github.io/blog/2013/02/22/a-plain-english-guide-to-javascript-prototypes/)
+- [Inheritance and the prototype chain - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
+
+对于理解 class：
+
+- [ES6 Classes in Depth - Nicolas Bevacqua](https://ponyfoo.com/articles/es6-classes-in-depth)
+- [ES6 Features - Classes](http://es6-features.org/#ClassDefinition)
+- [JavaScript Classes - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes)
