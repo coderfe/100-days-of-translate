@@ -44,6 +44,8 @@
     - [导入 / 导出](#导入--导出)
       - [示例代码](#示例代码-7)
       - [补充资源](#补充资源-10)
+    - [JavaScript *this*](#javascript-this)
+      - [补充资源](#补充资源-11)
 
 <!-- /TOC -->
 
@@ -841,7 +843,7 @@ console.log(myObj.x); // 10
 
 #### 详细解释
 
-通常（在 ES2015 之前）在声明新对象时，如果你想用变量作为对象的属性值时，你可能会写出以下代码：
+通常（在 ES2015 之前）在声明新对象时，如果想用变量作为对象的属性值，你可能会写出以下代码：
 
 ```javascript
 const x = 10;
@@ -899,7 +901,7 @@ fetchingPosts
 
 #### 详细解释
 
-当你发起一次 Ajax 请求时，响应并不是同步的，因为你想要的资源会花费一些时间。如果你请求的资源由于一些原因（404）不可用，它甚至不会返回。
+当你发起一次 Ajax 请求时，响应并不是同步的，因为请求的资源会花费一些时间。如果你请求的资源由于一些原因（404）不可用，它甚至不会返回。
 
 为了处理这种情况，ES2015 引入了 promises。Promises 有三种不同的状态：
 
@@ -958,7 +960,7 @@ xFetchPromise
 
 ### 模板字符串
 
-模板字符串时针对单行和多行字符串的[插值表达式](https://en.wikipedia.org/wiki/String_interpolation)。
+模板字符串是针对单行和多行字符串的[插值表达式](https://en.wikipedia.org/wiki/String_interpolation)。
 
 换句话说，它是一种新语法，你可以在其中使用任何 JavaScript 表达式（例如变量）。
 
@@ -977,7 +979,7 @@ const name = 'Nick';
 
 ### 标签模板字符串
 
-模板标签是可以放在[模板字符串](#模板字符串)前面的函数。当一个函数以这种方式被调用时，第一个变量是出现在模板插值之间的字符串数组，随后的参数时插值。使用展开操作符 `...` 来捕获它们。（[Ref: MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Tagged_template_literals)）。
+模板标签是可以放在[模板字符串](#模板字符串)前面的函数。当一个函数以这种方式被调用时，第一个变量是出现在模板插值之间的字符串数组，随后的参数是插值。使用展开操作符 `...` 来捕获它们。（[Ref: MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Tagged_template_literals)）。
 
 > 注：著名的 [styled-components](https://www.styled-components.com/) 非常依赖于这个功能。
 
@@ -1102,3 +1104,43 @@ console.log(result); // 3
 - [Destructuring special case - import statements](https://ponyfoo.com/articles/es6-destructuring-in-depth#special-case-import-statements)
 - [Misunderstanding ES6 Modules - Kent C. Dodds](https://medium.com/@kentcdodds/misunderstanding-es6-modules-upgrading-babel-tears-and-a-solution-ad2d5ab93ce0)
 - [Modules in JavaScript](http://exploringjs.com/es6/ch_modules.html#sec_modules-in-javascript)
+
+### JavaScript *this*
+
+JavaScript 中 *this* 操作符的行为不同于其它语言，而且在大多数情况下决定它的是一个函数会如何被调用。（[Ref: MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this)）。
+
+这个概念有许多微妙之处，而且非常难理解，我强烈建议你深入思考下面的补充资源。因此，我会提供我的个人理解来确定 this 等于什么。我从 [Yehuda Katz 写的这篇文章](http://yehudakatz.com/2011/08/11/understanding-javascript-function-invocation-and-this/)学到了许多 this 的技巧。
+
+```javascript
+function myFunc() {
+  //...
+}
+
+// 每个语句之后，你在 myFunc 中查找 this 的值
+
+myFunc.call('myString', 'hello'); // "myString" -- .call 的第一个参数被注入到 this
+
+// 在非严格模式下
+myFunc('hello'); // window -- myFunc() 是 myFunc.call(window, 'hello') 的语法糖
+
+// 在严格模式下
+myFunc('hello'); // undefined -- myFunc() 是 myFunc.call(undefined, 'hello') 的语法糖
+```
+
+```javascript
+var person = {
+  myFunc: function() {/*...*/}
+};
+
+person.myFunc.call(person, 'test'); // person Object -- .call 的第一个参数被注入到 this
+person.myFunc('test'); // person Object -- person.myFunc() 是 person.myFunc(person, 'test') 的语法糖
+
+var myBoundFunc = person.myFunc.bind('hello');
+person.myFunc('test'); // person Object -- bind 方法对原方法没有副作用
+myBoundFunc('test'); // "hello" -- myBoundFunc 是 person.myFunc 把 this 绑定为 hello
+```
+
+#### 补充资源
+
+- [Understanding JavaScript Function Invocation and “this” - Yehuda Katz](http://yehudakatz.com/2011/08/11/understanding-javascript-function-invocation-and-this/)
+- [JavaScript this - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this)
