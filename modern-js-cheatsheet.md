@@ -59,6 +59,15 @@
       - [Anamorphisms](#anamorphisms)
       - [Catamorphisms](#catamorphisms)
       - [补充资源](#补充资源-15)
+    - [生成器](#生成器)
+    - [静态方法](#静态方法)
+      - [简短解释](#简短解释-1)
+      - [示例代码](#示例代码-10)
+      - [详细解释](#详细解释-7)
+      - [补充资源](#补充资源-16)
+    - [术语](#术语)
+      - [作用域](#作用域)
+      - [变量突变](#变量突变)
 
 <!-- /TOC -->
 
@@ -1472,7 +1481,7 @@ Anamorphisms 是一些对象映射到包含对象类型的更复杂结构的函�
 function downToOne(n) {
   const list = [];
 
-  for (let i = n; i > 0; i--) {
+  for (let i = n; i > 0; --i) {
     list.push(i);
   }
 
@@ -1508,3 +1517,119 @@ product(downToOne(5)); // 120
 - [Anamorphisms in JavaScript](http://raganwald.com/2016/11/30/anamorphisms-in-javascript.html)
 - [Anamorphism](https://en.wikipedia.org/wiki/Anamorphism)
 - [Catamorphism](https://en.wikipedia.org/wiki/Catamorphism)
+
+### 生成器
+
+[Generators](https://mbeaudru.github.io/modern-js-cheatsheet/#generators)
+
+### 静态方法
+
+#### 简短解释
+
+`static` 关键词用于类中声明静态方法。Class 中的静态方法是属于 class 的，在任何 class 实例中都不可用。
+
+#### 示例代码
+
+```javascript
+class Repo {
+  static getName() {
+    return 'Repo name is modern js cheatsheet';
+  }
+}
+
+console.log(Repo.getName()); // "Repo name is modern js cheatsheet"
+
+let r = new Repo();
+console.log(r.getName()); // Uncaught TypeError: r.getName is not a function
+```
+
+#### 详细解释
+
+静态方法在另一个静态方法中可以通过 `this` 关键词调用，在非静态方法中无法调用。非静态方法无法
+直接通过 `this` 关键词访问静态方法。
+
+##### 在静态方法中调用其它静态方法
+
+在其它方法中调用静态方法，可以这样使用 `this` 关键词：
+
+```javascript
+class Repo {
+  static getName() {
+    return 'Repo name is modern-js-cheatsheet';
+  }
+
+  static modifyName() {
+    return this.getName() + '-added-this';
+  }
+}
+consoel.log(Repo.modifyName()); // "Repo name is modern-js-cheatsheet-added-this"
+```
+
+##### 在非静态方法中调用其它静态方法
+
+非静态方法调用静态方法有两种方式：
+
+1. 使用类名
+
+  为了在非静态方法中调用静态方法，我们使用类名，并且像属性一样调用静态方法。例如：`ClassName.StaticMethodName`
+
+  ```javascript
+  class Repo {
+    static getName() {
+      return 'Repo name is modern-js-cheatsheet';
+    }
+
+    useName() {
+      return Repo.getName() + '  and it contains some really important stuff';
+    }
+  }
+
+  let r = new Repo();
+  console.log(r.useName()); // "Repo name is modern-js-cheatsheet and it contains some really important stuff"
+  ```
+
+2. 使用构造函数
+
+  静态方法可以作为构造函数对象的属性调用：
+
+   ```javascript
+  class Repo {
+    static getName() {
+      return 'Repo name is modern-js-cheatsheet';
+    }
+
+    useName() {
+      return this.constructor.getName() + '  and it contains some really important stuff';
+    }
+  }
+
+  let r = new Repo();
+  console.log(r.useName()); // "Repo name is modern-js-cheatsheet and it contains some really important stuff"
+  ```
+
+#### 补充资源
+
+- [static keyword- MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/static)
+- [Static Methods- Javascript.info](https://javascript.info/class#static-methods)
+- [Static Members in ES6- OdeToCode](http://odetocode.com/blogs/scott/archive/2015/02/02/static-members-in-es6.aspx)
+
+### 术语
+
+#### 作用域
+
+值或表达式可见的或者可以被引用的上下文。如果变量或者其它表达式不在“当前作用域”，则其无法使用。
+
+Source: [MDN](https://developer.mozilla.org/en-US/docs/Glossary/Scope)
+
+#### 变量突变
+
+当一个变量的初始值之后发生变化了，则称变异。
+
+```javascript
+var myArr = [];
+myArr.push('first'); // 数组已变异
+```
+
+如果一个变量不能被变异，则它就是不可变的。
+
+[MDN](https://developer.mozilla.org/en-US/docs/Glossary/Mutable)
