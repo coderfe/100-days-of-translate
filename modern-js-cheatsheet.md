@@ -11,10 +11,15 @@
       - [简短解释](#简短解释)
       - [示例代码](#示例代码)
       - [详细解释](#详细解释)
+        - [var](#var)
+        - [let](#let)
+        - [const](#const)
       - [外部资源](#外部资源)
     - [箭头函数](#箭头函数)
       - [示例代码](#示例代码-1)
       - [详细解释](#详细解释-1)
+        - [简洁](#简洁)
+        - [_this_ 引用](#_this_-引用)
       - [补充资源](#补充资源-1)
     - [函数参数默认值](#函数参数默认值)
       - [补充资源](#补充资源-2)
@@ -24,10 +29,21 @@
     - [数组方法 - map / filter / reduce](#数组方法---map--filter--reduce)
       - [示例代码](#示例代码-3)
       - [详细解释](#详细解释-2)
+        - [Array.prototype.map()](#arrayprototypemap)
+        - [Array.prototype.filter()](#arrayprototypefilter)
+        - [Array.prototype.reduce()](#arrayprototypereduce)
+          - [第一次迭代](#第一次迭代)
+          - [第二次迭代](#第二次迭代)
+          - [第三次迭代](#第三次迭代)
+          - [第四次迭代](#第四次迭代)
+          - [[...]最后一次迭代](#最后一次迭代)
       - [补充资源](#补充资源-4)
     - [展开运算符“...”](#展开运算符)
       - [示例代码](#示例代码-4)
       - [详细解释](#详细解释-3)
+        - [可迭代（如数组）](#可迭代如数组)
+        - [函数剩余参数](#函数剩余参数)
+        - [对象属性展开](#对象属性展开)
       - [补充资源](#补充资源-5)
     - [对象属性简写](#对象属性简写)
       - [详细解释](#详细解释-4)
@@ -35,6 +51,8 @@
     - [Promises](#promises)
       - [示例代码](#示例代码-5)
       - [详细解释](#详细解释-5)
+        - [创建 promise](#创建-promise)
+        - [Promise 处理器用法](#promise-处理器用法)
       - [补充资源](#补充资源-7)
     - [模板字符串](#模板字符串)
       - [示例代码](#示例代码-6)
@@ -43,12 +61,17 @@
       - [补充资源](#补充资源-9)
     - [导入 / 导出](#导入--导出)
       - [示例代码](#示例代码-7)
+        - [命名导出](#命名导出)
+        - [默认 import/export](#默认-importexport)
       - [补充资源](#补充资源-10)
     - [JavaScript *this*](#javascript-this)
       - [补充资源](#补充资源-11)
     - [Class](#class)
       - [示例代码](#示例代码-8)
       - [补充资源](#补充资源-12)
+    - [Async Await](#async-await)
+      - [示例代码](#示例代码-9)
+      - [详细解释](#详细解释-6)
 
 <!-- /TOC -->
 
@@ -1203,3 +1226,30 @@ console.log(person.stringSentence()); // "Hello, my name is Manu and I'm 23"
 - [ES6 Classes in Depth - Nicolas Bevacqua](https://ponyfoo.com/articles/es6-classes-in-depth)
 - [ES6 Features - Classes](http://es6-features.org/#ClassDefinition)
 - [JavaScript Classes - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes)
+
+### Async Await
+
+除了 [Promises](https://github.com/coderfe/100-days-of-translate/blob/master/modern-js-cheatsheet.md#promises) 之外，还有一种称为 `async / await` 的新语法可以处理异步代码。
+
+async/await 函数试图简化使用 promises 的异步行为，并且在一组 Promises 中执行一些操作。正如 Promises 类似于结构化回调一样，async/await 类似于生成器和 Promises 的组合。async 函数总是返回一个 Promise。（[Ref: MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)）。
+
+> 注：在尝试 async/await 之前，你必须理解 Promises 的原理以及它如何工作，因为 async/await 依赖于 Promises。
+
+> 注2：[await 必须使用在 async 函数中](https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9#f3f0)，这意味着你不能再代码顶部使用 await，因为它不在 async 函数中。
+
+####　示例代码
+
+```javascript
+async function getGithubUser(username) {
+  const response = fetch(`https://api.github.com/users/${username}`);
+  return response.json();
+}
+
+getGithubUser('mbeaudru')
+  .then(user => console.log(user))
+  .catch(err => console.log(err));
+```
+
+#### 详细解释
+
+
