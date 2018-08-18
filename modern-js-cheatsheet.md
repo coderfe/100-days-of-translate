@@ -55,6 +55,10 @@
       - [补充资源](#补充资源-13)
     - [Truthy/Falsy](#truthyfalsy)
       - [补充资源](#补充资源-14)
+    - [Anamorphisms and Catamorphisms](#anamorphisms-and-catamorphisms)
+      - [Anamorphisms](#anamorphisms)
+      - [Catamorphisms](#catamorphisms)
+      - [补充资源](#补充资源-15)
 
 <!-- /TOC -->
 
@@ -1444,7 +1448,7 @@ JavaScript 中，truthy/falsy 是在 boolean 计算上下文中被转换为 bool
 当一个对象和 Boolean 值比较时 `[] == true`，它会这样做 `[].toString() == true`，因此：
 
 ```javascript
-let a = [] == true; // false -- [].toString() 返回 '‘
+let a = [] == true; // false -- [].toString() 返回 ''
 let b = [1] == true; // true -- [1].toString() 返回 '1'
 let c = [2] == true; // false -- [2].toString() 返回 '2'
 ```
@@ -1454,3 +1458,53 @@ let c = [2] == true; // false -- [2].toString() 返回 '2'
 - [Truthy (MDN)](https://developer.mozilla.org/en-US/docs/Glossary/Truthy)
 - [Falsy (MDN)](https://developer.mozilla.org/en-US/docs/Glossary/Falsy)
 - [Truthy and Falsy values in JS - Josh Clanton](http://adripofjavascript.com/blog/drips/truthy-and-falsy-values-in-javascript.html)
+
+### Anamorphisms and Catamorphisms
+
+#### Anamorphisms
+
+Anamorphisms 是一些对象映射到包含对象类型的更复杂结构的函数。这是把简单的机构展开为更复杂结构的过程。
+思考把一个整数展开为一个整数列表。这个整数是我们的初始对象，证书列表则是更复杂的结构。
+
+**示例代码**
+
+```javascript
+function downToOne(n) {
+  const list = [];
+
+  for (let i = n; i > 0; i--) {
+    list.push(i);
+  }
+
+  return list;
+}
+
+downToOne(5); // [5, 4, 3, 2, 1]
+```
+
+#### Catamorphisms
+
+Catamorphisms 和 Anamorphisms 相反，它会把复杂的对象结构转换成更简单的结构。以下面的例子为例，
+`product` 接受一组整数并返回一个整数。
+
+**示例代码**
+
+```javascript
+function product(list) {
+  const product = 1;
+
+  for (const i in list) {
+    product = product * i;
+  }
+
+  return product;
+}
+
+product(downToOne(5)); // 120
+```
+
+#### 补充资源
+
+- [Anamorphisms in JavaScript](http://raganwald.com/2016/11/30/anamorphisms-in-javascript.html)
+- [Anamorphism](https://en.wikipedia.org/wiki/Anamorphism)
+- [Catamorphism](https://en.wikipedia.org/wiki/Catamorphism)
