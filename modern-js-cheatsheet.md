@@ -72,6 +72,8 @@
     - [Async Await](#async-await)
       - [示例代码](#示例代码-9)
       - [详细解释](#详细解释-6)
+        - [错误处理](#错误处理)
+      - [补充资源](#补充资源-13)
 
 <!-- /TOC -->
 
@@ -1252,4 +1254,120 @@ getGithubUser('mbeaudru')
 
 #### 详细解释
 
+async/await 是基于 Promises 的，但是它又允许一种更加紧凑的代码风格。
 
+async 表示一个函数是异步的，而且始终会返回一个 Promise，你可以在 async 函数中使用 await 操作符来暂停该行的执行，直到表达式返回的 Promise 被 resolve 或者 reject。
+
+```javascript
+async function myFunc() {
+  return 'Hello World';
+}
+myFunc().then(msg => console.log(msg)); // "Hello World"
+```
+
+当到达 async 函数的 return 语句时，Promise 会以 fulfilled 状态返回值。如果在 async 函数中抛出错误，Promise 的状态会转变为 rejected。如果 async 函数中没有任何返回值，在 async 函数实行完成时，它仍旧会返回没有值的 Promise。
+
+await 操作符会等待 Promise 实现，并且只能用在 async 函数中。遇到 await 时，代码会暂停执行，直到 promises 完成。
+
+> 注：*fetch* 是一个函数，它允许发起 Ajax 请求并返回 Promise。
+
+让我们看看如何使用 promise 查找 Github 用户：
+
+```javascript
+function getGithubUser(username) {
+  return fetch(`https://api.github.com/users/${username}`).then(res => res.json());
+}
+
+getGithubUser('mbeaudru')
+  .then(user => console.log(user))
+  .catch(err => console.log(err));
+```
+
+这是 async/await：
+
+```javascript
+async function getGithubUser(username) {
+  const response = await fetch(`https://api.github.com/users/${username}`);
+  return response.json();
+}
+
+getGithubUser('mbeaudru')
+  .then(user => console.log(user))
+  .catch(err => console.log(err));
+```
+
+当你需要链接相互依赖的 promises 时，async/await 语法非常方便。
+
+举个例子，如果你需要获取 token 以便能够从数据库获取博客文章，并且获取作者的信息：
+
+```javascript
+async function fetchPostById(postId) {
+  const token = (await fetch('token_url')).json().token;
+  const post = (await fetch(`posts/${postId}?token=${token}`)).json();
+  const author = (await fetch(`/users/${post.authorId}`)).json();
+
+  post.author = author;
+  return post;
+}
+
+fetchPostById('gzIrzeo64')
+  .then(post => console.log(post))
+  .catch(err => console.log(err));
+```
+
+##### 错误处理
+
+除非为 await 添加 try/catch 语句，否则未捕获的异常——无论是在 async 函数主体抛出的，或者在 await 期间挂起——都将 reject async 函数返回的 promise，在 async 函数中使用 `throw` 语句和返回一个 reject 的 Promise 是一样的。（[Ref: MDN](https://ponyfoo.com/articles/understanding-javascript-async-await#error-handling)）。
+
+> 注： Promises 的行为都是一致的。
+
+在 Promise 中处理错误：
+
+```javascript
+function getUser() {
+  return new Promise((res, rej) => rej('User no found'));
+}
+
+function getAvatarByUsername(userId) {
+  return getUser(userId).then(user => user.avatar);
+}
+
+function getUserAvatar(username) {
+  return getAvatarByUsername(username).then(avatar => { username, avatar });
+}
+
+getUserAvatar('mbeaudru')
+  .then(res => console.log(res))
+  .catch(err => console.log(err));
+```
+
+等价的 async/await：
+
+```javascript
+async function getUser() {
+  throw 'User not found';
+}
+async function getAvatarByUsername(userId) {
+  const user = getUser(userId);
+  return user.avatar;
+}
+async function getUserAvatar(username) {
+  const avatar = getAvatarByUsername(username);
+  return { username, avatar };
+}
+
+getUserAvatar('mbeaudru')
+  .then(res => console.log(res))
+  .catch(err => console.log(err));
+```
+
+#### 补充资源
+
+- [Async/Await - JavaScript.Info](https://javascript.info/async-await)
+- [ES7 Async/Await](http://rossboucher.com/await/#/)
+- [6 Reasons Why JavaScript’s Async/Await Blows Promises Away](https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9)
+- [JavaScript awaits](https://dev.to/kayis/javascript-awaits)
+- [Using Async Await in Express with Node 8](https://medium.com/@Abazhenov/using-async-await-in-express-with-node-8-b8af872c0016)
+- [Async Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)
+- [Await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await)
+- [Using async / await in express with node 8](https://medium.com/@Abazhenov/using-async-await-in-express-with-node-8-b8af872c0016)
