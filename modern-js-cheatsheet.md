@@ -74,6 +74,7 @@
       - [详细解释](#详细解释-6)
         - [错误处理](#错误处理)
       - [补充资源](#补充资源-13)
+    - [Truthy/Falsy](#truthyfalsy)
 
 <!-- /TOC -->
 
@@ -1371,3 +1372,51 @@ getUserAvatar('mbeaudru')
 - [Async Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)
 - [Await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await)
 - [Using async / await in express with node 8](https://medium.com/@Abazhenov/using-async-await-in-express-with-node-8-b8af872c0016)
+
+### Truthy/Falsy
+
+JavaScript 中，truthy/falsy 是在 boolean 计算上下文中被转换为 boolean 型的值。一个 boolean 上下文的例子是 `if` 条件的评估。
+
+每个值都将被转换为 `true`，除非它等于：
+
+- `false`
+- `0`
+- ''（空字符串）
+- `null`
+- `undefined`
+- `NaN`
+
+以下是 boolean 上下文的示例：
+
+- `if` 条件评估
+
+  ```javascript
+  if (myVar) {}
+  ```
+
+  `myVar` 可以是任何[一等公民](https://en.wikipedia.org/wiki/First-class_citizen)（变量、函数、boolean），但是它会被转换为布尔值，因为它在 boolean 上下文中。
+
+- 在逻辑运算符**非** `!` 后面
+
+  如果该操作符的单个操作数能够转换为 true，它会返回 false，否则返回 true。
+
+  ```javascript
+  !0 // true -- 0 是假值，所以它返回 true
+  !!0 // false -- 0 是假值，!0 返回 true，!(!0) 返回 false
+  !!'' // false -- '' 是假值，!'' 返回 true，!(!'') 返回 false
+  ```
+
+- Boolean 对象构造函数
+
+  ```javascript
+  new Boolean(0); // false
+  new Boolean(1); // true
+  ```
+
+- 三元表达式
+
+  ```javascript
+  myVar ? 'truthy' : 'falsy'
+  ```
+
+在比较两个值时要注意。
