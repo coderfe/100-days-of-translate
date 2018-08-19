@@ -61,3 +61,5 @@
 30. [The Best Explanation of JavaScript Reactivity](https://medium.com/vue-mastery/the-best-explanation-of-javascript-reactivity-fea6112dd80d) —— [JavaScript 响应性的最佳解释](https://github.com/coderfe/100-days-of-translate/blob/master/javascript-reactivity.md)
 
 31. [Modern JavaScript Cheatsheet](https://mbeaudru.github.io/modern-js-cheatsheet/) —— [现代 JavaScript 备忘单](https://github.com/coderfe/100-days-of-translate/blob/master/modern-js-cheatsheet.md)
+
+32. [The Definitive Guide To Javascript Dates](https://flaviocopes.com/javascript-dates/) —— [JavaScript Dates 终极指南](https://github.com/coderfe/100-days-of-translate/blob/master/javascript-dates.md)
