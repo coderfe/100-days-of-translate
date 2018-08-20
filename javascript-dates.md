@@ -230,10 +230,88 @@ date.setUTCMilliseconds(newValue);
 Date.now();
 ```
 
-替代：
+来代替：
 
 ```javascript
 new Date().getTime();
 ```
 
+## JavaScript 努力做到更好
+
+注意。如果天数超过一个月，不会出现错误，而且日期会延伸到下一个月。
+
+```javascript
+new Date(2018, 6, 40); // Thu Aug 09 2018 00:00:00 GMT+0800 (China Standard Time)
+```
+
+同样适用于月份、小时、分钟、秒及毫秒。
+
+## 根据区域格式化时间
+
+国际化 API 已经被现代[浏览器支持][2]（例外：UC 浏览器），允许你翻译日期。
+
+它通过 `Intl` 暴露出来，这也有助于数字、字符串和货币本地化。
+
+我们现在要讨论 `Intl.DateTimeFormat()`。
+
+以下是如何使用它。
+
+根据电脑默认区域格式化日期：
+
+```javascript
+const date = new Date('July 22, 2018 07:22:13');
+new Intl.DateTimeFormat().format(date); // 在我本地是："2018/7/22"
+```
+
+根据不同的区域格式化日期：
+
+```javascript
+new Intl.DateTimeFormat('en-US').format(date); // "7/22/2018"
+```
+
+`Intl,DateTimeFormat` 方法接受一个可选参数，允许你自定义输出内容。同时显示时分秒：
+
+```javascript
+const options = {
+  year: 'numeric',
+  month: 'numeric',
+  day: 'numeric',
+  hour: 'numeric',
+  minute: 'numeric',
+  second: 'numeric'
+};
+
+new Intl.DateTimeFormat('en-US', option).format(date);
+// "7/22/2018, 7:22:13 AM"
+
+new Intl.DateTimeFormat('zh-CN', option).format(date);
+// "2018/7/22 上午7:22:13"
+```
+
+[这里有所有你可以使用的属性的参考][3]
+
+## 比较日期
+
+你可以使用 `Date.getTime()` 来比较两个不同的日期：
+
+```javascript
+const date1 = new Date('July 10, 2018 07:22:13');
+const date2 = new Date('July 22, 2018 07:22:13');
+const diff = date2.getTime() - date1.getTime(); // 1036800000
+```
+
+用同样的方式可以检查两个日期是否相等：
+
+```javascript
+const date1 = new Date('July 10, 2018 07:22:13');
+const date2 = new Date('July 10, 2018 07:22:13');
+if (date2.getTime() === date1.getTime()) {
+  // 日期相等
+}
+```
+
+要记住 `getTime()` 会返回毫秒数，所以在比较时你要考虑时间因素。`2018 年 7 月 10 日 07:22:13` 不等于 `2018 年 7 月 10 日`。在这种情况下，你可以使用 `setHours(0, 0, 0, 0)` 来重置时间。
+
 [1]: https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/javascript-dates/1.png
+[2]: https://caniuse.com/internationalization
+[3]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat
