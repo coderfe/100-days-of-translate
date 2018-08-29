@@ -65,3 +65,5 @@
 1. [The Definitive Guide To Javascript Dates](https://flaviocopes.com/javascript-dates/) —— [JavaScript Dates 终极指南](https://github.com/coderfe/100-days-of-translate/blob/master/javascript-dates.md)
 
 1. [How to write a good coding article](https://zellwk.com/blog/writing-good-coding-articles/) —— [如何写好一篇技术文章](https://github.com/coderfe/100-days-of-translate/blob/master/writing-good-coding-articles.md)
+
+1. [Building a long press directive in Vue](https://blog.logrocket.com/building-a-long-press-directive-in-vue-3408d60fb511) —— [制作一个 Vue 长按指令](https://github.com/coderfe/100-days-of-translate/blob/master/vue-long-press-directive.md)
