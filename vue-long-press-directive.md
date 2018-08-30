@@ -263,6 +263,7 @@ Vue.directive('longpress', {
       if (compName) {
         warn += `. Found in component ${compName}`;
       }
+      console.log(warn);
     }
 
     let pressTimer = null;
