@@ -80,7 +80,7 @@ sudo yum install git
 
 在系统上安装完 Git 之后，你可以通过在命令行键入 `git` 来访问它。
 
-![git](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/a-quick-guide-to-git/1.png)
+![git](https://raw.githubusercontent.com/coderfe/100-days-of-translate/master/a-quick-guide-to-git/git.svg)
 
 假设你有一个干净的文件夹。你可以键入下面的命令来初始化一个仓库
 
