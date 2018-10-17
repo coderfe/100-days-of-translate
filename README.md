@@ -65,3 +65,5 @@
 1. [The Definitive Guide To Javascript Dates](https://flaviocopes.com/javascript-dates/) —— [JavaScript Dates 终极指南](https://github.com/coderfe/100-days-of-translate/blob/master/javascript-dates.md)
 
 1. [How to write a good coding article](https://zellwk.com/blog/writing-good-coding-articles/) —— [如何写好一篇技术文章](https://github.com/coderfe/100-days-of-translate/blob/master/writing-good-coding-articles.md)
+
+1. [5 Tips to Write Better Conditionals in JavaScript](https://scotch.io/tutorials/5-tips-to-write-better-conditionals-in-javascript) —— [5 个小技巧，让你在 JavaScript 中写出更好的条件语句](https://github.com/coderfe/100-days-of-translate/blob/master/write-better-conditionals.md)
