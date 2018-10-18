@@ -215,9 +215,63 @@ test({ }); // unknown
 test({ name: 'apple', color: 'red' }); // apple
 ```
 
+#### 使用 Map/Object 字面量，而非 switch 语句
+
+让看看下面的例子，我们要基于颜色输出水果：
+
+```javascript
+function test(color) {
+  switch (color) {
+    case 'red':
+      return ['apple', 'strawberry'];
+    case 'yellow':
+      return ['banana', 'pineapple'];
+    case 'purple':
+      return ['grape', 'plum'];
+    default:
+      return [];
+  }
+}
+
+// 测试结果
+test(null); // []
+test('yellow'); // ['banana', 'pineapple']
+```
+
+上面的代码似乎并没有错，但我觉得它很啰嗦。使用更加简洁的对象字面量语法可以实现相同的结果：
+
+```javascript
+const fruitColor = {
+  red: ['apple', 'strawberry'],
+  yellow: ['banana', 'pineapple'],
+  purple: ['grape', 'plum']
+};
+function test(color) {
+  return fruitColor[color];
+}
+```
+
+另外，[Map][5] 也可以实现相同的结果：
+
+```javascript
+const fruitColor = new Map()
+  .set('red', ['apple', 'strawberry'])
+  .set('yellow', ['banana', 'pineapple'])
+  .set('purple', ['grape', 'plum']);
+
+function test(color) {
+  return fruitColor.get(color) || [];
+}
+```
+
+[Map][5] 是 ES2015 中的对象类型，它允许你存储键值对。
+
+那么我们应该禁止使用 switch 语句吗？
+
 你可以在[这儿](http://jsbin.com/bopovajiye/edit?js,console)运行示例代码。此外，如果你是函数式编程（FP）的爱好者，你还可以选择使用 [Lodash fp](https://github.com/lodash/lodash/wiki/FP-Guide)。
 
 [1]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes
 [2]: http://blog.timoxley.com/post/47041269194/avoid-else-return-early
 [3]: https://softwareengineering.stackexchange.com/questions/18454/should-i-return-from-a-function-early-or-use-an-if-statement
 [4]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Default_parameters
+[5]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
