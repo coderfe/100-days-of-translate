@@ -215,6 +215,8 @@ test({ }); // unknown
 test({ name: 'apple', color: 'red' }); // apple
 ```
 
+你可以在[这儿](http://jsbin.com/bopovajiye/edit?js,console)运行示例代码。此外，如果你是函数式编程（FP）的爱好者，你还可以选择使用 [Lodash fp](https://github.com/lodash/lodash/wiki/FP-Guide)。
+
 #### 使用 Map/Object 字面量，而非 switch 语句
 
 让看看下面的例子，我们要基于颜色输出水果：
@@ -266,12 +268,93 @@ function test(color) {
 
 [Map][5] 是 ES2015 中的对象类型，它允许你存储键值对。
 
-那么我们应该禁止使用 switch 语句吗？
+那么我们应该禁止使用 switch 语句吗？不要局限于此。就我个人而言，我会尽可能使用对象字面量，但我也不会设置规则来阻止，使用哪种取决于你应用的场景。
 
-你可以在[这儿](http://jsbin.com/bopovajiye/edit?js,console)运行示例代码。此外，如果你是函数式编程（FP）的爱好者，你还可以选择使用 [Lodash fp](https://github.com/lodash/lodash/wiki/FP-Guide)。
+Todd Motto 有一篇深入比较 switch 语句和对象字面量的文章，你可以[读一读][6]。
+
+### 总结：重构语法
+
+对于上面的例子，实际上我们可以使用 `Array.filter` 来重构代码以达到相同的结果：
+
+```javascript
+const fruits = [
+  { name: 'apple', color: 'red' },
+  { name: 'strawberry', color: 'red' },
+  { name: 'banana', color: 'yellow' },
+  { name: 'pineapple', color: 'yellow' },
+  { name: 'grape', color: 'purple' },
+  { name: 'plum', color: 'purple' }
+];
+
+function test(color) {
+  return fruits.filter(fruit => fruit.color === color);
+}
+```
+
+有不止一种方法可以实现相同的结果，在这儿我们展示了四个示例。写代码非常有趣！
+
+### 为所有/部分条件使用 Array.every/Array.some
+
+最后一个提示是利用最新的（但也并不是最新） JavaScript 数组函数来合并多行代码。思考下面的代码，我们要检查是否所有的水果都是红色：
+
+```javascript
+const fruits = [
+  { name: 'apple', color: 'red' },
+  { name: 'banana', color: 'yellow' },
+  { name: 'grape', color: 'purple' }
+];
+
+function test() {
+  let isAllRed = true;
+
+  for (let f of fruits) {
+    if (!isAllRed) break;
+    isAllRed = (f.color === 'red');
+  }
+
+  console.log(isAllRed); // false
+}
+```
+
+代码比较长！我们可以使用 `Array.every` 来合并代码：
+
+```javascript
+const fruits = [
+  { name: 'apple', color: 'red' },
+  { name: 'banana', color: 'yellow' },
+  { name: 'grape', color: 'purple' }
+];
+
+function test() {
+  const isAllRed = fruits.every(f => f.color === 'red');
+  console.log(isAllRed); // false
+}
+```
+
+现在是不是更加简洁了？同样，如果我们想检查水果中的任意一个是否为红色，我们可以使用 `Array.some`：
+
+```javascript
+const fruits = [
+  { name: 'apple', color: 'red' },
+  { name: 'banana', color: 'yellow' },
+  { name: 'grape', color: 'purple' }
+];
+
+function test() {
+  const isAnyRed = fruits.some(f => f.color === 'red');
+  console.log(isAnyRed); // true
+}
+```
+
+## 总结
+
+让我们一起“生产”更多易读的代码。我希望你能从这篇文章中学到新的东西。
+
+以上。Happy coding!
 
 [1]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes
 [2]: http://blog.timoxley.com/post/47041269194/avoid-else-return-early
 [3]: https://softwareengineering.stackexchange.com/questions/18454/should-i-return-from-a-function-early-or-use-an-if-statement
 [4]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Default_parameters
 [5]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
+[6]: https://toddmotto.com/deprecating-the-switch-statement-for-object-literals/
