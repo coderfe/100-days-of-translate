@@ -1,5 +1,14 @@
 # 5 个小技巧，让你在 JavaScript 中写出更好的条件语句
 
+- [5 个小技巧，让你在 JavaScript 中写出更好的条件语句](#5-个小技巧让你在-javascript-中写出更好的条件语句)
+  - [为多条件使用 Array.includes](#为多条件使用-arrayincludes)
+  - [减少嵌套，优先返回](#减少嵌套优先返回)
+  - [使用函数默认参数和解构](#使用函数默认参数和解构)
+  - [使用 Map/Object 字面量，而非 switch 语句](#使用-mapobject-字面量而非-switch-语句)
+    - [总结：重构语法](#总结重构语法)
+  - [为所有/部分条件使用 Array.every/Array.some](#为所有部分条件使用-arrayeveryarraysome)
+  - [总结](#总结)
+
 ## 为多条件使用 Array.includes
 
 我们一起看看下面的例子：
@@ -128,7 +137,7 @@ function test(fruit, quantity) {
 - [Avoid Else, Return Early][2] by Tim Oxley
 - [StackOverflow discussion][3] on if/else coding style
 
-### 使用函数默认参数和解构
+## 使用函数默认参数和解构
 
 我想下面的代码看起来很熟悉吧，在 JavaScript 中，我们总是需要检查 `null`/`undefined` 值，并为其赋予默认值：
 
@@ -217,7 +226,7 @@ test({ name: 'apple', color: 'red' }); // apple
 
 你可以在[这儿](http://jsbin.com/bopovajiye/edit?js,console)运行示例代码。此外，如果你是函数式编程（FP）的爱好者，你还可以选择使用 [Lodash fp](https://github.com/lodash/lodash/wiki/FP-Guide)。
 
-#### 使用 Map/Object 字面量，而非 switch 语句
+## 使用 Map/Object 字面量，而非 switch 语句
 
 让看看下面的例子，我们要基于颜色输出水果：
 
@@ -293,7 +302,7 @@ function test(color) {
 
 有不止一种方法可以实现相同的结果，在这儿我们展示了四个示例。写代码非常有趣！
 
-### 为所有/部分条件使用 Array.every/Array.some
+## 为所有/部分条件使用 Array.every/Array.some
 
 最后一个提示是利用最新的（但也并不是最新） JavaScript 数组函数来合并多行代码。思考下面的代码，我们要检查是否所有的水果都是红色：
 
