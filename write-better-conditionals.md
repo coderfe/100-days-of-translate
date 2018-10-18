@@ -187,7 +187,7 @@ test({ }); // unknown
 test({ name: 'apple', color: 'red' }); // apple
 ```
 
-瞧瞧上面的例子，如果水果名称可用，我们将输出水果名称，否则输出 unknown。我们可以通过使用默认函数参数和结构来避免 `fruit && fruit.name` 检查：
+瞧瞧上面的例子，如果水果名称可用，我们将输出水果名称，否则输出 unknown。我们可以通过使用默认函数参数和解构来避免 `fruit && fruit.name` 检查：
 
 ```javascript
 function test({ name } = {}) {
@@ -202,12 +202,12 @@ test({ name: 'apple', color: 'red' }); // apple
 
 我们只需要水果的 `name` 属性，所以可以通过 `{name}` 来解构参数，然后我们就可以在代码中将 `name` 作为变量，而不是 `fruit.name`。
 
-我们也制定了一个空对象 `{}` 作为默认值。如果不这样做，在执行 `test(undefined)` 时会出现错误——`Cannot destructure property name of 'undefined' or 'null'.`，因为 `undefined` 中没有 `name` 属性。
+我们也指定了一个空对象 `{}` 作为默认值。如果不这样做，在执行 `test(undefined)` 时会出现错误——`Cannot destructure property name of 'undefined' or 'null'.`，因为 `undefined` 中没有 `name` 属性。
 
 如果你不介意使用第三方库，这里有几种减少空检查的方法：
 
 - 使用 [Lodash get](https://lodash.com/docs/4.17.10#get) 方法
-- 使用 Facebook 的开源库 [idx](https://github.com/facebookincubator/idx)(结合 Babele.js)
+- 使用 Facebook 的开源库 [idx](https://github.com/facebookincubator/idx)(结合 Babel.js)
 
 下面是使用 Lodash 的例子：
 
