@@ -70,3 +70,4 @@
 
 1. [5 Tips to Write Better Conditionals in JavaScript](https://scotch.io/tutorials/5-tips-to-write-better-conditionals-in-javascript) —— [5 个小技巧，让你在 JavaScript 中写出更好的条件语句](https://github.com/coderfe/100-days-of-translate/blob/master/write-better-conditionals.md)
 
+1. [「Chrome DevTools」Network Issues Guide](https://developers.google.com/web/tools/chrome-devtools/network-performance/issues) —— [「Chrome DevTools」网络问题指南](https://github.com/coderfe/100-days-of-translate/blob/master/network-issues-guide.md)
